@@ -30,5 +30,6 @@ article p {
 
 .catalog-thumb {
     float: right;
-    width: 320px;
+    width: 220px;
+    border: 1px solid #D9D9DA;
 }
