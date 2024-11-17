@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="utf-8">
+    <title>Supercharging .NET Microservices</title>
+    <meta name="author" content="Bilal A." />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+</head>
+<body>
+  <header>
+   <a href="../index.html">Info</a> /
+   <a href="../projects.html">Projects</a> /
+   <a href="../gpts.html">CustomGPTs</a>
+  </header>
+
+  <article>
+    <h1>🚀 Supercharging .NET Microservices: My Top 5 NuGet Packages</h1>
+    <p>Imagine this: it’s a Monday morning, and your microservice that handles critical payment transactions has just hit a record-breaking number of requests. Everything seems fine — until it’s not. Your logs are unreadable, the database is timing out, and your service is collapsing under the pressure. Panic sets in, but you realize this isn’t your first rodeo. You’ve seen the storm coming, and thankfully, you’ve armed yourself with the right tools to weather it. This article is about those tools—five NuGet packages that have consistently saved my projects, and my sanity, when building robust .NET microservices.</p>
+
+    <h2>🛠️ <a target="_blank" href="https://github.com/HangfireIO/Hangfire">Hangfire</a>: Background Jobs Without the Chaos</h2>
+    <p>The first time I used Hangfire, I was tasked with creating a metrics reporting system that had to process thousands of request, errors, and response times every night. A cron job might have done the trick, but what happens if the job fails halfway through? What if I needed to monitor its progress or retry specific tasks? Hangfire came to my rescue.</p>
+    <p>With its intuitive dashboard, I could schedule recurring jobs, monitor their execution, and even retry failed tasks. It felt like having a personal assistant for my microservices. Now, whenever I need to offload heavy tasks like email notifications or batch data processing, Hangfire is my go-to. It’s not just about making things work; it’s about making things reliable.</p>
+
+    <h2>🛡️ <a target="_blank" href="https://github.com/App-vNext/Polly">Polly</a>: The Safety Net Every Microservice Needs</h2>
+    <p>Let me paint you a picture: your service depends on an external API, and suddenly that API becomes… flaky. Requests start failing intermittently, and your users are left staring at error messages. This is where Polly earns its keep.</p>
+    <p>Polly helps you build resilience into your system. I remember using it to implement a retry policy for a third-party payment gateway. The first time the gateway hiccupped during peak Black Friday traffic, Polly quietly retried the failed requests and kept everything running smoothly. It wasn’t just a fix—it was peace of mind. With Polly, your services become less brittle, handling transient failures like a pro.</p>
+
+    <h2>📖 <a target="_blank" href="https://github.com/fluentassertions/fluentassertions">Fluent Assertions</a>: Because Tests Should Speak Your Language</h2>
+    <p>Testing is like flossing — everyone knows they should do it, but it’s often rushed or neglected. Early in my career, I dreaded writing assertions. They were clunky, verbose, and didn’t clearly communicate what was being tested. Then I discovered Fluent Assertions.</p>
+    <p>Using Fluent Assertions felt like learning a new language — one that made sense. When I wrote <code>result.Should().NotBeNull()</code> or <code>errorMessage.Should().Contain("Invalid")</code>, it felt natural, like my tests were telling a story. And when debugging test failures, the detailed error messages were a revelation. Fluent Assertions transformed testing from a chore into an art, making my code more expressive and my intent crystal clear.</p>
+
+    <h2>📋 <a target="_blank" href="https://github.com/serilog/serilog">Serilog</a>: Logging with Style</h2>
+    <p>Here’s a confession: I used to hate logs. They were always cluttered, and finding the one piece of information I needed was like looking for a needle in a haystack. That changed when I started using Serilog.</p>
+    <p>Structured logging was a game-changer. Instead of dumping strings into my console, I started logging rich, queryable data. Debugging a payment processing issue? With Serilog and a dashboard like Seq, I could filter logs by transaction ID, trace the request’s journey, and pinpoint the exact moment things went south. Serilog didn’t just improve my logs; it improved the way I approached debugging.</p>
+
+    <h2>🌟 <a target="_blank" href="https://launchdarkly.com/">LaunchDarkly</a>: Shipping Features Without Fear</h2>
+    <p>Imagine rolling out a new feature to thousands of users, only to discover a critical bug two minutes later. That’s the nightmare LaunchDarkly prevents. With feature flags, I can roll out new features to a small subset of users, monitor the impact, and scale up when I’m confident.</p>
+    <p>One of my favorite LaunchDarkly moments was toggling a new delivery eligibility feature for just 5% of users during the initial rollout. When everything worked smoothly, we expanded to 50%, then 100%. And when the business team wanted to temporarily disable the feature during a marketing campaign, it was as simple as flipping a switch. LaunchDarkly gave us agility and control — two things every microservice developer dreams of.</p>
+
+    <h2>💡 What Are Your Lifesaving NuGet Packages?</h2>
+    <p>These five NuGet packages—Hangfire, Polly, Fluent Assertions, Serilog, and LaunchDarkly — are my secret weapons for building robust, scalable, and maintainable .NET microservices. They’ve saved me countless hours of debugging, prevented critical failures, and made my services resilient in the face of chaos.</p>
+  </article>
+
+  <footer>
+      <p>Copyright 2024 ©</p>
+  </footer>
+</body>
+</html>
