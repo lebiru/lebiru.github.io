@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            justify-content: center;
+        }
+        canvas {
+            border: 2px solid #fff;
+            background-color: #000;
+        }
+        .controls {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .controls button {
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: #444;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .controls button:active {
+            background-color: #666;
+        }
+        .up {
+            grid-column: 2;
+        }
+        .left {
+            grid-column: 1;
+        }
+        .right {
+            grid-column: 3;
+        }
+        .down {
+            grid-column: 2;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="controls">
+        <button class="up">↑</button>
+        <button class="left">←</button>
+        <button class="right">→</button>
+        <button class="down">↓</button>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const boxSize = 20; // Size of each square
+        const canvasSize = 400; // Canvas width and height
+        const boxesPerRow = canvasSize / boxSize;
+
+        let snake = [{ x: 10, y: 10 }]; // Snake's initial position
+        let direction = { x: 0, y: 0 }; // Snake's initial direction
+        let nextDirection = { x: 0, y: 0 }; // Buffered direction
+        let food = { x: getRandomCoord(), y: getRandomCoord() }; // Random food position
+        let score = 0;
+        let isMoving = false; // To prevent "Game Over" at start
+        let gameSpeed = 200; // Initial speed (ms per frame)
+        let gameInterval; // Game loop interval reference
+        let gameStartTime = 0; // Game start time
+
+        // Utility function to draw a rectangle
+        function drawBox(x, y, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x * boxSize, y * boxSize, boxSize, boxSize);
+        }
+
+        // Random coordinate generator
+        function getRandomCoord() {
+            return Math.floor(Math.random() * boxesPerRow);
+        }
+
+        // Reset game
+        function resetGame() {
+            clearInterval(gameInterval); // Stop the game loop
+            snake = [{ x: 10, y: 10 }];
+            direction = { x: 0, y: 0 };
+            nextDirection = { x: 0, y: 0 };
+            score = 0;
+            isMoving = false;
+            gameSpeed = 200; // Reset the speed
+            gameStartTime = 0;
+            food = { x: getRandomCoord(), y: getRandomCoord() };
+            drawInitialMap();
+        }
+
+        // Start the game loop
+        function startGameLoop() {
+            clearInterval(gameInterval); // Clear existing interval
+            gameInterval = setInterval(gameLoop, gameSpeed); // Restart loop with updated speed
+        }
+
+        // Start the timer
+        function startTimer() {
+            gameStartTime = Date.now();
+        }
+
+        // Draw initial game state
+        function drawInitialMap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the snake
+            snake.forEach(segment => drawBox(segment.x, segment.y, 'lime'));
+
+            // Draw the food
+            drawBox(food.x, food.y, 'red');
+
+            // Draw the score
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 20);
+
+            // Draw the timer
+            if (isMoving) {
+                const elapsedTime = Math.floor((Date.now() - gameStartTime) / 1000);
+                ctx.fillText(`Time: ${elapsedTime}s`, canvas.width - 100, 20);
+            }
+        }
+
+        // Game loop
+        function gameLoop() {
+            if (!isMoving) return; // Prevent the game from running until movement starts
+
+            // Update the direction
+            direction = nextDirection;
+
+            const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+            // Check for collision with walls or self
+            if (
+                head.x < 0 || head.x >= boxesPerRow || // Wall collision
+                head.y < 0 || head.y >= boxesPerRow || // Wall collision
+                snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y) // Self collision
+            ) {
+                alert(`Game Over! Your score was ${score} and you played for ${Math.floor((Date.now() - gameStartTime) / 1000)} seconds.`);
+                resetGame();
+                return;
+            }
+
+            // Add new head
+            snake.unshift(head);
+
+            // Check if snake eats food
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                food = { x: getRandomCoord(), y: getRandomCoord() };
+                increaseSpeed(); // Increase the speed
+            } else {
+                snake.pop(); // Remove the tail
+            }
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the snake
+            snake.forEach(segment => drawBox(segment.x, segment.y, 'lime'));
+
+            // Draw the food
+            drawBox(food.x, food.y, 'red');
+
+            // Draw the score
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 20);
+
+            // Draw the timer
+            const elapsedTime = Math.floor((Date.now() - gameStartTime) / 1000);
+            ctx.fillText(`Time: ${elapsedTime}s`, canvas.width - 100, 20);
+        }
+
+        // Increase game speed
+        function increaseSpeed() {
+            gameSpeed *= 0.99; // Increase speed by 1% (reduce interval)
+            startGameLoop(); // Restart the game loop with the new speed
+        }
+
+        // Direction control with arrow keys
+        document.addEventListener('keydown', (event) => {
+            const { x: currX, y: currY } = direction;
+
+            if (event.key === 'ArrowUp' && currY === 0) {
+                setDirection(0, -1);
+            } else if (event.key === 'ArrowDown' && currY === 0) {
+                setDirection(0, 1);
+            } else if (event.key === 'ArrowLeft' && currX === 0) {
+                setDirection(-1, 0);
+            } else if (event.key === 'ArrowRight' && currX === 0) {
+                setDirection(1, 0);
+            }
+        });
+
+        // Helper to set the direction
+        function setDirection(x, y) {
+            nextDirection = { x, y };
+            if (!isMoving) {
+                isMoving = true;
+                startTimer();
+                startGameLoop(); // Start the game loop on the first move
+            }
+        }
+
+        // Add mobile button controls
+        document.querySelector('.up').addEventListener('click', () => setDirection(0, -1));
+        document.querySelector('.down').addEventListener('click', () => setDirection(0, 1));
+        document.querySelector('.left').addEventListener('click', () => setDirection(-1, 0));
+        document.querySelector('.right').addEventListener('click', () => setDirection(1, 0));
+
+        // Initialize the game
+        resetGame();
+    </script>
+</body>
+</html>
