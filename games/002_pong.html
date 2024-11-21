@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <title>Pong</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+        }
+        #gameArea {
+            position: relative;
+            background-color: black;
+            width: 600px;
+            height: 400px;
+            border: 3px solid white;
+            overflow: hidden;
+            cursor: none; /* Hide cursor within game area */
+        }
+        .paddle {
+            position: absolute;
+            background-color: white;
+            width: 100px;
+            height: 20px;
+        }
+        #playerPaddle {
+            bottom: 0;
+        }
+        #comPaddle {
+            top: 0;
+        }
+        .ball {
+            position: absolute;
+            background-color: white;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+        #hud {
+            display: flex;
+            justify-content: space-between;
+            width: 600px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        #controls {
+            margin-top: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #countdown {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pong</h1>
+    <div id="hud">
+        <div>Rally: <span id="rallyCount">0</span></div>
+        <div>Time: <span id="rallyTime">0</span> sec</div>
+    </div>
+    <div id="countdown">3</div>
+    <div id="gameArea">
+        <div id="playerPaddle" class="paddle"></div>
+        <div id="comPaddle" class="paddle"></div>
+        <div id="ball" class="ball"></div>
+    </div>
+    <div id="controls">
+        <button onclick="moveLeft()">Left</button>
+        <button onclick="moveRight()">Right</button>
+    </div>
+    <script>
+        const gameArea = document.getElementById('gameArea');
+        const playerPaddle = document.getElementById('playerPaddle');
+        const comPaddle = document.getElementById('comPaddle');
+        const ball = document.getElementById('ball');
+        const countdownDisplay = document.getElementById('countdown');
+        const rallyCountDisplay = document.getElementById('rallyCount');
+        const rallyTimeDisplay = document.getElementById('rallyTime');
+        const paddleSpeed = 20;
+        let rallyCount = 0;
+        let rallyTime = 0;
+        let rallyStart = false;
+
+        // Paddle positions
+        let playerX = (gameArea.clientWidth - playerPaddle.offsetWidth) / 2;
+        let comX = (gameArea.clientWidth - comPaddle.offsetWidth) / 2;
+
+        // Ball properties
+        let ballX = gameArea.clientWidth / 2;
+        let ballY = gameArea.clientHeight / 2;
+        let ballSpeedX = 4;
+        let ballSpeedY = 4;
+
+        // Game state
+        let isGameRunning = false;
+
+        // Set initial positions
+        function updatePositions() {
+            playerPaddle.style.left = `${playerX}px`;
+            comPaddle.style.left = `${comX}px`;
+            ball.style.left = `${ballX}px`;
+            ball.style.top = `${ballY}px`;
+        }
+
+        // Move paddle functions
+        function moveLeft() {
+            playerX = Math.max(0, playerX - paddleSpeed);
+            updatePositions();
+        }
+
+        function moveRight() {
+            playerX = Math.min(gameArea.clientWidth - playerPaddle.offsetWidth, playerX + paddleSpeed);
+            updatePositions();
+        }
+
+        // Arrow key controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') moveLeft();
+            if (e.key === 'ArrowRight') moveRight();
+        });
+
+        // Mouse control for paddle
+        gameArea.addEventListener('mousemove', (e) => {
+            const gameAreaBounds = gameArea.getBoundingClientRect();
+            const mouseX = e.clientX - gameAreaBounds.left;
+
+            // Center paddle around mouse position
+            playerX = Math.max(
+                0,
+                Math.min(gameArea.clientWidth - playerPaddle.offsetWidth, mouseX - playerPaddle.offsetWidth / 2)
+            );
+            updatePositions();
+        });
+
+        // Ball and paddle collision detection
+        function checkCollision() {
+            if (ballY + ball.offsetHeight >= gameArea.clientHeight) {
+                // Player paddle collision
+                if (
+                    ballX + ball.offsetWidth >= playerX &&
+                    ballX <= playerX + playerPaddle.offsetWidth
+                ) {
+                    ballSpeedY *= -1;
+                    rallyCount++;
+                    rallyCountDisplay.textContent = rallyCount;
+
+                    // Speed boost if hit near paddle edges
+                    const hitPosition = (ballX - playerX) / playerPaddle.offsetWidth;
+                    if (hitPosition < 0.2 || hitPosition > 0.8) {
+                        ballSpeedX *= 1.1;
+                        ballSpeedY *= 1.1;
+                    }
+                } else {
+                    alert("Game Over! COM wins!");
+                    resetGame();
+                }
+            }
+
+            if (ballY <= 0) {
+                // COM paddle collision
+                if (
+                    ballX + ball.offsetWidth >= comX &&
+                    ballX <= comX + comPaddle.offsetWidth
+                ) {
+                    ballSpeedY *= -1;
+                    rallyCount++;
+                    rallyCountDisplay.textContent = rallyCount;
+
+                    // Speed boost if hit near paddle edges
+                    const hitPosition = (ballX - comX) / comPaddle.offsetWidth;
+                    if (hitPosition < 0.2 || hitPosition > 0.8) {
+                        ballSpeedX *= 1.1;
+                        ballSpeedY *= 1.1;
+                    }
+                } else {
+                    alert("You win!");
+                    resetGame();
+                }
+            }
+
+            if (ballX <= 0 || ballX + ball.offsetWidth >= gameArea.clientWidth) {
+                ballSpeedX *= -1;
+            }
+        }
+
+        // Game loop
+        function gameLoop() {
+            if (!isGameRunning) return;
+
+            // Move ball
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            // Check collisions
+            checkCollision();
+
+            // Smooth COM paddle movement
+            const targetX = ballX - comPaddle.offsetWidth / 2;
+            comX += (targetX - comX) * 0.1;
+
+            // Update positions
+            updatePositions();
+        }
+
+        // Timer for rally
+        function updateRallyTime() {
+            if (isGameRunning) {
+                rallyTime++;
+                rallyTimeDisplay.textContent = rallyTime;
+            }
+        }
+
+        // Countdown before start
+        function showCountdown() {
+            let count = 3;
+            countdownDisplay.style.display = 'block';
+            countdownDisplay.textContent = count;
+
+            const countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownDisplay.textContent = count;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.style.display = 'none';
+                    isGameRunning = true;
+                    rallyTime = 0;
+                    rallyStart = true;
+                }
+            }, 1000);
+        }
+
+        // Reset game
+        function resetGame() {
+            rallyCount = 0;
+            rallyTime = 0;
+            rallyCountDisplay.textContent = rallyCount;
+            rallyTimeDisplay.textContent = rallyTime;
+            ballX = gameArea.clientWidth / 2;
+            ballY = gameArea.clientHeight / 2;
+            ballSpeedX = 4;
+            ballSpeedY = 4;
+            isGameRunning = false;
+            rallyStart = false;
+            showCountdown();
+        }
+
+        // Start game loop
+        setInterval(gameLoop, 20);
+        setInterval(updateRallyTime, 1000);
+        resetGame();
+        updatePositions();
+    </script>
+</body>
+</html>
