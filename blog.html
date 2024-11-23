@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lebiru Blog Home Directory">
+    <title>Lebiru - Blog Directory</title>
+    <meta name="author" content="Bilal A." />
+    <link rel="stylesheet" href="simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+</head>
+
+<body>
+    <header>
+        <a href="index.html">Info</a> /
+        <a href="projects.html">Projects</a> /
+        <a href="gpts.html">CustomGPTs</a> /
+        <a href="blog.html">Blog</a>
+    </header>
+    <div class="container">
+        <h1>Lebiru - Blog Directory</h1>
+        <h3 style="font-style: italic; color: gray;">Click on a row to read the post</h2>
+            <input type="text" id="searchBox" placeholder="Search posts..." oninput="filterPosts()" />
+            <table id="blogTable">
+                <tbody id="blogPosts"></tbody>
+            </table>
+    </div>
+
+    <script>
+        // most recent up top
+        const blogPosts = [
+            {
+                title: 'Post #002 - Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
+                date: 'November 22nd, 2024',
+                content:
+                    "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability. I have had the privilege of guiding junior programmers in multiple teams and seen their growth firsthand...",
+                url: 'blog/002_mentoring_tips.html',
+            },
+            {
+                title: 'Post #001 - Supercharging .NET Microservices: My Top 5 NuGet Packages',
+                date: 'November 15th, 2024',
+                content:
+                    'Imagine this: it’s a Monday morning, and your microservice that handles critical payment transactions has just hit a record-breaking number of requests. Everything seems fine — until it’s not...',
+                url: 'blog/001_top_5_nugets.html',
+            }
+        ];
+
+        // Display blog posts
+        const displayPosts = (posts) => {
+            const tableBody = document.getElementById('blogPosts');
+            tableBody.innerHTML = '';
+
+            posts.forEach((post) => {
+                const row = document.createElement('tr');
+                row.onclick = () => (window.location.href = post.url);
+
+                const titleCell = document.createElement('td');
+                titleCell.textContent = post.title;
+                row.appendChild(titleCell);
+
+                const dateCell = document.createElement('td');
+                dateCell.textContent = post.date;
+                row.appendChild(dateCell);
+
+                const previewCell = document.createElement('td');
+                previewCell.textContent = post.content.split('. ').slice(0, 2).join('. ');
+                row.appendChild(previewCell);
+
+                tableBody.appendChild(row);
+            });
+        };
+
+        // Filter blog posts
+        const filterPosts = () => {
+            const searchText = document.getElementById('searchBox').value.toLowerCase();
+            const filteredPosts = blogPosts.filter(
+                (post) =>
+                    post.title.toLowerCase().includes(searchText) ||
+                    post.content.toLowerCase().includes(searchText)
+            );
+            displayPosts(filteredPosts);
+        };
+
+        // Initialize table with all posts
+        document.addEventListener('DOMContentLoaded', () => {
+            displayPosts(blogPosts);
+        });
+    </script>
+
+    <footer>
+        <p>Copyright 2024 ©</p>
+    </footer>
+</body>
+</html>
