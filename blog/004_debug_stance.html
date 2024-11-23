@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the root programming skill of debugging by learning itemized techniques for troubleshooting">
+    <title>Debug Stance</title>
+    <meta name="author" content="Bilal A." />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+</head>
+<body>
+    <header>
+        <a href="../index.html">Info</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a>
+    </header>
+    <article>
+
+        <h1>Debug Stance: The Root Skill</h1>
+        
+        <section>
+            <p>Picture this: you’re a lone samurai facing an unseen opponent. The battlefield is your code, and the enemy is a bug—hidden, clever, and unrelenting. Do you have the discipline to face it head-on? Debugging is the way of the programmer, a practice that sharpens your focus, strengthens your resolve, and transforms chaos into clarity. In this post, we’ll hone your “Debug Stance,” equipping you with the mental and technical tools to face any challenge with precision. Ready your keyboard, because by the end of this, you won’t just debug—you’ll master the art of the code duel.</p>
+        </section>
+        
+        <section>
+            <h2><span class="emoji">🔍</span> What is Debugging?</h2>
+            <p>Debugging is the process of identifying and fixing errors in code, but it’s more than just fixing mistakes—it’s the art of understanding how and why something doesn’t work. It requires both a logical mindset and creativity, as bugs often hide in places you least expect. The term itself has an interesting origin: the very first recorded “bug” was an actual moth found trapped in a relay of the Harvard Mark II computer in 1947. Engineers removed the moth and taped it into their logbook, humorously marking the first example of debugging in history.</p>
+            <p>While computers have advanced far beyond the vacuum tubes and relays of early machines, software remains imperfect. Code is written by humans, and even the most meticulous developer cannot predict every interaction, edge case, or variable at play. That’s why debugging is a perpetual necessity. Bugs arise from overlooked scenarios, unexpected inputs, or even changes in how systems interact over time. Debugging ensures software evolves, performs reliably, and adapts to new challenges—making it an indispensable skill for programmers at all levels.</p>
+        </section>
+        
+        <section>
+            Below are the 9 debugging techniques that have helped me countless times in identifying issues to their root. So, let's jump into it! 
+        </section>
+
+        <section>
+            <div style="text-align: center; margin: 25px 0px;">
+                <img src="../images/debug_duel.png" alt="Seven Samurai Duel Scene" width="500px">
+            </div>
+            <div style="text-align: center;"><p><em>It's time to get into your Debug Stance!</em></p></div>
+        </section>
+        
+        <section>
+            <a href="#expected_vs_actual"><h2 id="expected_vs_actual"><span class="emoji">📏</span> Technique 1: Expected vs. Actual</h2></a>
+            <p>"Expected vs Actual" is a fundamental debugging technique where you compare what the system is supposed to do (expected) against what it is actually doing (actual). This process involves clearly defining the expected result based on requirements, documentation, or intended functionality and then identifying discrepancies by observing the actual output. For example, if a function is designed to calculate the sum of two numbers but instead returns their product, the expected result would be the sum (e.g., 3 + 2 = 5), while the actual result might be 6 (3 * 2). By defining these boundaries, you can focus on the specific part of the system where the deviation occurs, such as reviewing the function's implementation or input handling. This clarity helps narrow down potential causes of the issue, making debugging more efficient and systematic.</p>
+        </section>
+        
+        <section>
+            <a href="#mvb"><h2 id="mvb"><span class="emoji">🛠️</span> Technique 2: Minimum Viable Bug (MVB)</h2></a>
+            <p>The "Minimum Viable Bug" (MVB) technique involves isolating the smallest amount of code that still reproduces the issue, stripping away any unnecessary noise to focus solely on the problematic behavior. This technique allows you to identify whether the bug is tied to a specific line, function, or interaction. For example, if an API call fails to return the expected data, you might hardcode the parameters, comment out unrelated lines, or use Console.WriteLine to log key variables. If the issue persists, you could recreate the project in a fresh environment with only the culprit code to confirm the bug's scope. By minimizing distractions and reducing the complexity of the code, you can better pinpoint the root cause and eliminate guesswork in your debugging process. This method is particularly useful for narrowing down large, interconnected systems to their critical failing components.</p>
+        </section>
+        
+        <section>
+            <a href="#rubber_duck_programming"><h2 id="rubber_duck_programming"><span class="emoji">🦆</span> Technique 3: Rubber Duck Programming</h2></a>
+            <p>Rubber Duck Programming is a debugging technique where you walk through your code line by line, often explaining each line's purpose out loud as if speaking to a rubber duck or another inanimate object. This process forces you to slow down and think critically about each step, often revealing syntax errors, logical issues, or simple typos. For instance, if you're iterating through a list and encountering unexpected results, explaining aloud that "this loop increments through each element of the array to print its value" might help you notice that you're using the wrong index or accessing the wrong variable. If you find yourself stuck on a line you can't explain, that's often a sign of where the issue lies. This method is not only effective for catching small mistakes but also for solidifying your understanding of the code and improving problem-solving skills.</p>
+
+            <ul>
+                <a target="_blank" href="https://amzn.to/3Z2t9y3"><li>Purchase Your Own Rubber Duck Here!</li></a>
+                <a target="_blank" href="../affiliate_disclosure.html"><li>Affiliate Disclosure</li></a>
+            </ul>
+        </section>
+        
+        <section>
+            <a href="#rtfm"><h2 id="rtfm"><span class="emoji">📚</span> Technique 4: Read the Fabulous Manual (RTFM)</h2></a>
+            <p>RTFM, short for "Read The Fabulous Manual," emphasizes the importance of understanding the documentation, libraries, SDKs, or APIs you’re working with. Programming languages and tools often come with unique quirks or required patterns, and reading the official documentation can uncover critical details you may have missed. For example, a custom SDK for handling HTTP requests might require a specific header format or initialization sequence that isn’t immediately obvious without consulting the manual. By delving into the documentation, you not only solve immediate issues but also deepen your expertise in the language or framework. For C#, Python, or JavaScript, leverage documentation online, or better yet chat with custom language bots I have created to help!</p>
+
+            <ul>
+                <li><a target="_blank" href="https://chatgpt.com/g/g-67414d0d33b88191b8db92a2af96772c-c-code-companion">C# Code Companion</a></li>
+                <li><a target="_blank" href="https://chatgpt.com/g/g-67414e6dfe3081919186cfcc4b49096c-python-expert-assistant">Python Expert Assistant</a></li>
+                <li><a target="_blank" href="https://chatgpt.com/g/g-67414f472e6c81918764f6c59448e884-javascript-pro-assistant">JavaScript Pro Assistant</a></li>
+            </ul>
+        </section>
+        
+        <section>
+            <a href="#bifurcation"><h2 id="bifurcation"><span class="emoji">🔀</span> Technique 5: Bifurcation</h2></a>
+            <p>Bifurcation is a debugging method that involves identifying which change, or "commit," introduced a bug by conducting a binary search through your version history. This technique relies on the idea of narrowing down the range of potential culprits by testing earlier and later commits until the exact breaking point is found. For example, if a feature that was working yesterday now throws an error, you might check the latest commit to confirm the bug exists, then test an earlier commit halfway back in the history. If the bug is present there, you repeat the process further back; if not, you move forward. This is why small, atomic commits are essential—they make it easier to isolate specific changes. By methodically narrowing down the search, bifurcation saves time and helps pinpoint the exact code change that caused the issue, making it easier to address.</p>
+        </section>
+        
+        <section>
+            <a href="#error_code_identification"><h2 id="error_code_identification"><span class="emoji">❓</span> Technique 6: Error Code Identification</h2></a>
+            <p>Error Code Identification is a critical debugging technique that involves leveraging error codes to gather insights and solutions from a wide range of resources. When faced with an error code, searching the web, forums, community threads, and technical channels can uncover whether others have encountered the same issue and how they resolved it. For example, if you encounter a database error like SQLSTATE[HY000] [1045] Access denied for user, searching this exact phrase can lead to posts on Stack Overflow, GitHub issues, or vendor documentation that pinpoint the root cause—such as incorrect credentials or missing permissions. This process not only helps resolve the current issue but can also guide you to best practices and preventative measures. Comprehensive searches often save time and effort, especially when troubleshooting widely-used libraries or frameworks with active community support.</p>
+        </section>
+        
+        <section>
+            <a href="#local_vs_remote"><h2 id="local_vs_remote"><span class="emoji">🌐</span> Technique 7: Local vs. Remote</h2></a>
+            <p>The "Local vs. Remote" debugging technique focuses on identifying discrepancies between local and remote environments to pinpoint issues. If your code runs flawlessly on your local machine but fails on the remote server, the problem often lies in configurations, environment variables, or mismatched dependencies. For example, if a locally tested API integration suddenly fails on the remote server, you might discover that an environment variable containing the API key was not properly set in the server configuration. Additionally, network-related issues such as DNS misconfigurations, firewall restrictions, or proxy settings could prevent remote functionality. This is where cloud and DevOps expertise becomes invaluable, enabling you to verify how your software interacts with remote environments and cloud services. By understanding these dynamics, you can confidently ensure that your code is robust and adaptable to different deployment contexts.</p>
+        </section>
+        
+        <section>
+            <a href="#verbosity"><h2 id="verbosity"><span class="emoji">📋</span> Technique 8: Verbosity</h2></a>
+            <p>Verbosity is a debugging technique that involves increasing the level of logging to gain deeper insights into an issue. By enabling more detailed logs, you can uncover hidden information about the system's state, execution paths, or errors that might not appear in standard logs. For example, if a web application throws a generic "500 Internal Server Error," increasing the logging verbosity might reveal a specific exception, such as a database timeout or a missing configuration file. However, this approach comes with a performance cost, so it's crucial to use it judiciously, especially on production servers, where excessive logging can impact performance or generate overwhelming amounts of data. Using verbosity in controlled environments like staging or during off-peak hours can provide the insights needed to resolve complex issues without risking system stability.</p>
+        </section>
+        
+        <section>
+            <a href="#dump_files"><h2 id="dump_files"><span class="emoji">💾</span> Technique 9: Dump Files</h2></a>
+            <p>Dump files are a powerful debugging tool that capture the state of a process at a specific point in time, allowing for detailed analysis of issues. By generating a process dump, you can examine memory usage, thread activity, or variable states to identify root causes of crashes or performance bottlenecks. For example, if an application is consuming excessive CPU resources or crashes unexpectedly, creating a dump file lets you analyze the process in tools like WinDbg or Visual Studio to pinpoint issues such as infinite loops or unhandled exceptions. This technique is often a prerequisite when working with vendor support, as it provides them with the critical data needed to assist in resolving issues. Knowing how to take dumps, traces, and snapshots not only enhances your troubleshooting capabilities but also builds trust and efficiency in cross-vendor relationships by showing a proactive approach to debugging and collaboration.</p>
+        </section>
+        
+        <section>
+            <a href="#take_a_beat"><h2 id="take_a_beat"><span class="emoji">⏸️</span> If All Else Fails: Post It and Take a Break</h2></a>
+            <p>When all else fails, the best approach is to post the issue publicly and take a break. Stepping away from the problem allows your mind to reset and often leads to fresh perspectives or solutions upon returning. Posting your issue in forums, community channels, or workplace groups invites others to assist, as they may have encountered similar problems or have unique insights to share. For example, sharing a detailed post about a stubborn bug on Stack Overflow, complete with error logs and your troubleshooting steps, increases the chances of someone providing a helpful solution. Just as importantly, once the issue is resolved, remember to post the resolution—this not only helps the community but also contributes to the collective knowledge for the next person facing the same challenge. Debugging is a marathon, not a sprint, so pace yourself to ensure you stay effective and avoid burnout.</p>
+        </section>
+        
+        <section>
+            <h2><span class="emoji">🏋️‍♂️</span> Practice Your Debugging Stance</h2>
+            <p>Practicing debugging consistently improves your problem-solving skills, leads to cleaner code, and fosters a debug-first mindset. Over time, you’ll become adept at identifying patterns and anticipating issues, making debugging more efficient and less stressful. This habit not only helps you resolve problems faster but also encourages writing more robust and reliable code.</p>
+        </section>
+        
+        <section>
+            <p><strong>💬 Is there a debugging technique that has worked particularly well for you? Mention it in the comments to help others improve their debugging strategies. Your experience could make a big difference in tackling tough issues!</p>
+        </section>
+        
+        <footer>
+            <p>Happy Debugging! 🖥️</p>
+        </footer>
+
+        <div id="disqus_thread"></div>
+        <script>
+            
+            var disqus_config = function () {
+              this.page.url = "https://lebiru.github.io/blog/004_debug_stance.html";
+              this.page.identifier = "004_debug_stance";
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <p>Copyright 2024 ©</p>
+    </footer>
+</body>
+</html>
