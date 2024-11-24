@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-22VNQG7W7C');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your personalized relaxation experience with Lebiru Soundboard. Enjoy soothing sounds like calming waves, relaxing rain, smooth jazz, and more, with adjustable volume controls.">
+  <meta name="keywords" content="relaxing soundboard, calming sounds, soothing audio, relaxing waves, rain sounds, jazz music, brown noise, ambient sound mixer">
+  <meta name="author" content="Bilal A. and various Artists">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lebiru.com/apps/001_soundboard.html">
+  <title>Lebiru Soundboard | Amibent Audio Mixer</title>
+  <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+  <link rel="stylesheet" href="../simple.css" type="text/css" />
+</head>
+<body>
+
+  <header>
+    <a href="../index.html">Info</a> /
+    <a href="../projects.html">Projects</a> /
+    <a href="../gpts.html">CustomGPTs</a> /
+    <a href="../blog.html">Blog</a>
+   </header>
+
+  <div class="soundboard">
+    <div class="header-container">
+      <h1 style="display: inline;">Lebiru Soundboard</h1>
+      <div class="playing-light" id="playing-light"></div>
+    </div>
+    <h4 style="color: grey; font-weight: 100">
+      Create your personalized relaxation experience with the Lebiru Soundboard. Mix and match soothing sounds like calming waves, relaxing rain, and smooth jazz, while adjusting individual volumes to craft the perfect ambiance.
+    </h4>
+    <div class="buttons">
+      <!-- Sound Control for Waves -->
+      <div class="sound-control">
+        <button onclick="toggleSound('waves', 'Calming Waves', 'amholma,  https://freesound.org/s/376795/, License: Creative Commons 0')">🏖️ Calming Waves</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('waves', this.value)">
+      </div>
+      <!-- Sound Control for Rain -->
+      <div class="sound-control">
+        <button onclick="toggleSound('rain', 'Relaxing Rain', 'Astounded, https://freesound.org/s/519663/, License: Attribution 4.0')">🌧️ Relaxing Rain</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)">
+      </div>
+      <!-- Sound Control for Jazz -->
+      <div class="sound-control">
+        <button onclick="toggleSound('jazz', 'Smooth Jazz', 'Migfus20, https://freesound.org/s/559850/, License: Attribution 4.0')">🎷 Smooth Jazz</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('jazz', this.value)">
+      </div>
+      <!-- Sound Control for Brown Noise -->
+      <div class="sound-control">
+        <button onclick="toggleSound('brown-noise', 'Brown Noise', 'Mrthenoronha, https://freesound.org/s/418385/, License: Creative Commons 0')">🟤 Brown Noise</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('brown-noise', this.value)">
+      </div>
+      <!-- Sound Control for Water Stream -->
+      <div class="sound-control">
+        <button onclick="toggleSound('water-stream', 'Water Stream', 'Kolezan, https://freesound.org/s/132048/, License: Attribution 4.0')">🌊 Water Stream</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('water-stream', this.value)">
+      </div>
+
+      <!-- Stop All Sounds Button -->
+      <button onclick="stopAllSounds()" style="background-color: red">Stop All</button>
+    </div>
+    <div class="attribution" id="attribution">
+      <p>Click a sound to see its details.</p>
+    </div>
+  </div>
+
+  <!-- Audio Elements -->
+  <audio id="waves" loop>
+    <source src="../audio/soundboard/gentle-waves.wav" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="rain" loop>
+    <source src="../audio/soundboard/rain-in-the-forest.wav" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="jazz" loop>
+    <source src="../audio/soundboard/lounge-jazz.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="brown-noise" loop>
+    <source src="../audio/soundboard/brown-noise.wav" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="water-stream" loop>
+    <source src="../audio/soundboard/water-stream.wav" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Embedded JavaScript
+    const playingSounds = {};
+
+    function toggleSound(soundId, soundName, authorName) {
+      const soundElement = document.getElementById(soundId);
+
+      if (playingSounds[soundId]) {
+        // Pause and remove the sound from the playingSounds list
+        soundElement.pause();
+        soundElement.currentTime = 0;
+        delete playingSounds[soundId];
+        updatePlayingLight();
+        updateAttribution();
+      } else {
+        // Play and add the sound to the playingSounds list
+        soundElement.play();
+        playingSounds[soundId] = { name: soundName, author: authorName };
+        updatePlayingLight();
+        updateAttribution();
+      }
+    }
+
+    function setVolume(soundId, volume) {
+      const soundElement = document.getElementById(soundId);
+      soundElement.volume = volume;
+    }
+
+    function stopAllSounds() {
+      // Stop all playing sounds
+      for (const soundId in playingSounds) {
+        const soundElement = document.getElementById(soundId);
+        soundElement.pause();
+        soundElement.currentTime = 0;
+      }
+      // Clear the playingSounds object
+      Object.keys(playingSounds).forEach((key) => delete playingSounds[key]);
+      updatePlayingLight();
+      updateAttribution();
+    }
+
+    function updatePlayingLight() {
+      const light = document.getElementById("playing-light");
+      if (Object.keys(playingSounds).length > 0) {
+        light.style.backgroundColor = "red"; // Light on
+      } else {
+        light.style.backgroundColor = "gray"; // Light off
+      }
+    }
+
+    function updateAttribution() {
+      const attributionDiv = document.getElementById("attribution");
+      if (Object.keys(playingSounds).length === 0) {
+        attributionDiv.innerHTML = `<p>Click a sound to see its details.</p>`;
+        return;
+      }
+
+      // Build attribution details
+      let attributionContent = `<p><strong>Now Playing:</strong></p><ul>`;
+      for (const soundId in playingSounds) {
+        const sound = playingSounds[soundId];
+        attributionContent += `<li>${sound.name} by ${sound.author}</li>`;
+      }
+      attributionContent += `</ul>`;
+      attributionDiv.innerHTML = attributionContent;
+    }
+  </script>
+</body>
+</html>

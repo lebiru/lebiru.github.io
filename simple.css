@@ -73,3 +73,67 @@ img {
 #blogPosts {
     cursor: pointer;
 }
+
+.soundboard {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .sound-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+
+  .playing-light {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: gray; /* Light off */
+    border: 2px solid #ddd;
+    transition: background-color 0.3s ease;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    width: 215px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  input[type="range"] {
+    width: 150px;
+  }
+
+  .attribution {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #555;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .attribution strong {
+    font-weight: bold;
+    color: #333;
+  }
