@@ -1,59 +1,171 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'G-22VNQG7W7C');
-    </script>
-    <meta charset="utf-8">
-    <title>Info - Bilal A.</title>
-    <meta name="author" content="Bilal A." />
-    <link rel="stylesheet" href="simple.css" type="text/css" />
-    <link rel="icon" type="image/x-icon" href="./images/favicon/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple/apple-touch-icon-180x180.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/apple/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="images/apple/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="images/apple/apple-touch-icon-76x76.png">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-22VNQG7W7C');
+  </script>
+  <meta charset="utf-8">
+  <title>Info - Bilal A.</title>
+  <meta name="author" content="Bilal A." />
+  <link rel="stylesheet" href="simple.css" type="text/css" />
+  <link rel="stylesheet" href="index.css" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="./images/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="images/apple/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="images/apple/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="images/apple/apple-touch-icon-76x76.png">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <!-- Hero Carousel JavaScript-->
+  <script>
+    $(function () {
+      $('.carousel-item').eq(0).addClass('active');
+      var total = $('.carousel-item').length;
+      var current = 0;
+      $('#moveRight').on('click', function () {
+        var next = current;
+        current = current + 1;
+        setSlide(next, current);
+      });
+      $('#moveLeft').on('click', function () {
+        var prev = current;
+        current = current - 1;
+        setSlide(prev, current);
+      });
+      function setSlide(prev, next) {
+        var slide = current;
+        if (next > total - 1) {
+          slide = 0;
+          current = 0;
+        }
+        if (next < 0) {
+          slide = total - 1;
+          current = total - 1;
+        }
+        $('.carousel-item').eq(prev).removeClass('active');
+        $('.carousel-item').eq(slide).addClass('active');
+        setTimeout(function () {
+
+        }, 800);
+      }
+    });
+  </script>
+
 </head>
+
 <body>
   <header>
     <a href="index.html">Info</a> /
     <a href="projects.html">Projects</a> /
     <a href="gpts.html">CustomGPTs</a> /
     <a href="blog.html">Blog</a>
-   </header>
+  </header>
   <article>
-  <p>Bilal A. - Senior Software Engineer</p>
+    <p>Bilal A. - Senior Software Engineer</p>
 
-  <img src="./images/me2.png" width="200px" style="display: inline;" />
-  <p>Bilal is an accomplished senior software engineer known for his transformative impact on diverse tech landscapes. He has over 11 years experience in building scalable, high performance applications.</p>
+    <img src="./images/me2.png" width="200px" style="display: inline;" />
+    <p style="margin-bottom: 100px;">Bilal is an accomplished senior software engineer known for his transformative
+      impact on diverse tech landscapes. He has over 11 years experience in building scalable, high performance
+      applications.</p>
 
-  <p><a href="https://github.com/lebiru">GitHub</a></p>
-  <p><a href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></p>
-  <p><a href="gpts.html">CustomGPTs</a></p>
+    <!-- Hero Carousel -->
+    <div class="carousel">
+      <div class="carousel__nav">
+        <span id="moveLeft" class="carousel__arrow">
+          <svg class="carousel__icon" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path>
+          </svg>
+        </span>
+        <span id="moveRight" class="carousel__arrow">
+          <svg class="carousel__icon" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+          </svg>
+        </span>
+      </div>
+      <div class="carousel-item carousel-item--1">
+        <div class="carousel-item__image"></div>
+        <div class="carousel-item__info">
+          <div class="carousel-item__container">
+            <h2 class="carousel-item__subtitle"></h2>
+            <h1 class="carousel-item__title">Lebiru Blog</h1>
+            <p class="carousel-item__description">Discover insightful articles and technical content on my blog.</p>
+            <a href="blog.html" class="carousel-item__btn">Explore the Blog</a>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item carousel-item--2">
+        <div class="carousel-item__image"></div>
+        <div class="carousel-item__info">
+          <div class="carousel-item__container">
+            <h2 class="carousel-item__subtitle"></h2>
+            <h1 class="carousel-item__title">Lebiru CustomGPTs</h1>
+            <p class="carousel-item__description">Enhance your productivity and simplify everyday tasks with my CustomGPTs.</p>
+            <a href="gpts.html" class="carousel-item__btn">Discover CustomGPTs</a>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item carousel-item--3">
+        <div class="carousel-item__image"></div>
+        <div class="carousel-item__info">
+          <div class="carousel-item__container">
+            <h2 class="carousel-item__subtitle"></h2>
+            <h1 class="carousel-item__title">LinkedIn</h1>
+            <p class="carousel-item__description">Explore my professional background, network, and accomplishments on LinkedIn.</p>
+            <a target="_blank" href="https://www.linkedin.com/in/bilalakabi/" class="carousel-item__btn">Visit My LinkedIn Profile</a>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="carousel-item carousel-item--4">
+        <div class="carousel-item__image"></div>
+        <div class="carousel-item__info">
+          <div class="carousel-item__container">
+            <h2 class="carousel-item__subtitle">Beach </h2>
+            <h1 class="carousel-item__title">The beach </h1>
+            <p class="carousel-item__description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+              accusantium doloremque laudantium, totam rem aperiam.</p>
+            <a href="#" class="carousel-item__btn">Explore the beach</a>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item carousel-item--5">
+        <div class="carousel-item__image"></div>
+        <div class="carousel-item__info">
+          <div class="carousel-item__container">
+            <h2 class="carousel-item__subtitle">The white building </h2>
+            <h1 class="carousel-item__title">White building</h1>
+            <p class="carousel-item__description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+              accusantium doloremque laudantium, totam rem aperiam.</p>
+            <a href="#" class="carousel-item__btn">Read the article</a>
+          </div>
+        </div>
+      </div>
+    </div> -->
 
-</article>
+  </article>
 
-<footer>
-  <div class="footer-container">
-    <ul class="footer-links">
-      <li><a href="index.html">Info</a></li>
-      <li><a href="projects.html">Project</a></li>
-      <li><a href="gpts.html">CustomGPTs</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-      <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-    </ul> 
-  </div>
-  <p>© <span id="copyright-year"></span> Lebiru Blog. All rights reserved.</p>
-  <script>
-    document.getElementById('copyright-year').textContent = new Date().getFullYear();
-  </script>   
-</footer>
+  <footer style="margin-top: 300px;">
+    <div class="footer-container">
+      <ul class="footer-links">
+        <li><a href="index.html">Info</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="gpts.html">CustomGPTs</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+      </ul>
+    </div>
+    <p>© <span id="copyright-year"></span> Lebiru Blog. All rights reserved.</p>
+    <script>
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
 </body>
+
 </html>
