@@ -13,8 +13,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lebiru Blog Home Directory">
-    <title>Lebiru - Blog Directory</title>
+    <meta name="description" content="Lebiru Games Directory">
+    <title>Lebiru - Games Directory</title>
     <meta name="author" content="Bilal A." />
     <link rel="stylesheet" href="simple.css" type="text/css" />
     <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
@@ -32,10 +32,10 @@
         <a href="blog.html">Blog</a>
     </header>
     <div class="container">
-        <h1>Lebiru - Blog Directory</h1>
-        <h3 style="font-style: italic; color: gray;">Click on a row to read the post</h2>
-            <input type="text" id="searchBox" placeholder="Search posts..." oninput="filterPosts()" />
-            <table id="blogTable">
+        <h1>Lebiru - Games Directory</h1>
+        <h3 style="font-style: italic; color: gray;">Click on a row to start the game</h2>
+            <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search games..." oninput="filterPosts()" />
+            <table id="blogTable" style="width: 100%;">
                 <tbody id="blogPosts"></tbody>
             </table>
     </div>
@@ -43,19 +43,19 @@
     <script>
         // most recent up top
         const blogPosts = [
+            // {
+            //     title: 'Post #002 - Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
+            //     date: 'November 22nd, 2024',
+            //     content:
+            //         "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability. I have had the privilege of guiding junior programmers in multiple teams and seen their growth firsthand...",
+            //     url: 'blog/002_mentoring_tips.html',
+            // },
             {
-                title: 'Post #002 - Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
-                date: 'November 22nd, 2024',
+                title: '[ 🖭 Game #001 - Snake]',
+                date: '',
                 content:
-                    "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability. I have had the privilege of guiding junior programmers in multiple teams and seen their growth firsthand...",
-                url: 'blog/002_mentoring_tips.html',
-            },
-            {
-                title: 'Post #001 - Supercharging .NET Microservices: My Top 5 NuGet Packages',
-                date: 'November 15th, 2024',
-                content:
-                    'Imagine this: it’s a Monday morning, and your microservice that handles critical payment transactions has just hit a record-breaking number of requests. Everything seems fine — until it’s not...',
-                url: 'blog/001_top_5_nugets.html',
+                    'Play the classic game Snake in your browser now! 🐍',
+                url: 'games/001_snake.html',
             }
         ];
 

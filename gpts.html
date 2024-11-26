@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 
 <head>
   <!-- Google tag (gtag.js) -->
@@ -11,11 +11,13 @@
 
     gtag('config', 'G-22VNQG7W7C');
   </script>
-  <meta charset="utf-8">
-  <title>CustomGPTs - Bilal A.</title>
-  <meta name="author" content="Bilal Abdul-Nabi" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lebiru Games Directory">
+  <title>Lebiru - CustomGPTs Directory</title>
+  <meta name="author" content="Bilal A." />
   <link rel="stylesheet" href="simple.css" type="text/css" />
-  <link rel="icon" type="image/x-icon" href="./images/favicon/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple/apple-touch-icon-180x180.png">
   <link rel="apple-touch-icon" sizes="152x152" href="images/apple/apple-touch-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="120x120" href="images/apple/apple-touch-icon-120x120.png">
@@ -29,93 +31,153 @@
     <a href="gpts.html">CustomGPTs</a> /
     <a href="blog.html">Blog</a>
   </header>
-  <article>
+  <div class="container">
+    <h1>Lebiru - CustomGPTs Directory</h1>
+    <h3 style="font-style: italic; color: gray;">Click on a row to start a chat...</h3>
+    <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search CustomGPTs..."
+      oninput="filterPosts()" />
+    <table id="blogTable" style="width: 100%; border-collapse: collapse;">
+      <tbody id="blogPosts"></tbody>
+    </table>
+  </div>
 
-    <h2>CustomGPTs</h2>
+  <script>
+    // Most recent at the top
+    const blogPosts = [
+      {
+        title: 'Code Coach',
+        imageSource: './images/gpts/code-coach.png',
+        content:
+          'Professional, approachable coach for coding interviews, specializing in algorithms and Big O.',
+        url: 'https://chat.openai.com/g/g-vRpW9JLAz-code-coach',
+      },
+      {
+        title: 'Chibi-fy Me',
+        imageSource: './images/gpts/chibify-me.png',
+        content:
+          'Transforms images into cute \'chibi\' style using Dall-e.',
+        url: 'https://chat.openai.com/g/g-YtRwSYG3w-chibi-fy-me',
+      },
+      {
+        title: 'Lazy Chef',
+        imageSource: './images/gpts/lazy-chef.png',
+        content:
+          'I mix casual talk with cooking jargon for easy, fun recipes.',
+        url: 'https://chatgpt.com/g/g-fk4dEHFdl-lazy-chef',
+      },
+      {
+        title: 'Juice Me',
+        imageSource: './images/gpts/juice-me.png',
+        content:
+          'Energetic, emoji-using juice recipe coach.',
+        url: 'https://chat.openai.com/g/g-vQwWSKtpS-juice-me',
+      },
+      {
+        title: 'DMV Tutor',
+        imageSource: './images/gpts/dmv-tutor.png',
+        content:
+          'Straightforward, no-nonsense DMV exam tutor.',
+        url: 'https://chat.openai.com/g/g-aCEtVNIx8-dmv-tutor',
+      },
+      {
+        title: 'OpenShift Pro Guide',
+        imageSource: './images/gpts/openshift-pro-guide.png',
+        content:
+          'Professional OpenShift expert for all technical queries.',
+        url: 'https://chatgpt.com/g/g-673e92e8d2408191b92d4871fbef2ac2-openshift-pro-guide',
+      },
+      {
+        title: 'C# Code Companion',
+        imageSource: './images/gpts/csharp-code-companion.png',
+        content:
+          'Expert C# programmer for troubleshooting and development.',
+        url: 'https://chatgpt.com/g/g-67414d0d33b88191b8db92a2af96772c-c-code-companion',
+      },
+      {
+        title: 'JavaScript Pro Assistant',
+        imageSource: './images/gpts/js-pro-assistant.png',
+        content:
+          'Expert JavaScript programmer and development assistant.',
+        url: 'https://chatgpt.com/g/g-67414f472e6c81918764f6c59448e884-javascript-pro-assistant',
+      },
+      {
+        title: 'Python Expert Assistant',
+        imageSource: './images/gpts/python-expert-assistant.png',
+        content:
+          'Expert Python programmer who explains, troubleshoots, and guides Python projects.',
+        url: 'https://chatgpt.com/g/g-67414e6dfe3081919186cfcc4b49096c-python-expert-assistant',
+      },
+      {
+        title: 'JLPT Sensei',
+        imageSource: './images/gpts/JLPT-sensei.png',
+        content:
+          'JLPT tutor, quizzes on chosen level (1-5), provides feedback on performance.',
+        url: 'https://chat.openai.com/g/g-XcDIOpggd-jlpt-sensei',
+      },
+    ];
 
-    <img src="./images/thumbs/chatgpt-logo.png" width="100px" style="display: inline;" />
-    <p>Below are custom ChatGPTs I created to assist in various tasks.</p>
+    // Display blog posts
+    const displayPosts = (posts) => {
+      const tableBody = document.getElementById('blogPosts');
+      tableBody.innerHTML = '';
 
-    <div class="catalog-item">
-      <p><a target="_blank"
-          href="https://chatgpt.com/g/g-67414e6dfe3081919186cfcc4b49096c-python-expert-assistant">Python Expert
-          Assistant</a></p>
-      <a target="_blank" href="https://chatgpt.com/g/g-67414e6dfe3081919186cfcc4b49096c-python-expert-assistant"><img
-          class="catalog-thumb" src="./images/gpts/python-expert-assistant.png"
-          alt="CustomGPT - Python Expert Assistant" /></a>
-      <p>Expert Python programmer who explains, troubleshoots, and guides Python projects.</p>
-    </div>
+      posts.forEach((post) => {
+        const row = document.createElement('tr');
+        row.style.cursor = 'pointer';
+        row.onclick = () => window.open(post.url, '_blank'); // Opens in a new tab
+        row.style.border = '1px solid rgb(104 201 205)';
+        row.style.padding = '10px';
 
-    <div class="catalog-item">
-      <p><a target="_blank"
-          href="https://chatgpt.com/g/g-67414f472e6c81918764f6c59448e884-javascript-pro-assistant">JavaScript Pro
-          Assistant</a></p>
-      <a target="_blank" href="https://chatgpt.com/g/g-67414f472e6c81918764f6c59448e884-javascript-pro-assistant"><img
-          class="catalog-thumb" src="./images/gpts/js-pro-assistant.png"
-          alt="CustomGPT - JavaScript Pro Assistant" /></a>
-      <p>Expert JavaScript programmer and development assistant.</p>
-    </div>
+        // Image cell
+        const imageCell = document.createElement('td');
+        imageCell.style.verticalAlign = 'top';
+        const image = document.createElement('img');
+        image.src = post.imageSource;
+        image.alt = post.title;
+        image.style.width = '100px'; // Adjust size as needed
+        image.style.height = 'auto';
+        image.style.marginRight = '10px';
+        imageCell.appendChild(image);
+        row.appendChild(imageCell);
 
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chatgpt.com/g/g-67414d0d33b88191b8db92a2af96772c-c-code-companion">C# Code
-          Companion</a></p>
-      <a target="_blank" href="https://chatgpt.com/g/g-67414d0d33b88191b8db92a2af96772c-c-code-companion"><img
-          class="catalog-thumb" src="./images/gpts/csharp-code-companion.png" alt="CustomGPT - C# Code Companion" /></a>
-      <p>Expert C# programmer for troubleshooting and development.</p>
-    </div>
+        // Content cell
+        const contentCell = document.createElement('td');
+        contentCell.style.verticalAlign = 'top';
+        contentCell.style.padding = '10px';
 
-    <div class="catalog-item">
-      <p><a target="_blank"
-          href="https://chatgpt.com/g/g-673e92e8d2408191b92d4871fbef2ac2-openshift-pro-guide">OpenShift Pro Guide</a>
-      </p>
-      <a target="_blank" href="https://chatgpt.com/g/g-673e92e8d2408191b92d4871fbef2ac2-openshift-pro-guide"><img
-          class="catalog-thumb" src="./images/gpts/openshift-pro-guide.png" alt="CustomGPT - OpenShift Pro Guide" /></a>
-      <p>Professional OpenShift expert for all technical queries.</p>
-    </div>
+        const title = document.createElement('div');
+        title.textContent = post.title;
+        title.style.fontWeight = 'bold';
+        title.style.marginBottom = '5px';
 
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chat.openai.com/g/g-aCEtVNIx8-dmv-tutor">DMV Tutor</a></p>
-      <a target="_blank" href="https://chat.openai.com/g/g-aCEtVNIx8-dmv-tutor"><img class="catalog-thumb"
-          src="./images/gpts/dmv-tutor.png" alt="CustomGPT - DMV Tutor" /></a>
-      <p>Straightforward, no-nonsense DMV exam tutor.</p>
-    </div>
+        const description = document.createElement('div');
+        description.textContent = post.content;
+        description.style.color = '#555';
 
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chat.openai.com/g/g-vQwWSKtpS-juice-me">Juice Me</a></p>
-      <a target="_blank" href="https://chat.openai.com/g/g-vQwWSKtpS-juice-me"><img class="catalog-thumb"
-          src="./images/gpts/juice-me.png" alt="CustomGPT - JuiceMe" /></a>
-      <p>Energetic, emoji-using juice recipe coach.</p>
-    </div>
+        contentCell.appendChild(title);
+        contentCell.appendChild(description);
+        row.appendChild(contentCell);
 
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chatgpt.com/g/g-fk4dEHFdl-lazy-chef">Lazy Chef</a></p>
-      <a target="_blank" href="https://chatgpt.com/g/g-fk4dEHFdl-lazy-chef"><img class="catalog-thumb"
-          src="./images/gpts/lazy-chef.png" alt="CustomGPT - Lazy Chef" /></a>
-      <p>I mix casual talk with cooking jargon for easy, fun recipes.</p>
-    </div>
+        tableBody.appendChild(row);
+      });
+    };
 
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chat.openai.com/g/g-YtRwSYG3w-chibi-fy-me">Chibi-fy Me</a></p>
-      <a target="_blank" href="https://chat.openai.com/g/g-YtRwSYG3w-chibi-fy-me"><img class="catalog-thumb"
-          src="./images/gpts/chibify-me.png" alt="CustomGPT - Chibify-Me" /></a>
-      <p>Transforms images into cute 'chibi' style using Dall-e.</p>
-    </div>
+    // Filter blog posts
+    const filterPosts = () => {
+      const searchText = document.getElementById('searchBox').value.toLowerCase();
+      const filteredPosts = blogPosts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(searchText) ||
+          post.content.toLowerCase().includes(searchText)
+      );
+      displayPosts(filteredPosts);
+    };
 
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chat.openai.com/g/g-XcDIOpggd-jlpt-sensei">JLPT Sensei</a></p>
-      <a target="_blank" href="https://chat.openai.com/g/g-XcDIOpggd-jlpt-sensei"><img class="catalog-thumb"
-          src="./images/gpts/JLPT-sensei.png" alt="CustomGPT - JLPT Sensei" /></a>
-      <p>JLPT tutor, quizzes on chosen level (1-5), provides feedback on performance.</p>
-    </div>
-
-    <div class="catalog-item">
-      <p><a target="_blank" href="https://chat.openai.com/g/g-vRpW9JLAz-code-coach">Code Coach</a></p>
-      <a target="_blank" href="https://chat.openai.com/g/g-vRpW9JLAz-code-coach"><img class="catalog-thumb"
-          src="./images/gpts/code-coach.png" alt="CustomGPT - Code Coach" /></a>
-      <p>Professional, approachable coach for coding interviews, specializing in algorithms and Big O.</p>
-    </div>
-
-  </article>
+    // Initialize table with all posts
+    document.addEventListener('DOMContentLoaded', () => {
+      displayPosts(blogPosts);
+    });
+  </script>
 
   <footer>
     <div class="footer-container">
@@ -126,14 +188,13 @@
         <li><a href="blog.html">Blog</a></li>
         <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
         <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-      </ul> 
+      </ul>
     </div>
-    <p>© <span id="copyright-year"></span> Lebiru Blog. All rights reserved.</p>
+    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
     <script>
       document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>   
+    </script>
   </footer>
-
 </body>
 
 </html>
