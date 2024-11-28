@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Muslim prayer times today with a simple interface.">
+  <meta name="keywords" content="prayer times, islam, muslim, fajr, dhuhr, asr, maghrib, isha, prayer">
+  <meta name="author" content="Bilal A.">
+  <title>Lebiru - Prayer Times Today</title>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.lebiru.com/apps/002_prayertimes.html">
+  <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/yellow/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="../images/apple//yellow/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/yellow/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/yellow/apple-touch-icon-76x76.png">
+  <link rel="stylesheet" href="../simple.css" type="text/css" />
+  <style>
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      margin: 30px 0px;
+      color: white;
+    }
+
+    .card {
+      width: 350px;
+      height: 500px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      background-color: white;
+    }
+
+    .card .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      transition: background 3s ease;
+    }
+
+    .stars,
+    .clouds {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .stars .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .clouds .cloud {
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: float 20s linear infinite;
+      box-shadow: 20px 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateX(-200px);
+      }
+
+      100% {
+        transform: translateX(110vw);
+      }
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      padding: 20px 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card-content h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    .prayer-times {
+      list-style: none;
+      margin-top: 15px;
+      text-align: left;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 40px 0px 40px 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      color: black;
+    }
+
+    .prayer-times li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      width: 90%;
+    }
+
+    .prayer-times li:last-child {
+      border-bottom: none;
+    }
+
+    .status-light {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: grey;
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-22VNQG7W7C');
+  </script>
+</head>
+
+<body>
+
+  <header>
+    <a href="../index.html">About Me</a> /
+    <a href="../projects.html">Projects</a> /
+    <a href="../gpts.html">CustomGPTs</a> /
+    <a href="../blog.html">Blog</a>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="background" id="dynamic-background"></div>
+      <div class="stars" id="stars"></div>
+      <div class="clouds" id="clouds"></div>
+      <div class="card-content">
+        <h1>Prayer Times Today</h1>
+        <ul class="prayer-times" id="prayer-times">
+          <li>Loading prayer times...</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const prayerTimesList = document.getElementById('prayer-times');
+    const background = document.getElementById('dynamic-background');
+    const starsContainer = document.getElementById('stars');
+    const cloudsContainer = document.getElementById('clouds');
+    let time = new Date().getHours(); // Initial current hour
+
+    // Create stars
+    function createStars(count) {
+      starsContainer.innerHTML = ''; // Clear existing stars
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        const x = Math.random() * 100; // Random position
+        const y = Math.random() * 100;
+        const delay = Math.random() * 3; // Random animation delay
+        const duration = 2 + Math.random() * 3; // Random twinkling duration
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        star.style.animationDelay = `${delay}s`;
+        star.style.animationDuration = `${duration}s`;
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Create clouds
+    function createClouds(count) {
+      cloudsContainer.innerHTML = ''; // Clear existing clouds
+      for (let i = 0; i < count; i++) {
+        const cloud = document.createElement('div');
+        cloud.classList.add('cloud');
+        const x = Math.random() * -200; // Start offscreen
+        const y = Math.random() * 50; // Random vertical position
+        cloud.style.left = `${x}px`;
+        cloud.style.top = `${y}%`;
+        cloudsContainer.appendChild(cloud);
+      }
+    }
+
+    // Update background
+    function updateBackground() {
+      const colors = [
+        'linear-gradient(to bottom, #FFA07A, #FFDAB9)',
+        'linear-gradient(to bottom, #87CEEB, #FFFFFF)',
+        'linear-gradient(to bottom, #FF4500, #FFD700)',
+        'linear-gradient(to bottom, #2C3E50, #1C1C3C)',
+      ];
+
+      const now = new Date();
+      const currentHour = now.getHours();
+      if (currentHour >= 5 && currentHour < 9) {
+        background.style.background = colors[0]; // Dawn
+        starsContainer.style.display = 'none';
+        cloudsContainer.style.display = 'none';
+      } else if (currentHour >= 9 && currentHour < 17) {
+        background.style.background = colors[1]; // Day
+        starsContainer.style.display = 'none';
+        cloudsContainer.style.display = 'block';
+        createClouds(5);
+      } else if (currentHour >= 17 && currentHour < 20) {
+        background.style.background = colors[2]; // Dusk
+        starsContainer.style.display = 'none';
+        cloudsContainer.style.display = 'none';
+      } else {
+        background.style.background = colors[3]; // Night
+        starsContainer.style.display = 'block';
+        createStars(100);
+        cloudsContainer.style.display = 'none';
+      }
+    }
+
+    // Fetch and display prayer times with status lights
+    function fetchPrayerTimes(lat, lon) {
+      const apiUrl = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`;
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const timings = data.data.timings;
+          const prayerTimes = [
+            { name: 'Fajr', time: timings.Fajr },
+            { name: 'Dhuhr', time: timings.Dhuhr },
+            { name: 'Asr', time: timings.Asr },
+            { name: 'Maghrib', time: timings.Maghrib },
+            { name: 'Isha', time: timings.Isha },
+          ];
+
+          prayerTimesList.innerHTML = '';
+          const now = new Date();
+
+          prayerTimes.forEach((prayer, index) => {
+            const prayerDate = new Date(`${now.toDateString()} ${prayer.time}`);
+            const listItem = document.createElement('li');
+            const light = document.createElement('div');
+            light.classList.add('status-light');
+
+            if (prayerDate < now) {
+              light.style.backgroundColor = 'green'; // Past
+            } else if (
+              prayerDate >= now &&
+              (index === 0 || new Date(`${now.toDateString()} ${prayerTimes[index - 1].time}`) < now)
+            ) {
+              light.style.backgroundColor = 'yellow'; // Next
+            } else {
+              light.style.backgroundColor = 'grey'; // Future
+            }
+
+            listItem.innerHTML = `${prayer.name}: ${prayer.time}`;
+            listItem.appendChild(light);
+            prayerTimesList.appendChild(listItem);
+          });
+        })
+        .catch(() => {
+          prayerTimesList.innerHTML = '<li>Unable to fetch prayer times.</li>';
+        });
+    }
+
+    // Initialize
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchPrayerTimes(latitude, longitude);
+        },
+        () => {
+          prayerTimesList.innerHTML = '<li>Location access denied.</li>';
+        }
+      );
+    } else {
+      prayerTimesList.innerHTML = '<li>Geolocation not supported.</li>';
+    }
+
+    updateBackground();
+    setInterval(updateBackground, 60000); // Update background every minute
+  </script>
+
+  <footer>
+    <div class="footer-container">
+      <ul class="footer-links">
+        <li><a href="../index.html">About Me</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+        <li><a href="../gpts.html">CustomGPTs</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+      </ul>
+    </div>
+    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+    <script>
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+
+</body>
+
+</html>
