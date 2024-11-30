@@ -1,12 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-22VNQG7W7C');
@@ -26,59 +26,109 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            min-height: 100vh;
             background-color: #333;
             font-family: Arial, sans-serif;
-            justify-content: center;
         }
+
         canvas {
             border: 2px solid #fff;
             background-color: #000;
         }
-        .controls {
-            margin-top: 10px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
+
+        .score-time-container {
+        display: flex;
+        justify-content: space-between;
+        width: 400px; /* Matches the width of the canvas */
+        margin-bottom: 10px;
+        color: white;
+        font-size: 16px;
+    }
+
+        .control-container {
+            width: 400px;
+            /* Fixed width for the container */
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
+
+        .controls {
+            display: grid;
+            grid-template-areas:
+                ". up ."
+                "left . right"
+                ". down .";
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            justify-content: center;
+            /* Center the controls horizontally */
+            align-items: center;
+            /* Center the buttons within the grid */
+        }
+
         .controls button {
-            padding: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
             background-color: #444;
+            color: white;
             border: none;
             border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px;
             cursor: pointer;
+            text-align: center;
+            width: 130px;
         }
+
         .controls button:active {
             background-color: #666;
         }
+
         .up {
-            grid-column: 2;
+            grid-area: up;
         }
+
         .left {
-            grid-column: 1;
+            grid-area: left;
         }
+
         .right {
-            grid-column: 3;
+            grid-area: right;
         }
+
         .down {
-            grid-column: 2;
+            grid-area: down;
         }
     </style>
 </head>
+
 <body>
+    <h1 style="color: white;">Lebiru - Snake Game</h1>
+    <h3 id="messageArea" style="color: white; text-align: center; width: 50%;">Awaiting first move...</h3>
+    
+    <div class="score-time-container">
+        <span id="score">Score: 0</span>
+        <span id="time">Time: 0s</span>
+    </div>
+    
     <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <div class="controls">
-        <button class="up">↑</button>
-        <button class="left">←</button>
-        <button class="right">→</button>
-        <button class="down">↓</button>
+
+    <div class="control-container">
+        <div class="controls">
+            <button class="up">↑</button>
+            <button class="left">←</button>
+            <button class="right">→</button>
+            <button class="down">↓</button>
+        </div>
     </div>
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -94,6 +144,7 @@
         let food = { x: getRandomCoord(), y: getRandomCoord() }; // Random food position
         let score = 0;
         let isMoving = false; // To prevent "Game Over" at start
+        let isGameOver = false;
         let gameSpeed = 200; // Initial speed (ms per frame)
         let gameInterval; // Game loop interval reference
         let gameStartTime = 0; // Game start time
@@ -102,6 +153,45 @@
         function drawBox(x, y, color) {
             ctx.fillStyle = color;
             ctx.fillRect(x * boxSize, y * boxSize, boxSize, boxSize);
+        }
+
+        // UI Utility
+        function hideMessage() {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.style.visibility = 'hidden';
+        }
+
+        function updateScore(newScore) {
+        score = newScore;
+        document.getElementById("score").textContent = `Score: ${score}`;
+    }   
+
+    function updateTime(newTime) {
+        document.getElementById("time").textContent = newTime;
+    }
+
+        function showMessage(message = 'default message') {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.textContent = message;
+            messageArea.style.visibility = 'visible';
+        }
+
+        // Pause Utility
+        // Function that waits for user input (click or tap)
+        async function waitForUserInput() {
+            return new Promise(resolve => {
+                // Event listener for click or tap
+                function handleUserInput(event) {
+                    // Remove event listeners after the first interaction
+                    document.removeEventListener('click', handleUserInput);
+                    document.removeEventListener('touchstart', handleUserInput);
+                    resolve(); // Resolve the promise
+                }
+
+                // Attach event listeners for click and touch
+                document.addEventListener('click', handleUserInput);
+                document.addEventListener('touchstart', handleUserInput);
+            });
         }
 
         // Random coordinate generator
@@ -120,12 +210,14 @@
             gameSpeed = 200; // Reset the speed
             gameStartTime = 0;
             food = { x: getRandomCoord(), y: getRandomCoord() };
+            updateTime(`Time: 0s`);
             drawInitialMap();
         }
 
         // Start the game loop
         function startGameLoop() {
             clearInterval(gameInterval); // Clear existing interval
+            hideMessage();
             gameInterval = setInterval(gameLoop, gameSpeed); // Restart loop with updated speed
         }
 
@@ -145,19 +237,17 @@
             drawBox(food.x, food.y, 'red');
 
             // Draw the score
-            ctx.fillStyle = '#fff';
-            ctx.font = '16px Arial';
-            ctx.fillText(`Score: ${score}`, 10, 20);
+            updateScore(score);
 
             // Draw the timer
             if (isMoving) {
                 const elapsedTime = Math.floor((Date.now() - gameStartTime) / 1000);
-                ctx.fillText(`Time: ${elapsedTime}s`, canvas.width - 100, 20);
+                updateTime(`Time: ${elapsedTime}s`)
             }
         }
 
         // Game loop
-        function gameLoop() {
+        async function gameLoop() {
             if (!isMoving) return; // Prevent the game from running until movement starts
 
             // Update the direction
@@ -171,8 +261,16 @@
                 head.y < 0 || head.y >= boxesPerRow || // Wall collision
                 snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y) // Self collision
             ) {
-                alert(`Game Over! Your score was ${score} and you played for ${Math.floor((Date.now() - gameStartTime) / 1000)} seconds.`);
+                showMessage(`Game Over! Your score was ${score} and you played for ${Math.floor((Date.now() - gameStartTime) / 1000)} seconds. Tap anywhere to play again.`);
+                isMoving = false;
+                isGameOver = true;
+
+                // Wait for user input to restart
+                await waitForUserInput();
+
                 resetGame();
+                showMessage("Awaiting first move...");
+                isGameOver = false;
                 return;
             }
 
@@ -198,13 +296,11 @@
             drawBox(food.x, food.y, 'red');
 
             // Draw the score
-            ctx.fillStyle = '#fff';
-            ctx.font = '16px Arial';
-            ctx.fillText(`Score: ${score}`, 10, 20);
+            updateScore(score);
 
             // Draw the timer
             const elapsedTime = Math.floor((Date.now() - gameStartTime) / 1000);
-            ctx.fillText(`Time: ${elapsedTime}s`, canvas.width - 100, 20);
+            updateTime(`Time: ${elapsedTime}s`);
         }
 
         // Increase game speed
@@ -232,11 +328,23 @@
         function setDirection(x, y) {
             nextDirection = { x, y };
             if (!isMoving) {
+                if (isGameOver) {
+                    resetGame();
+                }
                 isMoving = true;
                 startTimer();
                 startGameLoop(); // Start the game loop on the first move
             }
         }
+
+        // prevent arrow keys from moving the page
+        document.addEventListener('keydown', function (event) {
+            // Check if the key pressed is one of the arrow keys
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown' ||
+                event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault(); // Prevent the default scrolling behavior
+            }
+        });
 
         // Add mobile button controls
         document.querySelector('.up').addEventListener('click', () => setDirection(0, -1));
@@ -248,21 +356,22 @@
         resetGame();
     </script>
 
-<footer>
-    <div class="footer-container">
-      <ul class="footer-links">
-        <li><a href="../index.html">About Me</a></li>
-        <li><a href="../projects.html">Projects</a></li>
-        <li><a href="../gpts.html">CustomGPTs</a></li>
-        <li><a href="../blog.html">Blog</a></li>
-        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-      </ul> 
-    </div>
-    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
-    <script>
-      document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>   
-  </footer>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
 </body>
+
 </html>
