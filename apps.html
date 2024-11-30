@@ -13,15 +13,15 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lebiru Games Directory">
-    <title>Lebiru - Games Directory</title>
+    <meta name="description" content="Lebiru Apps Directory">
+    <title>Lebiru - Apps Directory</title>
     <meta name="author" content="Bilal A." />
     <link rel="stylesheet" href="simple.css" type="text/css" />
     <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple/blue/apple-touch-icon-180x180.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/apple/blue/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="images/apple/blue/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="images/apple/blue/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple/yellow/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple/yellow/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/apple/yellow/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple/yellow/apple-touch-icon-76x76.png">
 </head>
 
 <body>
@@ -32,30 +32,23 @@
         <a href="blog.html">Blog</a>
     </header>
     <div class="container">
-        <h1>Lebiru - Games Directory</h1>
-        <h3 style="font-style: italic; color: gray;">Click on a row to start the game</h2>
-            <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search games..." oninput="filterPosts()" />
+        <h1>Lebiru - Apps Directory</h1>
+        <h3 style="font-style: italic; color: gray;">Click on a row to use the app</h2>
+            <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search apps..." oninput="filterPosts()" />
             <table id="blogTable" style="width: 100%;">
-                <tbody id="blogPosts"></tbody>
+                <tbody id="blogPosts" class="appPosts"></tbody>
             </table>
     </div>
 
     <script>
         // most recent up top
         const blogPosts = [
-            // {
-            //     title: 'Post #002 - Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
-            //     date: 'November 22nd, 2024',
-            //     content:
-            //         "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability. I have had the privilege of guiding junior programmers in multiple teams and seen their growth firsthand...",
-            //     url: 'blog/002_mentoring_tips.html',
-            // },
             {
-                title: '[ 🐍 Game #001 - Snake]',
+                title: '[ 🔊 App #001 - SoundBoard]',
                 date: '',
                 content:
-                    'Play the classic game Snake in your browser now! 🐍',
-                url: 'games/001_snake.html',
+                    'Create your personalized relaxation experience with Lebiru Soundboard. Enjoy soothing sounds like calming waves, relaxing rain, smooth jazz, and more, with adjustable volume controls.',
+                url: 'apps/001_soundboard.html',
             }
         ];
 

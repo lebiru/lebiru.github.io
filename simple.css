@@ -113,6 +113,7 @@ img {
   padding: 5px 0px;
   border: 2px solid #10aab0;
   border-radius: 10px;
+  padding-left: 10px;
 }
 
 #blogPosts {
@@ -121,6 +122,10 @@ img {
 
 #blogTable {
   margin-bottom: 100px;
+}
+
+.appPosts td:first-child {
+  width: 33%;
 }
 
 .soundboard {
