@@ -1,0 +1,6 @@
+# Allow all search engines to access everything
+User-agent: *
+Disallow:
+
+# Sitemap location
+Sitemap: https://www.lebiru.com/sitemap.xml
