@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lebiru - APY Calculator">
+  <meta name="keywords" content="Lebiru - APY Calculator">
+  <meta name="author" content="Bilal A.">
+  <title>Lebiru - APY Calculator</title>
+  <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+  <link rel="stylesheet" href="../simple.css" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <style>
+    .container {
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      height: 38px;
+      /* Ensure a consistent height */
+    }
+
+    canvas {
+      margin-top: 20px;
+    }
+
+    .disclaimer-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .disclaimer-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #efcc6c;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .disclaimer-button:hover {
+      background-color: #efcc6c;
+    }
+
+    .disclaimer-text {
+      margin-top: 10px;
+      display: none;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #efcc6c;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .info-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .info-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #10aaa2;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .info-button:hover {
+      background-color: #10aaa2;
+    }
+
+    .info-text {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      display: none;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #10aaa2;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: left;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      body {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="../index.html">About Me</a> /
+    <a href="../projects.html">Projects</a> /
+    <a href="../gpts.html">CustomGPTs</a> /
+    <a href="../blog.html">Blog</a> /
+    <a href="../apps.html">Apps</a> /
+    <a href="../games.html">Games</a>
+  </header>
+
+  <div class="container">
+    <h1>APY Calculator</h1>
+
+    <!-- Info Button -->
+    <div class="info-container">
+      <button id="info-toggle" class="info-button">Information</button>
+      <div id="info-text" class="info-text">
+        <h2>What is APY?</h2>
+        <p>APY (Annual Percentage Yield) is a measure of the total interest earned on an investment or deposit over a year, accounting for the effects of compounding. Unlike simple interest, APY considers how often interest is added to your balance, making it a more accurate way to understand potential earnings.</p>
+        
+        <h2>How to Use This Tool:</h2>
+        <p>This APY Calculator helps you estimate the growth of your savings or investments over time. Enter your initial deposit, annual interest rate (APY), and how often the interest compounds. You can also add optional recurring deposits to see how regular contributions impact your total. The tool visualizes your principal and interest growth, allowing you to make informed financial decisions.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="principal">Principal ($):</label>
+      <input type="number" id="principal" value="1000" min="0" step="1">
+    </div>
+    <div class="form-group">
+      <label for="rate">APY (%):</label>
+      <input type="number" id="rate" value="5" min="0" step="0.1">
+    </div>
+    <div class="form-group">
+      <label for="years">Years:</label>
+      <input type="number" id="years" value="10" min="1" max="100" step="1">
+    </div>
+    <div class="form-group">
+      <label for="compoundInterval">Compound Interval:</label>
+      <select id="compoundInterval">
+        <option value="365">Daily</option>
+        <option value="52">Weekly</option>
+        <option value="12">Monthly</option>
+        <option value="4">Quarterly</option>
+        <option value="2">Semi-Annual</option>
+        <option value="1">Yearly</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="deposits">Deposits (optional, $):</label>
+      <input type="number" id="deposits" value="0" min="0" step="1">
+    </div>
+    <div class="form-group">
+      <label for="depositFrequency">Deposit Frequency:</label>
+      <select id="depositFrequency">
+        <option value="52">Weekly</option>
+        <option value="12">Monthly</option>
+        <option value="2">Semi-Annual</option>
+        <option value="1">Yearly</option>
+      </select>
+    </div>
+    <canvas id="apyChart"></canvas>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-container">
+      <button id="disclaimer-toggle" class="disclaimer-button">Disclaimer</button>
+      <div id="disclaimer-text" class="disclaimer-text">
+        Whilst every effort has been made to ensure the accuracy and reliability of this calculator, it is provided for informational purposes only and should not be construed as financial advice. We do not accept any responsibility for errors, inaccuracies, or for any monetary losses, damages, or other consequences that may arise from the use of this tool. Please consult with a qualified professional before making any financial decisions.
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <script>
+    const principalInput = document.getElementById('principal');
+    const rateInput = document.getElementById('rate');
+    const yearsInput = document.getElementById('years');
+    const compoundIntervalInput = document.getElementById('compoundInterval');
+    const depositsInput = document.getElementById('deposits');
+    const depositFrequencyInput = document.getElementById('depositFrequency');
+    const ctx = document.getElementById('apyChart').getContext('2d');
+
+    let chart;
+
+    function calculateAPY(principal, rate, years, compoundsPerYear, deposits, depositFrequency) {
+      const results = [];
+      let totalPrincipal = principal;
+
+      for (let year = 1; year <= years; year++) {
+        // Add deposits for the year
+        const yearlyDeposits = deposits * depositFrequency;
+        totalPrincipal += yearlyDeposits;
+
+        const amount = totalPrincipal * Math.pow(1 + (rate / 100) / compoundsPerYear, compoundsPerYear * year);
+        const profit = amount - principal - yearlyDeposits * year;
+        results.push({ year, total: amount, principal: totalPrincipal, profit });
+      }
+      return results;
+    }
+
+    function updateChart() {
+      const principal = parseFloat(principalInput.value);
+      const rate = parseFloat(rateInput.value);
+      const years = parseInt(yearsInput.value);
+      const compoundsPerYear = parseInt(compoundIntervalInput.value);
+      const deposits = parseFloat(depositsInput.value);
+      const depositFrequency = parseInt(depositFrequencyInput.value);
+
+      if (isNaN(principal) || isNaN(rate) || isNaN(years) || isNaN(compoundsPerYear) || isNaN(deposits) || isNaN(depositFrequency)) return;
+
+      const apyData = calculateAPY(principal, rate, years, compoundsPerYear, deposits, depositFrequency);
+
+      const labels = apyData.map(data => `Year ${data.year}`);
+      const principalData = apyData.map(data => data.principal.toFixed(2));
+      const profitData = apyData.map(data => data.profit.toFixed(2));
+
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Principal ($)',
+              data: principalData,
+              backgroundColor: 'rgba(54, 162, 235, 0.7)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'APY Profit ($)',
+              data: profitData,
+              backgroundColor: 'rgba(75, 192, 192, 0.7)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true
+            }
+          },
+          scales: {
+            x: {
+              stacked: true,
+              title: {
+                display: true,
+                text: 'Years'
+              }
+            },
+            y: {
+              stacked: true,
+              title: {
+                display: true,
+                text: 'Amount ($)'
+              },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    principalInput.addEventListener('input', updateChart);
+    rateInput.addEventListener('input', updateChart);
+    yearsInput.addEventListener('input', updateChart);
+    compoundIntervalInput.addEventListener('change', updateChart);
+    depositsInput.addEventListener('input', updateChart);
+    depositFrequencyInput.addEventListener('change', updateChart);
+
+    document.getElementById('disclaimer-toggle').addEventListener('click', function () {
+      const disclaimerText = document.getElementById('disclaimer-text');
+      if (disclaimerText.style.display === 'none' || disclaimerText.style.display === '') {
+        disclaimerText.style.display = 'block';
+      } else {
+        disclaimerText.style.display = 'none';
+      }
+    });
+
+    document.getElementById('info-toggle').addEventListener('click', function () {
+      const infoText = document.getElementById('info-text');
+      if (infoText.style.display === 'none' || infoText.style.display === '') {
+        infoText.style.display = 'block';
+      } else {
+        infoText.style.display = 'none';
+      }
+    });
+
+    // Initial render
+    updateChart();
+  </script>
+
+  <footer>
+    <div class="footer-container">
+      <ul class="footer-links">
+        <li><a href="../index.html">About Me</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+        <li><a href="../gpts.html">CustomGPTs</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a href="../apps.html">Apps</a></li>
+        <li><a href="../games.html">Games</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+      </ul>
+    </div>
+    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+    <script>
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+</body>
+
+</html>
