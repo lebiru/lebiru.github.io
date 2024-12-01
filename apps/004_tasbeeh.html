@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lebiru - Tasbeeh Companion">
+  <meta name="keywords" content="Lebiru - Tasbeeh Companion">
+  <meta name="author" content="Bilal A.">
+  <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/yellow/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="../images/apple//yellow/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/yellow/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/yellow/apple-touch-icon-76x76.png">
+  <link rel="stylesheet" href="../simple.css" type="text/css" />
+  <title>Lebiru - Tasbeeh Companion</title>
+  <style>
+    .golden-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: #fff;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .golden-icon {
+      font-size: 24px;
+      color: gold;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      margin: 50px auto;
+    }
+
+    .counter-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    .radial {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circle {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      background-color: lightgray;
+      border-radius: 50%;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .circle.active {
+      background-color: #4caf50;
+      transform: scale(1.4);
+    }
+
+    #counter-btn {
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 80px;
+      height: 80px;
+      border: none;
+      border-radius: 50%;
+      background: #4caf50;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+      animation: pulsate 2s infinite;
+    }
+
+    @keyframes pulsate {
+      0% {
+        box-shadow: 0 0 10px 2px #4caf50;
+      }
+
+      50% {
+        box-shadow: 0 0 20px 5px #4caf50;
+      }
+
+      100% {
+        box-shadow: 0 0 10px 2px #4caf50;
+      }
+    }
+
+    .buttons-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .reset-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #f44336;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .reset-button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="../index.html">About Me</a> /
+    <a href="../projects.html">Projects</a> /
+    <a href="../gpts.html">CustomGPTs</a> /
+    <a href="../blog.html">Blog</a> /
+    <a href="../apps.html">Apps</a> /
+    <a href="../games.html">Games</a>
+  </header>
+
+  <div class="container">
+
+    <h2>Lebiru - Tasbeeh Companion</h2>
+
+    <div class="golden-row" id="golden-row">
+      <!-- Collected golden symbols will be displayed here -->
+    </div>
+    <div class="counter-container">
+      <div class="radial">
+        <!-- Circles will be generated programmatically -->
+      </div>
+      <button id="counter-btn">0</button>
+    </div>
+    <div class="buttons-container">
+      <button class="reset-button" id="reset-golden-btn">Reset</button>
+    </div>
+  </div>
+  <script>
+    const counterButton = document.getElementById("counter-btn");
+    const goldenRow = document.getElementById("golden-row");
+    const resetGoldenButton = document.getElementById("reset-golden-btn");
+
+    let count = 0;
+    let completedCycles = 0;
+
+    // Initialize 100 circles programmatically
+    const radialContainer = document.querySelector(".radial");
+    for (let i = 0; i < 100; i++) {
+      const circle = document.createElement("div");
+      circle.classList.add("circle");
+      radialContainer.appendChild(circle);
+      const angle = (i * 360) / 100; // Distribute circles evenly
+      const x = 120 * Math.cos((angle * Math.PI) / 180); // X coordinate
+      const y = 120 * Math.sin((angle * Math.PI) / 180); // Y coordinate
+      circle.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // Re-select circles after they are dynamically added
+    const circles = document.querySelectorAll(".circle");
+
+    // On button click, increment the count and activate the next circle
+    counterButton.addEventListener("click", () => {
+      if (count < 100) {
+        // Reset previous circle
+        if (count > 0) {
+          circles[count - 1].classList.remove("active");
+        }
+
+        // Activate the next circle
+        circles[count].classList.add("active");
+        count++;
+
+        // Update button text
+        counterButton.textContent = count;
+      } else {
+        completedCycles++;
+        addGoldenIconToRow();
+        resetCounter();
+      }
+    });
+
+    // Reset all golden squares
+    resetGoldenButton.addEventListener("click", () => {
+      goldenRow.innerHTML = "";
+      completedCycles = 0;
+      resetCounter();
+    });
+
+    // Reset functionality
+    function resetCounter() {
+      circles.forEach((circle) => circle.classList.remove("active"));
+      count = 0;
+      counterButton.textContent = count;
+    }
+
+    // Add golden icon only after completing 100 tasbeehs
+    function addGoldenIconToRow() {
+      const icon = document.createElement("div");
+      icon.classList.add("golden-icon");
+      icon.textContent = "۞";
+      goldenRow.appendChild(icon);
+    }
+  </script>
+
+  <footer>
+    <div class="footer-container">
+      <ul class="footer-links">
+        <li><a href="../index.html">About Me</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+        <li><a href="../gpts.html">CustomGPTs</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a href="../apps.html">Apps</a></li>
+        <li><a href="../games.html">Games</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+      </ul>
+    </div>
+    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+    <script>
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+
+</body>
+
+</html>
