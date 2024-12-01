@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lebiru - Snake Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
     <script>
@@ -19,361 +23,346 @@
     <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
     <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
     <link rel="stylesheet" href="../simple.css" type="text/css" />
-    <title>Snake Game</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        #game-container {
+            position: relative;
+            margin: auto;
+            margin-top: 20px;
         }
 
         body {
+            margin: 1em auto 2em auto;
+            background-color: #f0f0f0;
+        }
+
+        .hud {
+            position: absolute;
+            top: 10px;
+            width: 100%;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .hud span {
+            font-size: 16px;
+        }
+
+        .game-over-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            display: none;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #333;
-            font-family: Arial, sans-serif;
-        }
-
-        canvas {
-            border: 2px solid #fff;
-            background-color: #000;
-        }
-
-        .score-time-container {
-        display: flex;
-        justify-content: space-between;
-        width: 400px; /* Matches the width of the canvas */
-        margin-bottom: 10px;
-        color: white;
-        font-size: 16px;
-    }
-
-        .control-container {
-            width: 400px;
-            /* Fixed width for the container */
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            width: 300px;
+            margin: 20px auto;
         }
 
         .controls {
             display: grid;
-            grid-template-areas:
-                ". up ."
-                "left . right"
-                ". down .";
-            grid-template-columns: 1fr auto 1fr;
+            grid-template-columns: 50px 50px 50px;
             gap: 10px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 400px;
             justify-content: center;
-            /* Center the controls horizontally */
             align-items: center;
-            /* Center the buttons within the grid */
         }
 
         .controls button {
-            background-color: #444;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 15px;
+            width: 50px;
+            height: 50px;
+            font-size: 16px;
             cursor: pointer;
+        }
+
+        #restart-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px;
+        }
+
+        header,
+        footer {
             text-align: center;
-            width: 130px;
+            margin: 10px 0;
         }
 
-        .controls button:active {
-            background-color: #666;
+        footer .footer-links {
+            list-style: none;
+            padding: 0;
         }
 
-        .up {
-            grid-area: up;
-        }
-
-        .left {
-            grid-area: left;
-        }
-
-        .right {
-            grid-area: right;
-        }
-
-        .down {
-            grid-area: down;
+        footer .footer-links li {
+            display: inline;
+            margin: 0 10px;
         }
     </style>
 </head>
 
 <body>
-    <h1 style="color: white;">Lebiru - Snake Game</h1>
-    <h3 id="messageArea" style="color: white; text-align: center; width: 50%;">Awaiting first move...</h3>
-    
-    <div class="score-time-container">
-        <span id="score">Score: 0</span>
-        <span id="time">Time: 0s</span>
-    </div>
-    
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
 
-    <div class="control-container">
-        <div class="controls">
-            <button class="up">↑</button>
-            <button class="left">←</button>
-            <button class="right">→</button>
-            <button class="down">↓</button>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+
+    <h3 style="text-align: center;">Lebiru - Snake Game</h1>
+        <div id="game-container">
+            <!-- HUD for score and timer -->
+            <div class="hud">
+                <span id="score">Score: 0</span>
+                <span id="timer">Time: 0.0</span>
+            </div>
+            <!-- Game Over Message -->
+            <div class="game-over-message" id="game-over-message">
+                Game Over! Your score is <span id="final-score">0</span> and time is <span id="final-time">0.0</span>
+            </div>
         </div>
-    </div>
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
 
-        const boxSize = 20; // Size of each square
-        const canvasSize = 400; // Canvas width and height
-        const boxesPerRow = canvasSize / boxSize;
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <!-- D-pad on the left -->
+            <div class="controls">
+                <div></div> <!-- Placeholder for centering "up" button -->
+                <button id="up">↑</button>
+                <div></div> <!-- Placeholder for centering -->
 
-        let snake = [{ x: 10, y: 10 }]; // Snake's initial position
-        let direction = { x: 0, y: 0 }; // Snake's initial direction
-        let nextDirection = { x: 0, y: 0 }; // Buffered direction
-        let food = { x: getRandomCoord(), y: getRandomCoord() }; // Random food position
-        let score = 0;
-        let isMoving = false; // To prevent "Game Over" at start
-        let isGameOver = false;
-        let gameSpeed = 200; // Initial speed (ms per frame)
-        let gameInterval; // Game loop interval reference
-        let gameStartTime = 0; // Game start time
+                <button id="left">←</button>
+                <div></div> <!-- Placeholder for centering "middle" -->
+                <button id="right">→</button>
 
-        // Utility function to draw a rectangle
-        function drawBox(x, y, color) {
-            ctx.fillStyle = color;
-            ctx.fillRect(x * boxSize, y * boxSize, boxSize, boxSize);
-        }
+                <div></div> <!-- Placeholder for centering -->
+                <button id="down">↓</button>
+                <div></div> <!-- Placeholder for centering -->
+            </div>
 
-        // UI Utility
-        function hideMessage() {
-            const messageArea = document.getElementById('messageArea');
-            messageArea.style.visibility = 'hidden';
-        }
+            <!-- Restart button on the right -->
+            <button id="restart-button">Restart</button>
+        </div>
+        <script>
+            const cellSize = 15; // Each cell is 15x15 pixels
+            const gridWidth = 20; // Grid is 20 cells wide
+            const gridHeight = 20; // Grid is 20 cells tall
+            const config = {
+                type: Phaser.AUTO,
+                width: cellSize * gridWidth,
+                height: cellSize * gridHeight,
+                backgroundColor: '#000',
+                parent: 'game-container',
+                scene: {
+                    preload,
+                    create,
+                    update,
+                },
+            };
 
-        function updateScore(newScore) {
-        score = newScore;
-        document.getElementById("score").textContent = `Score: ${score}`;
-    }   
+            const game = new Phaser.Game(config);
 
-    function updateTime(newTime) {
-        document.getElementById("time").textContent = newTime;
-    }
+            let snake;
+            let apple;
+            let score = 0;
+            let cursors;
+            let direction = 'right';
+            let nextDirection = 'right';
+            let moveTimer = 0;
+            let isGameOver = false;
+            let gameTime = 0; // Track the elapsed game time
+            let speedMultiplier = 1; // Initial speed multiplier
 
-        function showMessage(message = 'default message') {
-            const messageArea = document.getElementById('messageArea');
-            messageArea.textContent = message;
-            messageArea.style.visibility = 'visible';
-        }
+            const scoreElement = document.getElementById('score');
+            const timerElement = document.getElementById('timer');
+            const gameOverMessage = document.getElementById('game-over-message');
+            const finalScoreElement = document.getElementById('final-score');
+            const finalTimeElement = document.getElementById('final-time');
 
-        // Pause Utility
-        // Function that waits for user input (click or tap)
-        async function waitForUserInput() {
-            return new Promise(resolve => {
-                // Event listener for click or tap
-                function handleUserInput(event) {
-                    // Remove event listeners after the first interaction
-                    document.removeEventListener('click', handleUserInput);
-                    document.removeEventListener('touchstart', handleUserInput);
-                    resolve(); // Resolve the promise
+            function preload() { }
+
+            function create() {
+                // Snake (Starts with one block)
+                snake = [{ x: 5, y: 7 }];
+
+                // Apple (Random position)
+                apple = { x: 10, y: 7 };
+
+                // Input handling
+                cursors = this.input.keyboard.createCursorKeys();
+                setupButtons();
+
+                // Setup restart button
+                setupRestartButton();
+
+                isGameOver = false;
+                gameTime = 0; // Reset timer
+
+                // Hide game over message at start
+                gameOverMessage.style.display = 'none';
+            }
+
+            function update(time, delta) {
+                if (isGameOver) return;
+
+                // Increment the game time
+                gameTime += delta / 1000; // Convert milliseconds to seconds
+                timerElement.textContent = `Time: ${gameTime.toFixed(1)}`;
+
+                // Move snake at regular intervals
+                if (time > moveTimer) {
+                    moveSnake.call(this);
+                    moveTimer = time + 350 * speedMultiplier; // Adjust speed dynamically
                 }
 
-                // Attach event listeners for click and touch
-                document.addEventListener('click', handleUserInput);
-                document.addEventListener('touchstart', handleUserInput);
-            });
-        }
+                handleInput();
+                renderGame(this);
 
-        // Random coordinate generator
-        function getRandomCoord() {
-            return Math.floor(Math.random() * boxesPerRow);
-        }
-
-        // Reset game
-        function resetGame() {
-            clearInterval(gameInterval); // Stop the game loop
-            snake = [{ x: 10, y: 10 }];
-            direction = { x: 0, y: 0 };
-            nextDirection = { x: 0, y: 0 };
-            score = 0;
-            isMoving = false;
-            gameSpeed = 200; // Reset the speed
-            gameStartTime = 0;
-            food = { x: getRandomCoord(), y: getRandomCoord() };
-            updateTime(`Time: 0s`);
-            drawInitialMap();
-        }
-
-        // Start the game loop
-        function startGameLoop() {
-            clearInterval(gameInterval); // Clear existing interval
-            hideMessage();
-            gameInterval = setInterval(gameLoop, gameSpeed); // Restart loop with updated speed
-        }
-
-        // Start the timer
-        function startTimer() {
-            gameStartTime = Date.now();
-        }
-
-        // Draw initial game state
-        function drawInitialMap() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the snake
-            snake.forEach(segment => drawBox(segment.x, segment.y, 'lime'));
-
-            // Draw the food
-            drawBox(food.x, food.y, 'red');
-
-            // Draw the score
-            updateScore(score);
-
-            // Draw the timer
-            if (isMoving) {
-                const elapsedTime = Math.floor((Date.now() - gameStartTime) / 1000);
-                updateTime(`Time: ${elapsedTime}s`)
+                // Update score
+                scoreElement.textContent = `Score: ${score}`;
             }
-        }
 
-        // Game loop
-        async function gameLoop() {
-            if (!isMoving) return; // Prevent the game from running until movement starts
+            function renderGame(scene) {
+                const graphics = scene.add.graphics();
+                graphics.clear();
 
-            // Update the direction
-            direction = nextDirection;
+                // Draw background
+                graphics.fillStyle(0x000000, 1);
+                graphics.fillRect(0, 0, config.width, config.height);
 
-            const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+                // Draw the snake
+                snake.forEach((segment, index) => {
+                    if (index === 0) {
+                        // Head of the snake - darker green
+                        graphics.fillStyle(0x008000, 1); // Darker green
+                    } else {
+                        // Body of the snake - regular green
+                        graphics.fillStyle(0x00ff00, 1); // Lighter green
+                    }
+                    graphics.fillRect(segment.x * cellSize, segment.y * cellSize, cellSize, cellSize);
+                });
 
-            // Check for collision with walls or self
-            if (
-                head.x < 0 || head.x >= boxesPerRow || // Wall collision
-                head.y < 0 || head.y >= boxesPerRow || // Wall collision
-                snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y) // Self collision
-            ) {
-                showMessage(`Game Over! Your score was ${score} and you played for ${Math.floor((Date.now() - gameStartTime) / 1000)} seconds. Tap anywhere to play again.`);
-                isMoving = false;
+                // Draw the apple
+                graphics.fillStyle(0xff0000, 1);
+                graphics.fillRect(apple.x * cellSize, apple.y * cellSize, cellSize, cellSize);
+            }
+
+            function moveSnake() {
+                const head = { ...snake[0] };
+
+                // Determine new head position
+                if (direction === 'right') head.x++;
+                else if (direction === 'left') head.x--;
+                else if (direction === 'down') head.y++;
+                else if (direction === 'up') head.y--;
+
+                // Check for collisions
+                if (isOutOfBounds(head) || isCollidingWithSelf(head)) {
+                    this.scene.pause(); // Pause the scene
+                    endGame.call(this);
+                    return;
+                }
+
+                // Add the new head to the snake
+                snake.unshift(head);
+
+                // Check for apple collision
+                if (head.x === apple.x && head.y === apple.y) {
+                    score += 10; // Increase score
+                    speedMultiplier *= 0.99; // Increase speed by reducing the interval
+                    positionApple(); // Reposition apple
+                } else {
+                    snake.pop(); // Remove the tail if no apple eaten
+                }
+            }
+
+            function positionApple() {
+                let validPosition = false;
+                while (!validPosition) {
+                    apple.x = Phaser.Math.Between(0, gridWidth - 1);
+                    apple.y = Phaser.Math.Between(0, gridHeight - 1);
+                    validPosition = !snake.some(segment => segment.x === apple.x && segment.y === apple.y);
+                }
+            }
+
+            function handleInput() {
+                if (cursors.left.isDown && direction !== 'right') nextDirection = 'left';
+                else if (cursors.right.isDown && direction !== 'left') nextDirection = 'right';
+                else if (cursors.up.isDown && direction !== 'down') nextDirection = 'up';
+                else if (cursors.down.isDown && direction !== 'up') nextDirection = 'down';
+
+                // Apply the buffered direction
+                direction = nextDirection;
+            }
+
+            function setupButtons() {
+                document.getElementById('up').addEventListener('click', () => {
+                    if (direction !== 'down') nextDirection = 'up';
+                });
+                document.getElementById('down').addEventListener('click', () => {
+                    if (direction !== 'up') nextDirection = 'down';
+                });
+                document.getElementById('left').addEventListener('click', () => {
+                    if (direction !== 'right') nextDirection = 'left';
+                });
+                document.getElementById('right').addEventListener('click', () => {
+                    if (direction !== 'left') nextDirection = 'right';
+                });
+            }
+
+            function setupRestartButton() {
+                document.getElementById('restart-button').addEventListener('click', () => {
+                    game.scene.scenes[0].scene.restart(); // Restart the game scene
+                });
+            }
+
+            function isOutOfBounds(position) {
+                return position.x < 0 || position.x >= gridWidth || position.y < 0 || position.y >= gridHeight;
+            }
+
+            function isCollidingWithSelf(position) {
+                return snake.slice(1).some(segment => segment.x === position.x && segment.y === position.y);
+            }
+
+            function endGame() {
                 isGameOver = true;
 
-                // Wait for user input to restart
-                await waitForUserInput();
-
-                resetGame();
-                showMessage("Awaiting first move...");
-                isGameOver = false;
-                return;
+                // Display the game over message
+                finalScoreElement.textContent = score;
+                finalTimeElement.textContent = gameTime.toFixed(1);
+                gameOverMessage.style.display = 'block';
             }
-
-            // Add new head
-            snake.unshift(head);
-
-            // Check if snake eats food
-            if (head.x === food.x && head.y === food.y) {
-                score++;
-                food = { x: getRandomCoord(), y: getRandomCoord() };
-                increaseSpeed(); // Increase the speed
-            } else {
-                snake.pop(); // Remove the tail
-            }
-
-            // Clear the canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the snake
-            snake.forEach(segment => drawBox(segment.x, segment.y, 'lime'));
-
-            // Draw the food
-            drawBox(food.x, food.y, 'red');
-
-            // Draw the score
-            updateScore(score);
-
-            // Draw the timer
-            const elapsedTime = Math.floor((Date.now() - gameStartTime) / 1000);
-            updateTime(`Time: ${elapsedTime}s`);
-        }
-
-        // Increase game speed
-        function increaseSpeed() {
-            gameSpeed *= 0.99; // Increase speed by 1% (reduce interval)
-            startGameLoop(); // Restart the game loop with the new speed
-        }
-
-        // Direction control with arrow keys
-        document.addEventListener('keydown', (event) => {
-            const { x: currX, y: currY } = direction;
-
-            if (event.key === 'ArrowUp' && currY === 0) {
-                setDirection(0, -1);
-            } else if (event.key === 'ArrowDown' && currY === 0) {
-                setDirection(0, 1);
-            } else if (event.key === 'ArrowLeft' && currX === 0) {
-                setDirection(-1, 0);
-            } else if (event.key === 'ArrowRight' && currX === 0) {
-                setDirection(1, 0);
-            }
-        });
-
-        // Helper to set the direction
-        function setDirection(x, y) {
-            nextDirection = { x, y };
-            if (!isMoving) {
-                if (isGameOver) {
-                    resetGame();
-                }
-                isMoving = true;
-                startTimer();
-                startGameLoop(); // Start the game loop on the first move
-            }
-        }
-
-        // prevent arrow keys from moving the page
-        document.addEventListener('keydown', function (event) {
-            // Check if the key pressed is one of the arrow keys
-            if (event.key === 'ArrowUp' || event.key === 'ArrowDown' ||
-                event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-                event.preventDefault(); // Prevent the default scrolling behavior
-            }
-        });
-
-        // Add mobile button controls
-        document.querySelector('.up').addEventListener('click', () => setDirection(0, -1));
-        document.querySelector('.down').addEventListener('click', () => setDirection(0, 1));
-        document.querySelector('.left').addEventListener('click', () => setDirection(-1, 0));
-        document.querySelector('.right').addEventListener('click', () => setDirection(1, 0));
-
-        // Initialize the game
-        resetGame();
-    </script>
-
-    <footer>
-        <div class="footer-container">
-            <ul class="footer-links">
-                <li><a href="../index.html">About Me</a></li>
-                <li><a href="../projects.html">Projects</a></li>
-                <li><a href="../gpts.html">CustomGPTs</a></li>
-                <li><a href="../blog.html">Blog</a></li>
-                <li><a href="../apps.html">Apps</a></li>
-                <li><a href="../games.html">Games</a></li>
-                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-            </ul>
-        </div>
-        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
-        <script>
-            document.getElementById('copyright-year').textContent = new Date().getFullYear();
         </script>
-    </footer>
+
+        <footer>
+            <div class="footer-container">
+                <ul class="footer-links">
+                    <li><a href="../index.html">About Me</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
+                    <li><a href="../gpts.html">CustomGPTs</a></li>
+                    <li><a href="../blog.html">Blog</a></li>
+                    <li><a href="../apps.html">Apps</a></li>
+                    <li><a href="../games.html">Games</a></li>
+                    <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                    <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                </ul>
+            </div>
+            <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+            <script>
+                document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            </script>
+        </footer>
 </body>
 
 </html>
