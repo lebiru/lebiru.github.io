@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
   <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-      gtag('config', 'G-22VNQG7W7C');
+    gtag('config', 'G-22VNQG7W7C');
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Create your personalized relaxation experience with Lebiru Soundboard. Enjoy soothing sounds like calming waves, relaxing rain, smooth jazz, and more, with adjustable volume controls.">
-  <meta name="keywords" content="relaxing soundboard, calming sounds, soothing audio, relaxing waves, rain sounds, jazz music, brown noise, ambient sound mixer">
+  <meta name="description"
+    content="Create your personalized relaxation experience with Lebiru Soundboard. Enjoy soothing sounds like calming waves, relaxing rain, smooth jazz, and more, with adjustable volume controls.">
+  <meta name="keywords"
+    content="relaxing soundboard, calming sounds, soothing audio, relaxing waves, rain sounds, jazz music, brown noise, ambient sound mixer">
   <meta name="author" content="Bilal A. and various Artists">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.lebiru.com/apps/001_soundboard.html">
@@ -24,17 +27,84 @@
   <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/yellow/apple-touch-icon-120x120.png">
   <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/yellow/apple-touch-icon-76x76.png">
   <link rel="stylesheet" href="../simple.css" type="text/css" />
+  <style>
+    /* General Styling for Timer Section */
+    #custom-timer-container,
+    #sleep-timer-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
+
+    #custom-timer-container input,
+    #custom-timer-container button {
+      margin-right: 10px;
+      padding: 8px;
+      border: 1px solid #007BFF;
+      /* Blue border */
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    #custom-timer-container input:focus,
+    #custom-timer-container button:hover {
+      outline: none;
+      border-color: #0056b3;
+      /* Darker blue on hover/focus */
+    }
+
+    #custom-timer-container button {
+      background-color: #007BFF;
+      /* Blue background */
+      color: #ffffff;
+      /* White text */
+      cursor: pointer;
+    }
+
+    #custom-timer-container button:disabled {
+      background-color: #cccccc;
+      /* Gray background for disabled button */
+      cursor: not-allowed;
+    }
+
+    #sleep-timer-container label,
+    #custom-timer-container label {
+      font-weight: bold;
+      color: #0056b3;
+      /* Blue text */
+    }
+
+    #sleep-timer-display {
+      font-weight: bold;
+      color: #0056b3;
+      /* Blue text */
+      margin-top: 10px;
+    }
+
+    #sleep-timer-message {
+      font-weight: bold;
+      color: #004080;
+      /* Darker blue text */
+      margin-top: 5px;
+    }
+
+    #lullaby-control {
+      background-color: #b200ff;
+    }
+  </style>
 </head>
+
 <body>
 
   <header>
     <a href="../index.html">About Me</a> /
     <a href="../projects.html">Projects</a> /
     <a href="../gpts.html">CustomGPTs</a> /
-    <a href="../blog.html">Blog</a> / 
+    <a href="../blog.html">Blog</a> /
     <a href="../apps.html">Apps</a> /
     <a href="../games.html">Games</a>
-   </header>
+  </header>
 
   <div class="soundboard">
     <div class="header-container">
@@ -42,37 +112,82 @@
       <div class="playing-light" id="playing-light"></div>
     </div>
     <h4 style="color: grey; font-weight: 100">
-      Create your personalized relaxation experience with the Lebiru Soundboard. Mix and match soothing sounds like calming waves, relaxing rain, and smooth jazz, while adjusting individual volumes to craft the perfect ambiance.
+      Create your personalized relaxation experience with the Lebiru Soundboard. Mix and match soothing sounds like
+      calming waves, relaxing rain, and smooth jazz, while adjusting individual volumes to craft the perfect ambiance.
     </h4>
     <div class="buttons">
       <!-- Sound Control for Waves -->
       <div class="sound-control">
-        <button onclick="toggleSound('waves', 'Calming Waves', 'amholma,  https://freesound.org/s/376795/, License: Creative Commons 0')">🏖️ Calming Waves</button>
+        <button
+          onclick="toggleSound('waves', 'Calming Waves', 'amholma,  https://freesound.org/s/376795/, License: Creative Commons 0')">🏖️
+          Calming Waves</button>
         <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('waves', this.value)">
       </div>
       <!-- Sound Control for Rain -->
       <div class="sound-control">
-        <button onclick="toggleSound('rain', 'Relaxing Rain', 'Astounded, https://freesound.org/s/519663/, License: Attribution 4.0')">🌧️ Relaxing Rain</button>
+        <button
+          onclick="toggleSound('rain', 'Relaxing Rain', 'Astounded, https://freesound.org/s/519663/, License: Attribution 4.0')">🌧️
+          Relaxing Rain</button>
         <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)">
       </div>
       <!-- Sound Control for Jazz -->
       <div class="sound-control">
-        <button onclick="toggleSound('jazz', 'Smooth Jazz', 'Migfus20, https://freesound.org/s/559850/, License: Attribution 4.0')">🎷 Smooth Jazz</button>
+        <button
+          onclick="toggleSound('jazz', 'Smooth Jazz', 'Migfus20, https://freesound.org/s/559850/, License: Attribution 4.0')">🎷
+          Smooth Jazz</button>
         <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('jazz', this.value)">
       </div>
       <!-- Sound Control for Brown Noise -->
       <div class="sound-control">
-        <button onclick="toggleSound('brown-noise', 'Brown Noise', 'Mrthenoronha, https://freesound.org/s/418385/, License: Creative Commons 0')">🟤 Brown Noise</button>
+        <button
+          onclick="toggleSound('brown-noise', 'Brown Noise', 'Mrthenoronha, https://freesound.org/s/418385/, License: Creative Commons 0')">🟤
+          Brown Noise</button>
         <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('brown-noise', this.value)">
       </div>
       <!-- Sound Control for Water Stream -->
       <div class="sound-control">
-        <button onclick="toggleSound('water-stream', 'Water Stream', 'Kolezan, https://freesound.org/s/132048/, License: Attribution 4.0')">🌊 Water Stream</button>
+        <button
+          onclick="toggleSound('water-stream', 'Water Stream', 'Kolezan, https://freesound.org/s/132048/, License: Attribution 4.0')">🌊
+          Water Stream</button>
         <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('water-stream', this.value)">
+      </div>
+      <!-- Sound Control for Lullaby -->
+      <div class="sound-control">
+        <button id="lullaby-control"
+          onclick="toggleSound('lullaby', 'Lullaby', 'Brahms - Lullaby / Wiegenlied - Op.49, No.4 (Arr. for Music Box) by GregorQuendel, https://freesound.org/s/710389/, License: Attribution NonCommercial 4.0')">👶
+          Lullaby</button>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('lullaby', this.value)">
       </div>
 
       <!-- Stop All Sounds Button -->
       <button onclick="stopAllSounds()" style="background-color: red">Stop All</button>
+
+      <!-- Sleep Timer Section -->
+      <div id="sleep-timer-container">
+        <label for="sleep-timer">Sleep Timer:</label>
+        <select id="sleep-timer" onchange="handleSleepTimerSelection(this.value)">
+          <option value="">Set Timer</option>
+          <option value="3600">1 Hour</option>
+          <option value="7200">2 Hours</option>
+          <option value="10800">3 Hours</option>
+          <option value="14400">4 Hours</option>
+          <option value="18000">5 Hours</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+
+      <!-- Custom Timer Input and Set Button -->
+      <div id="custom-timer-container" style="display: none;">
+        <input type="number" id="custom-timer-input" placeholder="Enter time in minutes" min="1" />
+        <button onclick="setCustomTimer()">Set</button>
+      </div>
+
+      <!-- Sleep Timer Display -->
+      <div id="sleep-timer-display">No sleep timer set.</div>
+
+      <!-- Sleep Timer Message -->
+      <div id="sleep-timer-message">No sleep timer set yet.</div>
+
     </div>
     <div class="attribution" id="attribution">
       <p>Click a sound to see its details.</p>
@@ -100,6 +215,10 @@
     <source src="../audio/soundboard/water-stream.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
+  <audio id="lullaby" loop>
+    <source src="../audio/soundboard/lullaby.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     // Embedded JavaScript
@@ -123,6 +242,95 @@
         updateAttribution();
       }
     }
+
+    let sleepTimer = null;
+    let sleepTimerCountdown = null; // For the countdown interval
+    let remainingTime = 0; // Time left in seconds
+
+    function handleSleepTimerSelection(value) {
+      // Reset existing timers
+      if (sleepTimer) {
+        clearTimeout(sleepTimer);
+        sleepTimer = null;
+      }
+      if (sleepTimerCountdown) {
+        clearInterval(sleepTimerCountdown);
+        sleepTimerCountdown = null;
+      }
+
+      // Reset displays
+      updateSleepTimerDisplay(null);
+      updateSleepTimerMessage("No sleep timer set yet.");
+
+      // Show or hide the custom timer input
+      const customTimerContainer = document.getElementById("custom-timer-container");
+      if (value === "custom") {
+        customTimerContainer.style.display = "block";
+      } else {
+        customTimerContainer.style.display = "none";
+        if (value) {
+          startSleepTimer(parseInt(value));
+          const hours = parseInt(value) / 3600;
+          updateSleepTimerMessage(`Sleep timer set for ${hours} hour(s).`);
+        }
+      }
+    }
+
+    function setCustomTimer() {
+      const input = document.getElementById("custom-timer-input");
+      const customTimeInMinutes = parseInt(input.value);
+
+      if (isNaN(customTimeInMinutes) || customTimeInMinutes <= 0) {
+        updateSleepTimerMessage("Please enter a valid number greater than 0.");
+        return;
+      }
+
+      const customTimeInSeconds = customTimeInMinutes * 60;
+      startSleepTimer(customTimeInSeconds);
+      updateSleepTimerMessage(`Custom sleep timer set for ${customTimeInMinutes} minutes.`);
+      document.getElementById("custom-timer-container").style.display = "none"; // Hide input after setting
+    }
+
+    function startSleepTimer(duration) {
+      remainingTime = duration;
+
+      // Start the main timer
+      sleepTimer = setTimeout(() => {
+        stopAllSounds();
+        updateSleepTimerDisplay(null); // Reset display
+        updateSleepTimerMessage("Sleep timer activated. All sounds stopped.");
+      }, duration * 1000);
+
+      // Start the countdown display
+      sleepTimerCountdown = setInterval(() => {
+        remainingTime--;
+        updateSleepTimerDisplay(remainingTime);
+        if (remainingTime <= 0) {
+          clearInterval(sleepTimerCountdown);
+        }
+      }, 1000);
+
+      updateSleepTimerDisplay(remainingTime);
+    }
+
+    function updateSleepTimerDisplay(seconds) {
+      const display = document.getElementById("sleep-timer-display");
+      if (seconds === null || seconds <= 0) {
+        display.textContent = "No sleep timer set.";
+      } else {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secondsLeft = seconds % 60;
+        display.textContent = `Time left: ${hours}h ${minutes}m ${secondsLeft}s`;
+      }
+    }
+
+    function updateSleepTimerMessage(message) {
+      const messageDisplay = document.getElementById("sleep-timer-message");
+      messageDisplay.textContent = message;
+    }
+
+    // END OF SLEEP TIMER LOGIC 
 
     function setVolume(soundId, volume) {
       const soundElement = document.getElementById(soundId);
@@ -169,24 +377,25 @@
     }
   </script>
 
-<footer>
-  <div class="footer-container">
-    <ul class="footer-links">
-      <li><a href="../index.html">About Me</a></li>
-      <li><a href="../projects.html">Projects</a></li>
-      <li><a href="../gpts.html">CustomGPTs</a></li>
-      <li><a href="../blog.html">Blog</a></li>
-      <li><a href="../apps.html">Apps</a></li>
-      <li><a href="../games.html">Games</a></li>
-      <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-      <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-    </ul> 
-  </div>
-  <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
-  <script>
-    document.getElementById('copyright-year').textContent = new Date().getFullYear();
-  </script>   
-</footer>
+  <footer>
+    <div class="footer-container">
+      <ul class="footer-links">
+        <li><a href="../index.html">About Me</a></li>
+        <li><a href="../projects.html">Projects</a></li>
+        <li><a href="../gpts.html">CustomGPTs</a></li>
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a href="../apps.html">Apps</a></li>
+        <li><a href="../games.html">Games</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+      </ul>
+    </div>
+    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+    <script>
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
 
 </body>
+
 </html>
