@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="description" content="Lebiru - Tasbeeh Companion">
   <meta name="keywords" content="Lebiru - Tasbeeh Companion">
   <meta name="author" content="Bilal A.">
@@ -124,6 +124,44 @@
     .reset-button:hover {
       background-color: #d32f2f;
     }
+
+    .info-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .info-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #10aaa2;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .info-button:hover {
+      background-color: #10aaa2;
+    }
+
+    .info-text {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      display: none;
+      padding: 15px;
+      border: 1px solid #ccc;
+      background-color: #10aaa2;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: left;
+      color: white;
+    }
+
+    button,
+    a {
+      touch-action: manipulation;
+    }
   </style>
 </head>
 
@@ -141,6 +179,97 @@
   <div class="container">
 
     <h2>Lebiru - Tasbeeh Companion</h2>
+
+    <!-- Info Button -->
+    <div class="info-container">
+      <button id="info-toggle" class="info-button">Information</button>
+      <div id="info-text" class="info-text">
+        <h2>What is Tasbeeh?</h2>
+        <p>Tasbeeh refers to the act of glorifying and praising Allah through specific phrases and supplications, often
+          recited as a form of remembrance (Dhikr). Derived from the Arabic root "s-b-h," meaning "to glorify," Tasbeeh
+          emphasizes acknowledging Allah's perfection, greatness, and mercy. It is a spiritual practice deeply rooted in
+          Islamic tradition, designed to help believers stay connected to their Creator, find inner peace, and cultivate
+          gratitude. Commonly recited with a string of prayer beads (known as a Misbaha or Tasbeeh beads) or simply
+          counted on the fingers, Tasbeeh serves as a way to reflect on Allah’s attributes and seek closeness to Him in
+          both daily routines and moments of worship.</p>
+
+        <h2>Overview of the Different Types of Tasbeeh</h2>
+        <p>The various types of Tasbeeh encompass a rich spectrum of phrases that glorify, praise, and seek connection
+          with Allah. These include declarations of Allah’s perfection, such as SubhanAllah (Glory be to Allah), and
+          expressions of gratitude, like Alhamdulillah (All praise is due to Allah). Other types, such as Allahu Akbar
+          (Allah is the Greatest), highlight Allah’s supremacy, while La ilaha illallah (There is no deity but Allah)
+          reaffirms the core belief of monotheism. Additionally, Tasbeeh like Astaghfirullah (I seek forgiveness from
+          Allah) encourages repentance, and La hawla wa la quwwata illa billah (There is no power and no strength except
+          with Allah) fosters reliance on Allah’s strength. More comprehensive forms, such as Tasbeeh Fatimah and
+          Durood, blend various themes of glorification, gratitude, and blessings. Together, these Tasbeehs offer a
+          versatile and spiritually enriching practice that helps Muslims maintain mindfulness of Allah in every moment.
+        </p>
+
+        <h2>SubhanAllah (سبحان الله)</h2>
+        <h3>Meaning: "Glory be to Allah."</h3>
+        <p>This Tasbeeh emphasizes the transcendence and perfection of Allah. By reciting SubhanAllah, believers
+          acknowledge that Allah is free from any imperfection, defect, or deficiency. It is often used in gratitude,
+          reflection, or during moments of awe for Allah's creation, such as witnessing nature or experiencing
+          blessings.</p>
+
+        <h2>Alhamdulillah (الحمد لله)</h2>
+        <h3>Meaning: "All praise is due to Allah."</h3>
+        <p>This phrase expresses gratitude to Allah for His countless blessings, whether visible or hidden.
+          Alhamdulillah is a reminder to appreciate Allah's mercy and guidance in every aspect of life. It can be
+          recited in both joyful moments and times of difficulty, as a way to stay thankful for Allah’s wisdom and plan.
+        </p>
+
+        <h2>Allahu Akbar (الله أكبر)</h2>
+        <h3>Meaning: "Allah is the Greatest."</h3>
+        <p>This Tasbeeh serves as a declaration of Allah’s supreme greatness above all things. It is often recited
+          during prayer, but also in moments when believers seek to reaffirm their focus on Allah as the ultimate power
+          and authority in the universe, above all worldly concerns.</p>
+
+        <h2>La ilaha illallah (لا إله إلا الله)</h2>
+        <h3>Meaning: "There is no deity but Allah."</h3>
+        <p>This is the foundation of the Islamic faith, known as the Shahada. It reflects the essence of monotheism,
+          affirming that worship is due to Allah alone. Reciting this phrase reminds Muslims of their core belief and
+          strengthens their connection to Allah, especially during moments of spiritual reflection.</p>
+
+        <h2>Astaghfirullah (أستغفر الله)</h2>
+        <h3>Meaning: "I seek forgiveness from Allah."</h3>
+        <p>This Tasbeeh is recited for repentance and seeking Allah’s mercy for sins, whether intentional or accidental.
+          Astaghfirullah encourages self-reflection and humility, reminding believers that turning to Allah for
+          forgiveness is a key part of spiritual growth and purification.</p>
+
+        <h2>La hawla wa la quwwata illa billah (لا حول ولا قوة إلا بالله)</h2>
+        <h3>Meaning: "There is no power and no strength except with Allah."</h3>
+        <p>This phrase acknowledges Allah’s control over all matters, encouraging reliance on Him during challenges or
+          difficulties. It reminds believers that true strength and success come only from Allah, and it helps cultivate
+          patience and trust in His plans.</p>
+
+        <h2>SubhanAllahi wa bihamdihi (سبحان الله وبحمده)</h2>
+        <h3>Meaning: "Glory be to Allah and all praise is due to Him."</h3>
+        <p>This short but powerful Tasbeeh combines glorification and praise in one phrase. It is an easy yet highly
+          rewarding act of worship, as mentioned in Hadith. Reciting this phrase frequently can bring immense blessings
+          and forgiveness for minor sins.</p>
+
+        <h2>SubhanAllahi wa bihamdihi, SubhanAllahil-Azeem (سبحان الله وبحمده سبحان الله العظيم)</h2>
+        <h3>Meaning: "Glory be to Allah and all praise is due to Him, Glory be to Allah, the Most Great."</h3>
+        <p>Described by Prophet Muhammad ﷺ as beloved words to Allah, this Tasbeeh combines recognition of Allah’s
+          majesty and gratitude. It is especially rewarding when recited regularly and reflects a deep appreciation for
+          Allah’s greatness.</p>
+
+        <h2>Tasbeeh Fatimah</h2>
+        <h3>Recitation: 33 times SubhanAllah, 33 times Alhamdulillah, and 34 times Allahu Akbar.</h3>
+        <p>Prophet Muhammad ﷺ recommended this Tasbeeh to Fatimah (RA) as a way to ease fatigue and gain spiritual
+          strength. It is traditionally recited before sleeping and serves as a way to end the day with gratitude and
+          reflection on Allah’s blessings.</p>
+
+        <h2>Durood (Salawat)</h2>
+        <h3>Example: "Allahumma salli 'ala Muhammadin wa 'ala ali Muhammadin."</h3>
+        <h3>Meaning: "O Allah, send blessings upon Muhammad and the family of Muhammad."</h3>
+        <p>Reciting Durood is a means of invoking Allah’s blessings and peace upon Prophet Muhammad ﷺ. It brings immense
+          rewards and is a way to express love and gratitude for the guidance provided through the Prophet’s teachings.
+        </p>
+
+      </div>
+    </div>
 
     <div class="golden-row" id="golden-row">
       <!-- Collected golden symbols will be displayed here -->
@@ -181,12 +310,7 @@
     // On button click, increment the count and activate the next circle
     counterButton.addEventListener("click", () => {
       if (count < 100) {
-        // Reset previous circle
-        if (count > 0) {
-          circles[count - 1].classList.remove("active");
-        }
-
-        // Activate the next circle
+        // Activate the next circle without removing previous ones
         circles[count].classList.add("active");
         count++;
 
@@ -220,6 +344,15 @@
       icon.textContent = "۞";
       goldenRow.appendChild(icon);
     }
+
+    document.getElementById('info-toggle').addEventListener('click', function () {
+      const infoText = document.getElementById('info-text');
+      if (infoText.style.display === 'none' || infoText.style.display === '') {
+        infoText.style.display = 'block';
+      } else {
+        infoText.style.display = 'none';
+      }
+    }); 
   </script>
 
   <footer>
