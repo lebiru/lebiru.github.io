@@ -107,10 +107,22 @@
             display: inline;
             margin: 0 10px;
         }
+
+        #pause-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            width: 100px;
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- AUDIO SETUP BEGIN -->
+    <audio id="bite-sound" src="../audio/snake/bite.mp3" preload="auto"></audio>
+    <!-- AUDIO SETUP END -->
 
     <header>
         <a href="../index.html">About Me</a> /
@@ -151,8 +163,11 @@
                 <div></div> <!-- Placeholder for centering -->
             </div>
 
-            <!-- Restart button on the right -->
-            <button id="restart-button">Restart</button>
+            <!-- Pause and Restart buttons -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <button id="pause-button">Pause</button>
+                <button id="restart-button">Restart</button>
+            </div>
         </div>
         <script>
             const cellSize = 15; // Each cell is 15x15 pixels
@@ -165,6 +180,7 @@
                 backgroundColor: '#000',
                 parent: 'game-container',
                 scene: {
+                    key: 'MainScene',
                     preload,
                     create,
                     update,
@@ -211,6 +227,8 @@
 
                 // Hide game over message at start
                 gameOverMessage.style.display = 'none';
+
+                setupPauseButton(); // Set up the Pause button
             }
 
             function update(time, delta) {
@@ -282,6 +300,14 @@
                     score += 10; // Increase score
                     speedMultiplier *= 0.99; // Increase speed by reducing the interval
                     positionApple(); // Reposition apple
+
+                    // Play bite sound
+                    const biteSound = document.getElementById('bite-sound');
+                    biteSound.currentTime = 0; // Reset sound to the beginning
+                    biteSound.play().catch(error => {
+                        console.log("Error playing bite sound:", error.message);
+                    });
+
                 } else {
                     snake.pop(); // Remove the tail if no apple eaten
                 }
@@ -343,6 +369,26 @@
                 finalTimeElement.textContent = gameTime.toFixed(1);
                 gameOverMessage.style.display = 'block';
             }
+
+            function setupPauseButton() {
+                const pauseButton = document.getElementById('pause-button');
+                let isPaused = false;
+
+                pauseButton.addEventListener('click', () => {
+                    const currentScene = game.scene.scenes[0]; // Get the active scene
+
+                    if (!isPaused) {
+                        currentScene.scene.pause(); // Pause the active scene
+                        pauseButton.textContent = 'Resume'; // Change button text
+                    } else {
+                        currentScene.scene.resume(); // Resume the active scene
+                        pauseButton.textContent = 'Pause'; // Change button text back
+                    }
+
+                    isPaused = !isPaused; // Toggle pause state
+                });
+            }
+
         </script>
 
         <footer>
