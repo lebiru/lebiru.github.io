@@ -92,6 +92,42 @@
     #lullaby-control {
       background-color: #b200ff;
     }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 70%;
+      /* Adjust width to fit your layout */
+      height: 10px;
+      background: #ddd;
+      border-radius: 5px;
+      outline: none;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    input[type="range"]:hover {
+      opacity: 1;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      /* Larger thumb for better touch interaction */
+      height: 20px;
+      background: #007BFF;
+      /* Match your color scheme */
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #007BFF;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -121,42 +157,42 @@
         <button
           onclick="toggleSound('waves', 'Calming Waves', 'amholma,  https://freesound.org/s/376795/, License: Creative Commons 0')">🏖️
           Calming Waves</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('waves', this.value)">
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume('waves', this.value)">
       </div>
       <!-- Sound Control for Rain -->
       <div class="sound-control">
         <button
           onclick="toggleSound('rain', 'Relaxing Rain', 'Astounded, https://freesound.org/s/519663/, License: Attribution 4.0')">🌧️
           Relaxing Rain</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('rain', this.value)">
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume('rain', this.value)">
       </div>
       <!-- Sound Control for Jazz -->
       <div class="sound-control">
         <button
           onclick="toggleSound('jazz', 'Smooth Jazz', 'Migfus20, https://freesound.org/s/559850/, License: Attribution 4.0')">🎷
           Smooth Jazz</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('jazz', this.value)">
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume('jazz', this.value)">
       </div>
       <!-- Sound Control for Brown Noise -->
       <div class="sound-control">
         <button
           onclick="toggleSound('brown-noise', 'Brown Noise', 'Mrthenoronha, https://freesound.org/s/418385/, License: Creative Commons 0')">🟤
           Brown Noise</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('brown-noise', this.value)">
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume('brown-noise', this.value)">
       </div>
       <!-- Sound Control for Water Stream -->
       <div class="sound-control">
         <button
           onclick="toggleSound('water-stream', 'Water Stream', 'Kolezan, https://freesound.org/s/132048/, License: Attribution 4.0')">🌊
           Water Stream</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('water-stream', this.value)">
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume('water-stream', this.value)">
       </div>
       <!-- Sound Control for Lullaby -->
       <div class="sound-control">
         <button id="lullaby-control"
           onclick="toggleSound('lullaby', 'Lullaby', 'Brahms - Lullaby / Wiegenlied - Op.49, No.4 (Arr. for Music Box) by GregorQuendel, https://freesound.org/s/710389/, License: Attribution NonCommercial 4.0')">👶
           Lullaby</button>
-        <input type="range" min="0" max="1" step="0.01" value="0.5" onchange="setVolume('lullaby', this.value)">
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume('lullaby', this.value)">
       </div>
 
       <!-- Stop All Sounds Button -->
@@ -165,7 +201,7 @@
       <!-- Sleep Timer Section -->
       <div id="sleep-timer-container">
         <label for="sleep-timer">Sleep Timer:</label>
-        <select id="sleep-timer" onchange="handleSleepTimerSelection(this.value)">
+        <select id="sleep-timer" oninput="handleSleepTimerSelection(this.value)">
           <option value="">Set Timer</option>
           <option value="3600">1 Hour</option>
           <option value="7200">2 Hours</option>
@@ -334,7 +370,7 @@
 
     function setVolume(soundId, volume) {
       const soundElement = document.getElementById(soundId);
-      soundElement.volume = volume;
+      soundElement.volume = parseFloat(volume);
     }
 
     function stopAllSounds() {
