@@ -120,10 +120,6 @@
 
 <body>
 
-    <!-- AUDIO SETUP BEGIN -->
-    <audio id="bite-sound" src="../audio/snake/bite.mp3" preload="auto"></audio>
-    <!-- AUDIO SETUP END -->
-
     <header>
         <a href="../index.html">About Me</a> /
         <a href="../projects.html">Projects</a> /
@@ -206,7 +202,9 @@
             const finalScoreElement = document.getElementById('final-score');
             const finalTimeElement = document.getElementById('final-time');
 
-            function preload() { }
+            function preload() { 
+                this.load.audio('bite', 'https://lebiru-github-io.pages.dev/snake/bite.mp3');
+            }
 
             function create() {
                 // Snake (Starts with one block)
@@ -229,6 +227,8 @@
                 gameOverMessage.style.display = 'none';
 
                 setupPauseButton(); // Set up the Pause button
+
+                this.biteSound = this.sound.add('bite');
             }
 
             function update(time, delta) {
@@ -302,11 +302,7 @@
                     positionApple(); // Reposition apple
 
                     // Play bite sound
-                    const biteSound = document.getElementById('bite-sound');
-                    biteSound.currentTime = 0; // Reset sound to the beginning
-                    biteSound.play().catch(error => {
-                        console.log("Error playing bite sound:", error.message);
-                    });
+                    this.biteSound.play();
 
                 } else {
                     snake.pop(); // Remove the tail if no apple eaten
