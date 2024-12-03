@@ -8,13 +8,25 @@
   </url>
   <url>
     <loc>https://www.lebiru.com/apps/001_soundboard.html</loc>
-    <lastmod>2024-11-30</lastmod>
+    <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.lebiru.com/apps/002_prayertimes.html</loc>
     <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.lebiru.com/apps/003_apy.html</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.lebiru.com/apps/004_tasbeeh.html</loc>
+    <lastmod>2024-12-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -55,8 +67,14 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.lebiru.com/games/001_snake.html</loc>
+    <loc>https://www.lebiru.com/contact.html</loc>
     <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.lebiru.com/games/001_snake.html</loc>
+    <lastmod>2024-12-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
