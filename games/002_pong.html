@@ -1,304 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game - Lebiru</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-22VNQG7W7C');
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
     <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
-    <link rel="stylesheet" href="../simple.css" type="text/css" />    
-    <title>Pong</title>
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: black;
-            color: white;
-        }
-        #gameArea {
+        #game-container {
             position: relative;
-            background-color: black;
-            width: 600px;
-            height: 400px;
-            border: 3px solid white;
-            overflow: hidden;
-            cursor: none; /* Hide cursor within game area */
+            margin: auto;
+            margin-top: 20px;
         }
-        .paddle {
+
+        body {
+            margin: 1em auto 2em auto;
+            background-color: #f0f0f0;
+        }
+
+        .hud {
             position: absolute;
-            background-color: white;
-            width: 100px;
-            height: 20px;
-        }
-        #playerPaddle {
-            bottom: 0;
-        }
-        #comPaddle {
-            top: 0;
-        }
-        .ball {
-            position: absolute;
-            background-color: white;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-        }
-        #hud {
+            top: 10px;
+            width: 100%;
             display: flex;
             justify-content: space-between;
-            width: 600px;
-            margin-bottom: 10px;
-            font-size: 18px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            color: white;
         }
-        #controls {
-            margin-top: 10px;
+
+        .hud span {
+            font-size: 16px;
         }
-        button {
-            margin: 5px;
-            padding: 10px 20px;
+
+        .game-over-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            display: none;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            margin: 20px auto;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 50px 50px 50px;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .controls button {
+            width: 50px;
+            height: 50px;
             font-size: 16px;
             cursor: pointer;
         }
-        #countdown {
-            font-size: 24px;
-            color: white;
+
+        #restart-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px;
+        }
+
+        header,
+        footer {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        footer .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-links li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        #pause-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
             margin-bottom: 10px;
-            display: none;
+            width: 100px;
         }
     </style>
 </head>
+
 <body>
-    <h1>Pong</h1>
-    <div id="hud">
-        <div>Rally: <span id="rallyCount">0</span></div>
-        <div>Time: <span id="rallyTime">0</span> sec</div>
-    </div>
-    <div id="countdown">3</div>
-    <div id="gameArea">
-        <div id="playerPaddle" class="paddle"></div>
-        <div id="comPaddle" class="paddle"></div>
-        <div id="ball" class="ball"></div>
-    </div>
-    <div id="controls">
-        <button onclick="moveLeft()">Left</button>
-        <button onclick="moveRight()">Right</button>
-    </div>
-    <script>
-        const gameArea = document.getElementById('gameArea');
-        const playerPaddle = document.getElementById('playerPaddle');
-        const comPaddle = document.getElementById('comPaddle');
-        const ball = document.getElementById('ball');
-        const countdownDisplay = document.getElementById('countdown');
-        const rallyCountDisplay = document.getElementById('rallyCount');
-        const rallyTimeDisplay = document.getElementById('rallyTime');
-        const paddleSpeed = 20;
-        let rallyCount = 0;
-        let rallyTime = 0;
-        let rallyStart = false;
 
-        // Paddle positions
-        let playerX = (gameArea.clientWidth - playerPaddle.offsetWidth) / 2;
-        let comX = (gameArea.clientWidth - comPaddle.offsetWidth) / 2;
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
 
-        // Ball properties
-        let ballX = gameArea.clientWidth / 2;
-        let ballY = gameArea.clientHeight / 2;
-        let ballSpeedX = 4;
-        let ballSpeedY = 4;
+    <h3 style="text-align: center;">Pong Game - Lebiru</h1>
+        <div id="game-container">
+        </div>
 
-        // Game state
-        let isGameRunning = false;
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <!-- D-pad on the left -->
+            <div class="controls">
+                <div></div> <!-- Placeholder for centering "up" button -->
+                <button id="up">↑</button>
+                <div></div> <!-- Placeholder for centering -->
 
-        // Set initial positions
-        function updatePositions() {
-            playerPaddle.style.left = `${playerX}px`;
-            comPaddle.style.left = `${comX}px`;
-            ball.style.left = `${ballX}px`;
-            ball.style.top = `${ballY}px`;
-        }
+                <button id="left">←</button>
+                <div></div> <!-- Placeholder for centering "middle" -->
+                <button id="right">→</button>
 
-        // Move paddle functions
-        function moveLeft() {
-            playerX = Math.max(0, playerX - paddleSpeed);
-            updatePositions();
-        }
+                <div></div> <!-- Placeholder for centering -->
+                <button id="down">↓</button>
+                <div></div> <!-- Placeholder for centering -->
+            </div>
 
-        function moveRight() {
-            playerX = Math.min(gameArea.clientWidth - playerPaddle.offsetWidth, playerX + paddleSpeed);
-            updatePositions();
-        }
+            <!-- Pause and Restart buttons -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <button id="pause-button">Pause</button>
+                <button id="restart-button">Restart</button>
+            </div>
+        </div>
 
-        // Arrow key controls
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') moveLeft();
-            if (e.key === 'ArrowRight') moveRight();
-        });
-
-        // Mouse control for paddle
-        gameArea.addEventListener('mousemove', (e) => {
-            const gameAreaBounds = gameArea.getBoundingClientRect();
-            const mouseX = e.clientX - gameAreaBounds.left;
-
-            // Center paddle around mouse position
-            playerX = Math.max(
-                0,
-                Math.min(gameArea.clientWidth - playerPaddle.offsetWidth, mouseX - playerPaddle.offsetWidth / 2)
-            );
-            updatePositions();
-        });
-
-        // Ball and paddle collision detection
-        function checkCollision() {
-            if (ballY + ball.offsetHeight >= gameArea.clientHeight) {
-                // Player paddle collision
-                if (
-                    ballX + ball.offsetWidth >= playerX &&
-                    ballX <= playerX + playerPaddle.offsetWidth
-                ) {
-                    ballSpeedY *= -1;
-                    rallyCount++;
-                    rallyCountDisplay.textContent = rallyCount;
-
-                    // Speed boost if hit near paddle edges
-                    const hitPosition = (ballX - playerX) / playerPaddle.offsetWidth;
-                    if (hitPosition < 0.2 || hitPosition > 0.8) {
-                        ballSpeedX *= 1.1;
-                        ballSpeedY *= 1.1;
+        <script>
+            // Phaser configuration
+            const config = {
+                type: Phaser.AUTO,
+                width: 400,
+                height: 400,
+                backgroundColor: '#000000',
+                parent: 'game-container', // Attach Phaser game to this container
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        debug: false
                     }
-                } else {
-                    alert("Game Over! COM wins!");
-                    resetGame();
+                },
+                scene: {
+                    key: 'MainScene',
+                    preload: preload,
+                    create: create,
+                    update: update
+                }
+            };
+
+            const game = new Phaser.Game(config);
+
+            let playerPaddle, comPaddle, ball;
+            let playerSpeed = 200;
+            let rallyCount = 0;
+            let rallyText, winText;
+            let isGameOver = false;
+            let isGameRunning = false;
+            let isPaused = false;
+            let ballTrail = []; // Array to hold after images
+            let lastAfterImageTime = 0; // Time since the last after image
+
+            const TIME_BETWEEN_AFTER_IMAGES = 50; // Time in milliseconds between after images
+            const MAX_AFTER_IMAGE_FRAMES = 10;
+
+            function preload() {
+                this.load.image('background', 'https://lebiru-github-io-assets.pages.dev/pong/background.png');
+                this.load.image('player', 'https://lebiru-github-io-assets.pages.dev/pong/player.png');
+                this.load.image('com', 'https://lebiru-github-io-assets.pages.dev/pong/com.png');
+            }
+
+            function create() {
+                // Add background image
+                this.add.image(200, 200, 'background').setDisplaySize(400, 400);
+
+                // Add paddles using physics-enabled images
+                playerPaddle = this.physics.add.image(200, 380, 'player');
+                comPaddle = this.physics.add.image(200, 20, 'com');
+
+                // Create the ball as a circle
+                ball = this.add.circle(200, 200, 10, 0xFFFFFF); // Circle with radius 10 and orange color
+                this.physics.add.existing(ball); // Add physics to the circle
+
+                // Enable collision for ball with screen bounds
+                ball.body.setCollideWorldBounds(true, 1, 1); // Bounce on edges
+                ball.body.setBounce(1, 1);
+                ball.body.setVelocity(0, 0); // no velocity until game starts
+
+                // Set player paddle properties
+                playerPaddle.setCollideWorldBounds(true);
+                playerPaddle.body.immovable = true;
+
+                // Set COM paddle properties
+                comPaddle.setCollideWorldBounds(true);
+                comPaddle.body.immovable = true;
+
+                // Add collision detection
+                this.physics.add.collider(ball, playerPaddle, (ball, paddle) => paddleHit(ball, paddle, this), null, this);
+                this.physics.add.collider(ball, comPaddle, (ball, paddle) => paddleHit(ball, paddle, this), null, this);
+
+                // HUD
+                rallyText = this.add.text(10, 10, `Rally: 0`, { fontSize: '18px', color: '#ffffff' });
+                winText = this.add.text(200, 200, '', { fontSize: '24px', color: '#ffffff' }).setOrigin(0.5);
+
+                countdownText = this.add.text(200, 200, '', {
+                    fontSize: '200px',
+                    fill: '#ffffff',
+                }).setOrigin(0.5);
+
+                // Add pause functionality
+                this.input.keyboard.on('keydown-P', () => togglePause(this));
+                this.input.keyboard.on('keydown-R', () => restartGame(this));
+
+                setupPauseButton();
+                setupRestartButton();
+                setupControlButtons();
+
+                // Start the countdown
+                startCountdown(this);
+
+                // Keyboard input
+                cursors = this.input.keyboard.createCursorKeys();
+            }
+
+            function restartGame(scene) {
+                scene.scene.restart(); // Restart the current scene
+                isPaused = false; // Reset pause state
+                isGameOver = false;
+                isGameRunning = false;
+                rallyCount = 0;
+            }
+
+            function togglePause(scene) {
+                if (isPaused) {
+                    scene.physics.resume(); // Resume physics
+                    isPaused = false;
+                }
+                else {
+                    scene.physics.pause(); // Pause physics
+                    isPaused = true;
                 }
             }
 
-            if (ballY <= 0) {
-                // COM paddle collision
-                if (
-                    ballX + ball.offsetWidth >= comX &&
-                    ballX <= comX + comPaddle.offsetWidth
-                ) {
-                    ballSpeedY *= -1;
-                    rallyCount++;
-                    rallyCountDisplay.textContent = rallyCount;
+            function startCountdown(scene) {
+                let countdown = 3; // Starting number
+                countdownText.setText(countdown);
 
-                    // Speed boost if hit near paddle edges
-                    const hitPosition = (ballX - comX) / comPaddle.offsetWidth;
-                    if (hitPosition < 0.2 || hitPosition > 0.8) {
-                        ballSpeedX *= 1.1;
-                        ballSpeedY *= 1.1;
+                const timer = scene.time.addEvent({
+                    delay: 1000, // 1 second
+                    callback: () => {
+                        countdown--;
+                        if (countdown > 0) {
+                            countdownText.setText(countdown);
+                        } else {
+                            countdownText.setText('GO!');
+                            timer.remove(false);
+
+                            // Start the game
+                            scene.time.delayedCall(500, () => {
+                                countdownText.setText('');
+                                isGameRunning = true;
+
+                                // Randomize the initial direction of the ball
+                                const speed = 150; // Base speed
+                                const randomX = Phaser.Math.Between(-1, 1) || 1; // Randomize x-direction (-1 or 1)
+                                const randomY = -1; // ensure computer always servers first
+
+                                ball.body.setVelocity(speed * randomX, speed * randomY);
+
+                            });
+                        }
+                    },
+                    repeat: 3, // Runs 3 times
+                });
+            }
+
+            function addGlowEffect(scene, target, color) {
+                const glow = scene.add.graphics();
+                glow.fillStyle(color, 0.2); // Semi-transparent glow
+                glow.fillCircle(0, 0, target.displayWidth); // Match paddle size
+                glow.setDepth(-1); // Place behind the paddle
+
+                scene.events.on('update', () => {
+                    glow.setPosition(target.x, target.y); // Follow paddle
+                });
+            }
+
+            function movePlayer() {
+
+                if (isGameOver) return;
+
+                if (cursors.left.isDown) {
+                    playerPaddle.body.setVelocityX(-playerSpeed); // Move left
+                } else if (cursors.right.isDown) {
+                    playerPaddle.body.setVelocityX(playerSpeed); // Move right
+                } else {
+                    playerPaddle.body.setVelocityX(0); // Stop moving
+                }
+            }
+
+            function moveComPaddle() {
+
+                //return; // for testing player win
+
+                if (isGameOver) return;
+
+                const maxComSpeed = 750; // Maximum speed for COM paddle
+                const ballX = ball.body.x;
+                const comX = comPaddle.body.x;
+
+                // Calculate the direction and target speed
+                const direction = ballX - comX;
+
+                // Apply a direct speed change based on direction
+                const targetSpeed = Phaser.Math.Clamp(direction * 45, -maxComSpeed, maxComSpeed);
+
+                // Set the velocity instantly to switch directions quickly
+                comPaddle.body.setVelocityX(targetSpeed);
+            }
+
+
+
+            function paddleHit(ball, paddle, scene) {
+
+                if (isGameOver) return;
+
+                rallyCount++;
+                rallyText.setText(`Rally: ${rallyCount}`);
+
+                // Add slight velocity variation based on collision point
+                const relativeImpact = ball.x - paddle.x;
+
+                // Gradual velocity increase
+                const velocityIncreaseFactor = 1.05; // Gradual multiplier
+                const maxVelocity = 400; // Cap the ball's velocity to prevent it from becoming too fast
+
+                // Adjust velocity in x and y directions
+                const randomAngleFactor = Phaser.Math.Between(-7, 7); // Random value between -10 and 10
+                let newVelocityX = ball.body.velocity.x + relativeImpact * 2;
+                let newVelocityY = ball.body.velocity.y * velocityIncreaseFactor;
+
+                // Apply randomness to X or Y velocity
+                newVelocityX += randomAngleFactor;
+
+                // Clamp velocity to max limits
+                newVelocityX = Phaser.Math.Clamp(newVelocityX, -maxVelocity, maxVelocity);
+                newVelocityY = Phaser.Math.Clamp(newVelocityY, -maxVelocity, maxVelocity);
+
+                ball.body.setVelocity(newVelocityX, newVelocityY);
+            }
+
+
+            function update() {
+
+                if (isGameOver) return;
+                if (!isGameRunning) return;
+
+                movePlayer(); // Handle key input
+                moveComPaddle(); // Move the COM paddle with speed limit
+
+                updateBallTrail(this);
+
+                if (ball.body.y > config.height - 23) {
+                    gameOver(this, 'COM Wins!'); // Pass scene and message
+                } else if (ball.body.y < 5) {
+                    gameOver(this, 'You Win!');
+                }
+            }
+
+            function updateBallTrail(scene) {
+                // Check if enough time has passed to add a new after image
+                if (scene.time.now - lastAfterImageTime > TIME_BETWEEN_AFTER_IMAGES) {
+                    // Add a new after image at the ball's current position
+                    const afterImage = scene.add.circle(ball.x, ball.y, 10, 0xFFFFFF); // Use the scene's context
+                    ballTrail.push(afterImage);
+
+                    if (ballTrail.length > MAX_AFTER_IMAGE_FRAMES) {
+                        const oldest = ballTrail.shift(); // Remove the oldest image
+                        oldest.destroy(); // Destroy it to free resources
                     }
-                } else {
-                    alert("You win!");
-                    resetGame();
+
+                    // Update transparency of each image based on its age
+                    ballTrail.forEach((image, index) => {
+                        const alpha = (1 - (1 - index / ballTrail.length)); // Older images are more transparent
+                        image.setAlpha(alpha);
+                    });
+
+                    // Update the lastAfterImageTime
+                    lastAfterImageTime = scene.time.now;
                 }
             }
 
-            if (ballX <= 0 || ballX + ball.offsetWidth >= gameArea.clientWidth) {
-                ballSpeedX *= -1;
+            function setupPauseButton() {
+                const pauseButton = document.getElementById('pause-button');
+                pauseButton.removeEventListener('click', handlePauseButton); // Remove old listener
+                pauseButton.addEventListener('click', handlePauseButton); // Add new listener
             }
-        }
 
-        // Game loop
-        function gameLoop() {
-            if (!isGameRunning) return;
-
-            // Move ball
-            ballX += ballSpeedX;
-            ballY += ballSpeedY;
-
-            // Check collisions
-            checkCollision();
-
-            // Smooth COM paddle movement
-            const targetX = ballX - comPaddle.offsetWidth / 2;
-            comX += (targetX - comX) * 0.1;
-
-            // Update positions
-            updatePositions();
-        }
-
-        // Timer for rally
-        function updateRallyTime() {
-            if (isGameRunning) {
-                rallyTime++;
-                rallyTimeDisplay.textContent = rallyTime;
+            function setupRestartButton() {
+                const restartButton = document.getElementById('restart-button');
+                restartButton.removeEventListener('click', handleRestartButton); // Remove old listener
+                restartButton.addEventListener('click', handleRestartButton); // Add new listener
             }
-        }
 
-        // Countdown before start
-        function showCountdown() {
-            let count = 3;
-            countdownDisplay.style.display = 'block';
-            countdownDisplay.textContent = count;
+            function setupControlButtons() {
+                const leftButton = document.getElementById('left');
+                const rightButton = document.getElementById('right');
+                let moveLeftInterval = null;
+                let moveRightInterval = null;
 
-            const countdownInterval = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdownDisplay.textContent = count;
-                } else {
-                    clearInterval(countdownInterval);
-                    countdownDisplay.style.display = 'none';
-                    isGameRunning = true;
-                    rallyTime = 0;
-                    rallyStart = true;
-                }
-            }, 1000);
-        }
+                // Move left on button press
+                leftButton.addEventListener('mousedown', () => {
+                    if (!moveLeftInterval) {
+                        moveLeftInterval = setInterval(() => {
+                            playerPaddle.body.setVelocityX(-playerSpeed);
+                        }, 16); // Runs roughly at 60 FPS
+                    }
+                });
 
-        // Reset game
-        function resetGame() {
-            rallyCount = 0;
-            rallyTime = 0;
-            rallyCountDisplay.textContent = rallyCount;
-            rallyTimeDisplay.textContent = rallyTime;
-            ballX = gameArea.clientWidth / 2;
-            ballY = gameArea.clientHeight / 2;
-            ballSpeedX = 4;
-            ballSpeedY = 4;
-            isGameRunning = false;
-            rallyStart = false;
-            showCountdown();
-        }
+                leftButton.addEventListener('mouseup', () => {
+                    clearInterval(moveLeftInterval);
+                    moveLeftInterval = null;
+                    playerPaddle.body.setVelocityX(0); // Stop movement on release
+                });
 
-        // Start game loop
-        setInterval(gameLoop, 20);
-        setInterval(updateRallyTime, 1000);
-        resetGame();
-        updatePositions();
-    </script>
+                leftButton.addEventListener('mouseleave', () => {
+                    clearInterval(moveLeftInterval);
+                    moveLeftInterval = null;
+                    playerPaddle.body.setVelocityX(0); // Stop movement if mouse leaves the button
+                });
 
-<footer>
-    <div class="footer-container">
-      <ul class="footer-links">
-        <li><a href="../index.html">About Me</a></li>
-        <li><a href="../projects.html">Projects</a></li>
-        <li><a href="../gpts.html">CustomGPTs</a></li>
-        <li><a href="../blog.html">Blog</a></li>
-        <li><a href="../apps.html">Apps</a></li>
-        <li><a href="../games.html">Games</a></li>
-        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-      </ul> 
-    </div>
-    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
-    <script>
-      document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>   
-  </footer>
+                leftButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // Prevent default touch behavior
+                    if (!moveLeftInterval) {
+                        moveLeftInterval = setInterval(() => {
+                            playerPaddle.body.setVelocityX(-playerSpeed);
+                        }, 16);
+                    }
+                });
+
+                leftButton.addEventListener('touchend', () => {
+                    clearInterval(moveLeftInterval);
+                    moveLeftInterval = null;
+                    playerPaddle.body.setVelocityX(0);
+                });
+
+                // Move right on button press
+                rightButton.addEventListener('mousedown', () => {
+                    if (!moveRightInterval) {
+                        moveRightInterval = setInterval(() => {
+                            playerPaddle.body.setVelocityX(playerSpeed);
+                        }, 16); // Runs roughly at 60 FPS
+                    }
+                });
+
+                rightButton.addEventListener('mouseup', () => {
+                    clearInterval(moveRightInterval);
+                    moveRightInterval = null;
+                    playerPaddle.body.setVelocityX(0);
+                });
+
+                rightButton.addEventListener('mouseleave', () => {
+                    clearInterval(moveRightInterval);
+                    moveRightInterval = null;
+                    playerPaddle.body.setVelocityX(0);
+                });
+
+                rightButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    if (!moveRightInterval) {
+                        moveRightInterval = setInterval(() => {
+                            playerPaddle.body.setVelocityX(playerSpeed);
+                        }, 16);
+                    }
+                });
+
+                rightButton.addEventListener('touchend', () => {
+                    clearInterval(moveRightInterval);
+                    moveRightInterval = null;
+                    playerPaddle.body.setVelocityX(0);
+                });
+            }
+
+            function handlePauseButton() {
+                togglePause(game.scene.scenes[0]);
+            }
+
+            function handleRestartButton() {
+                restartGame(game.scene.scenes[0]);
+            }
+
+            function gameOver(scene, message) {
+                isGameOver = true;
+                ball.body.setVelocity(0, 0);
+                winText.setText(message);
+            }
+        </script>
+        <footer>
+            <div class="footer-container">
+                <ul class="footer-links">
+                    <li><a href="../index.html">About Me</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
+                    <li><a href="../gpts.html">CustomGPTs</a></li>
+                    <li><a href="../blog.html">Blog</a></li>
+                    <li><a href="../apps.html">Apps</a></li>
+                    <li><a href="../games.html">Games</a></li>
+                    <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                    <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                </ul>
+            </div>
+            <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+            <script>
+                document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            </script>
+        </footer>
 </body>
+
 </html>
