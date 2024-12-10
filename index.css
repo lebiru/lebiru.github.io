@@ -121,8 +121,8 @@
   background-image: url('images/hero/hero-3.png');
 }
 
-/* .carousel-item--4 .carousel-item__image{
-  background-image: url('https://images.pexels.com/photos/1008732/pexels-photo-1008732.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
+.carousel-item--4 .carousel-item__image{
+  background-image: url('images/hero/hero-4.png');
 }
 
 .carousel-item--5 .carousel-item__image{
