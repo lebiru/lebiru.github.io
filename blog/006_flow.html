@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <title>The Flow of Programming</title>
+    <meta name="author" content="Bilal A." />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+
+            <h1>The Flow of Programming</h1>
+
+            <section>
+                <p>How do successful teams consistently ship high-quality software while managing the chaos of constant code updates? Take for example the Linux Operating System, which averages about <a target="_blank" href="https://www.sobyte.net/post/2022-01/linux-kernel-2021-highlights">202 code commits per day</a>. How is software at this scale managed in a way to know what is going out, while also developing for what's to come in the future?</p>
+                <p>The answer lies in adopting a well-defined programming workflow. Without clear systems for managing code updates, even the best developers can face unnecessary friction, delayed deployments, or bugs slipping into production. The de facto versioning control system "Git" offers a variety of patterns that simplify these processes, with GitFlow and Trunk-Based Development standing out as the two most widely used approaches.</p>
+                <p>In this blog post I will delve into these two programming flows, helping you understand their strengths and challenges. By the end, you’ll be equipped to choose the workflow that best suits your team’s needs.</p>
+            </section>
+
+            <section>
+                <h2>GitFlow: The Stable Yet Complex Flow</h2>
+                <p>GitFlow is a structured pattern for using Git to manage code updates seamlessly. While Git serves as the underlying tool, GitFlow provides the methodology and guidelines for organizing work within a version-controlled system. This structure allows teams to collaborate efficiently while maintaining clear pathways for development and production-ready code.</p>
+                <p>The foundation of GitFlow lies in its branch structure:</p>
+                <ul>
+                    <li><strong>Develop Branch</strong>: The central branch where all code updates converge before they are prepared for release.</li>
+                    <li><strong>Feature Branch</strong>: Temporary branches used for isolated changes such as features or bug fixes. These branches end their lifecycle after their changes are merged through a Pull Request.</li>
+                    <li><strong>Release Branch</strong>: A branch designated for preparing a specific release, often bundling multiple features or fixes. These are semantically versioned to track deployment readiness.</li>
+                    <li><strong>Main Branch</strong>: The production branch containing stable, tagged versions. Updates to this branch come exclusively from the release branch.</li>
+                </ul>
+                <p>GitFlow excels in environments with multiple developers and high commit rates, offering robust controls and clear separation of responsibilities. However, this flow comes with complexity. Hotfixes, for example, need to be merged into multiple branches, and managing releases demands careful supervision. Teams must be disciplined to effectively implement and maintain GitFlow.</p>
+            </section>
+
+            <section>
+                <h2>Trunk-Based: The Fast Yet Simple Flow</h2>
+                <p>Trunk-Based Development offers a simpler alternative to GitFlow by drastically reducing the number of branches used. Instead of maintaining multiple long-lived branches, this approach emphasizes continual merges into a single “trunk” branch, often referred to as the develop, main, or production branch.</p>
+                <p>At its core, Trunk-Based Development relies on a unified branch that serves as the hub for all updates. Developers frequently commit small, incremental changes to this branch, ensuring the codebase remains up to date and ready for deployment. In some implementations, this trunk branch is deployed directly to production.</p>
+                <p>The advantages of this approach lie in its simplicity. Fewer branches mean fewer conflicts and reduced management overhead. Frequent merges also lead to faster, more iterative deployments. However, this flow demands a disciplined team and a strong emphasis on code quality. Rollbacks can be more challenging since changes are integrated directly into the trunk, making it critical to maintain stability. It is even more important to ensure code changes do not break the branch when taking this approach.</p>
+            </section>
+
+            <section>
+                <h2>Comparison Table</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Workflow</th>
+                            <th>Pros</th>
+                            <th>Cons</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>GitFlow</strong></td>
+                            <td>
+                                <ul>
+                                    <li>Provides robust control and stability for large teams.</li>
+                                    <li>Clear pathways for development and production-ready code.</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>High complexity; requires disciplined supervision and management of multiple
+                                        branches.</li>
+                                    <li>Hotfixes need to be merged into multiple branches, increasing overhead.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trunk-Based</strong></td>
+                            <td>
+                                <ul>
+                                    <li>Simplifies Git management with fewer branches.</li>
+                                    <li>Encourages frequent, incremental deployments.</li>
+                                    <li>Reduces conflicts and management overhead.</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Harder to rollback changes as all updates go into a single branch.</li>
+                                    <li>Requires high code quality and discipline to avoid destabilizing the trunk.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Best Practices</h2>
+                <p>Regardless of the flow you choose, certain best practices can help you maintain an efficient workflow:</p>
+                <ul>
+                    <li>Always open Pull Requests for features or fixes to allow for peer review.</li>
+                    <li>Use Git history to verify the accuracy of production deployments.</li>
+                    <li>For urgent hotfixes, branch off the production version, apply the fix, and merge it back into all relevant branches.</li>
+                </ul>
+                <p>These practices ensure your team can handle features, fixes, and deployments with minimal disruption.
+                </p>
+            </section>
+
+            <section>
+                <p>Whether you choose GitFlow or Trunk-Based Development, the ultimate goal is to streamline your code versioning process. A well-chosen flow eliminates friction and allows your team to focus on the exciting parts of programming: building and improving your app. By adopting a thoughtful approach to version control, you can reduce complexity and foster a more productive development environment.</p>
+                <p>How does your team handle deployments? Do you prefer GitFlow, Trunk-Based Development, or a hybrid approach? Share your experiences and insights in the comments below. Let’s explore how different teams achieve the flow of programming!</p>
+            </section>
+
+            <section>
+                <h2>Additional Resources</h2>
+                <ul>
+                    <li><a target="_blank" href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model by Vincent Driessen</a></li>
+                    <li><a target="_blank" href="https://dora.dev/capabilities/trunk-based-development/">Trunk-Based Development</a></li>
+                </ul>
+            </section>
+
+        <div id="disqus_thread"></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url = "https://lebiru.github.io/blog/006_flow.html";
+                this.page.identifier = "006_flow";
+            };
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://lebiru.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a target="_blank"
+                href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
