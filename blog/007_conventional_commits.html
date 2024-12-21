@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how Conventional Commits can transform your development workflow with clear commit messages, automated releases, and improved team collaboration." />
+    <title>The Art of Conventional Commits</title>
+    <meta name="author" content="Bilal A." />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+
+        <h1>The Art of Conventional Commits 🖋️</h1>
+        <section>
+            <p>Picture this: It's deployment day, and the production server is on fire. Your team is scrambling to
+                identify
+                the cause, but the commit history looks like a cryptic diary:
+                <code>"fixed stuff," "updates," "another fix."</code> Frustration mounts as no one can trace the issue
+                quickly, and the team burns hours trying to untangle the mess.
+            </p>
+
+            <section>
+                <div style="text-align: center; margin: 25px 0px;">
+                    <img src="../images/ambiguous-git-history.png" alt="a developer having a bad time because git history is ambiguous" width="500px">
+                </div>
+                <div style="text-align: center;"><p><em>Another evening lost because of a cryptic git history!</em></p></div>
+            </section>
+
+            <p>This nightmare scenario is all too familiar for many development teams.</p>
+            <p>But it doesn’t have to be this way.</p>
+        </section>
+        <section>
+            <p>Enter <strong>Conventional Commits</strong>: a standardized format for writing commit messages that
+                brings
+                order to the chaos and sets your team up for success.</p>
+            <p>By the end of this post, you’ll understand how Conventional Commits work and why they’re important.
+                You’ll
+                learn how to structure clear and consistent commit messages, improve teamwork, and simplify your
+                development
+                process. Plus, you’ll pick up practical tips to help your team adopt this system and make your workflow
+                more
+                efficient.</p>
+        </section>
+
+        <section>
+            <h3>What Are Conventional Commits?</h3>
+            <p>Conventional Commits is a lightweight convention for writing commit messages. It specifies a structure
+                that
+                not only makes messages more readable but also <em>empowers</em> teams to automate workflows like
+                versioning, changelog generation, and CI/CD pipelines.</p>
+            <p>A Conventional Commit message typically includes a <strong>type</strong>, an optional
+                <strong>scope</strong>,
+                and a <strong>description</strong>, making it immediately clear what the commit does.
+            </p>
+        </section>
+
+
+        <h3>What Does A Conventional Commit Look Like?</h3>
+        <pre><code>feat: add navigation bar to dashboard
+        
+Added a fully responsive navigation bar to the dashboard.
+        </code></pre>
+        <p>This format allows other developers to instantly understand that a new feature ("feat") was added and what it
+            does.</p>
+        <h3>What Does An Ambiguous Commit Look Like?</h3>
+        <pre><code>updated stuff
+        </code></pre>
+        <p>This commit message is vague and provides no context about what was updated. Without clear information, team
+            members can’t quickly identify what changes were made or why. For example, it’s unclear whether this was a
+            bug fix, a new feature, or a minor style adjustment. Poor commit messages like this slow down debugging,
+            hinder collaboration, and reduce the overall quality of the project’s history.</p>
+
+        <h3>Conventional Commit Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th><strong>Type</strong></th>
+                    <th><strong>Purpose</strong></th>
+                    <th><strong>Semantic Version Increment</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>feat</code></td>
+                    <td>Indicates a new feature.</td>
+                    <td>Minor (e.g., <code>1.0.0</code> to <code>1.1.0</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>fix</code></td>
+                    <td>Represents a bug fix.</td>
+                    <td>Patch (e.g., <code>1.0.0</code> to <code>1.0.1</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>docs</code></td>
+                    <td>Documentation changes (e.g., README updates).</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><code>style</code></td>
+                    <td>Code style changes (e.g., formatting, white-space) that do not affect functionality.</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><code>refactor</code></td>
+                    <td>Code changes that neither fix a bug nor add a feature.</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><code>test</code></td>
+                    <td>Adding or modifying tests.</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td><code>BREAKING CHANGE</code></td>
+                    <td>Highlights a major change that requires user action (e.g., API redesign).</td>
+                    <td>Major (e.g., <code>1.0.0</code> to <code>2.0.0</code>)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Each commit message is a self-contained unit of information, with types like <code>feat</code>, which
+            signifies a new feature, or <code>fix</code>, which denotes a bug fix. <code>docs</code> is used for
+            documentation updates, while <code>style</code> covers non-functional formatting changes like whitespace
+            adjustments. The <code>refactor</code> type applies to restructuring code without altering behavior, and
+            <code>test</code> focuses on additions or modifications to tests. The <code>BREAKING CHANGE</code> tag
+            signals major updates requiring user action, often tied to significant system or API overhauls. This
+            structured approach ensures that your commit history is not just meaningful but actionable, offering clear
+            insights for debugging and project tracking.
+        </p>
+
+        <h3>Conventional Commit Benefits</h3>
+        <h4>1. Consistency Across Commit Messages</h4>
+        <p>A uniform structure ensures that all commit messages are clear, easy to read, and meaningful, fostering
+            better collaboration across teams. For example, instead of vague messages like <code>"changes"</code>,
+            developers can use messages like <code>fix(auth): resolve login issue</code>. This clarity ensures everyone
+            understands the context of a change immediately.</p>
+        <h4>2. Automated Release Management</h4>
+        <p>Tools like <strong>semantic-release</strong> can parse commit messages to automatically determine the next
+            version number and publish releases. For instance, a <code>feat: add dark mode</code> commit can trigger a
+            minor version bump, while a <code>fix: correct typo in navbar</code> commit might result in a patch release.
+            This automation saves time and reduces manual errors during versioning.</p>
+        <h4>3. Easier Changelog Generation</h4>
+        <p>Adhering to this convention allows tools to automatically generate changelogs that accurately reflect changes
+            in the codebase. For example, commits labeled <code>feat</code> and <code>fix</code> can be listed under
+            "Features" and "Bug Fixes" sections, respectively, providing a clear overview of updates in each release.
+        </p>
+        <h4>4. Improved Traceability</h4>
+        <p>Commit types and scopes provide clear context, making it easier to trace changes and debug issues. For
+            example, if a bug reappears in a deployment, the commit message
+            <code>fix(payment): handle null pointer exception</code> immediately directs the team to the relevant code
+            and context for debugging.
+        </p>
+        <h4>5. Enhanced CI/CD Integration</h4>
+        <p>Conventional Commits can trigger specific CI/CD workflows. For instance, a
+            <code>feat: implement search functionality</code> commit might deploy a feature branch to staging, while a
+            <code>fix: resolve API timeout issue</code> commit could automatically run regression tests to verify
+            stability. This integration ensures smoother and faster development cycles.
+        </p>
+
+        <p>For larger teams, enforcing commit standards can be automated using <strong>prehook scripts</strong>. Prehook
+            scripts are scripts that run before a commit is finalized in Git. They validate the commit message format to
+            ensure it aligns with standards like Conventional Commits, and they can also perform additional checks such
+            as running linters or unit tests to maintain code quality. For example, you can use a tool like
+            <strong>Husky</strong> to implement a prehook that checks if the commit message starts with a valid type,
+            such as <code>feat</code>, <code>fix</code>, or <code>docs</code>. Additionally, a prehook can block commits
+            if tests fail, preventing broken code from entering the repository. This automation ensures that only
+            properly formatted and tested commits are pushed, saving time during reviews and reducing errors in
+            production.
+        </p>
+
+        <p>While tools and scripts help enforce the standard, the real success lies in making this approach a team
+            habit. Regularly discuss the importance of meaningful commit messages, and review them during code reviews
+            to reinforce the practice.</p>
+
+        <p>Conventional Commits are a simple yet powerful way to bring structure, clarity, and efficiency to your
+            development workflow. From enabling automated releases to improving collaboration, this methodology
+            positions your team for long-term success.</p>
+        <p>What do you think about Conventional Commits? Are there other strategies you’ve found helpful for maintaining
+            clean commit histories? Share your thoughts in the comments below!</p>
+
+
+        <div id="disqus_thread"></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url = "https://lebiru.github.io/blog/007_conventional_commits.html";
+                this.page.identifier = "007_conventional_commits";
+            };
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://lebiru.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a target="_blank"
+                href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
