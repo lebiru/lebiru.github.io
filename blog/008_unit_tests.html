@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how to use unit testing in .NET to ensure your code is robust and maintainable. Explore practical examples, xUnit Theory attributes, and parameterized tests for efficient and scalable testing." />
+    <title>Unit Testing in .NET: Automated Quality Assurance for Your Code ⚗️</title>
+    <meta name="author" content="Bilal A." />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: darkgray;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+
+        <h1>Unit Testing in .NET: Automated Quality Assurance for Your Code ⚗️</h1>
+
+        <p>Have you ever imagined a job where your work is automatically checked and graded almost instantly? For programmers, this dream is a reality, thanks to unit testing. Like an engineering architect ensuring their blueprints are structurally sound, programmers use unit tests to validate the foundations of their code before building on it.</p>
+    
+        <img src="../images/passing-unit-tests.png" style="width: 20em; height: auto; margin: 0 auto; display: block;" />
+        <p class="image-caption" >Another successful day thanks to unit tests!</p>
+
+        <p>By the end of this post, you will have a solid understanding of what unit tests are and how to use the powerful <code>Theory</code> attribute in xUnit to test multiple scenarios efficiently. Let’s dive into what unit testing is, why it matters, and how you can use it effectively in .NET.</p>
+    
+        <h2>What Is Unit Testing?</h2>
+        <p>Unit testing is a development practice where isolated parts of your code - called “units” - are tested to ensure they behave as expected. Developers write tests to check the correctness of their code and get rapid feedback on whether their changes are successful or not. A well-formed unit test typically follows an "expected vs. actual" approach, where the developer defines the expected outcome and verifies that the actual result matches this expectation. This structure ensures clarity and precision in validating the behavior of the code.</p>
+    
+        <h3>Why Unit Testing Pays Off</h3>
+        <p>Unit testing offers a range of benefits that make it an invaluable part of the development process. By acting as a safety net, unit tests ensure that future changes to the codebase do not introduce bugs, enabling developers to confidently refactor or add new features. Furthermore, unit tests provide clear documentation of the expected behavior of your code, helping both developers and users understand how the application should function. This combination of error prevention and improved clarity makes unit testing a critical tool for delivering robust and maintainable software.</p>
+    
+        <h3>Assign, Act, Assert</h3>
+        <p>The "Assign, Act, Assert" pattern is the foundation of writing clear and effective unit tests. This structure ensures that tests are well-organized and easy to understand. In the Assign phase, you set up the necessary preconditions or inputs, such as creating objects or initializing variables. The Act phase involves invoking the method or function being tested, simulating the behavior you want to verify. Finally, the Assert phase checks that the actual outcome matches the expected result, confirming that the code behaves as intended. This systematic approach makes it easier to identify the purpose of each part of the test and quickly pinpoint issues when something fails. Following this pattern not only improves test readability but also enhances maintainability, as each test becomes a concise verification of a specific behavior.</p>
+
+        <h2>Creating a Simple Calculator App with Unit Tests</h2>
+        <p>We’ll create a simple app called <code>Lebiru.Calculator</code> that performs basic arithmetic operations: addition, subtraction, multiplication, and division. We will use unit tests to verify the correctness of each mathematical operation as well.</p>
+    
+        <p>The following is written in C#, but can be applicable for any language.</p>
+
+        <h3>Step 1: Define the Interface</h3>
+        <p>First, let’s define an interface <code>IOperation</code> to ensure that all operations follow a standard <code>Execute</code> method:</p>
+        <pre class="code-block"><code>public interface IOperation 
+{
+    double Execute(double num1, double num2);
+}</code></pre>
+    
+        <h3>Step 2: Write the Operations</h3>
+        <p>Next, implement the <code>Execute</code> method for each of the four classes for the basic math operations: <code>Addition</code>, <code>Subtraction</code>, <code>Multiplication</code>, and <code>Division</code>.</p>
+        <pre class="code-block"><code>public class Addition : IOperation 
+{
+    public double Execute(double num1, double num2) => num1 + num2;
+}
+    
+public class Subtraction : IOperation 
+{
+    public double Execute(double num1, double num2) => num1 - num2;
+}
+    
+public class Multiplication : IOperation 
+{
+    public double Execute(double num1, double num2) => num1 * num2;
+}
+    
+public class Division : IOperation 
+{
+    public double Execute(double num1, double num2) 
+    {
+            return num1 / num2;
+    }
+}</code></pre>
+    
+        <h3>Step 3: Build the Console Application</h3>
+        <p>Finally, create the main logic that interacts with these operations:</p>
+        <pre class="code-block"><code>// Welcome message
+Console.WriteLine("Welcome to Lebiru.Calculator!");
+
+// Keep running this app unless user stops it
+while (true)
+{
+    // Display menu for user selection
+    Console.WriteLine("\nPlease select an operation:");
+    Console.WriteLine("1: Addition");
+    Console.WriteLine("2: Subtraction");
+    Console.WriteLine("3: Multiplication");
+    Console.WriteLine("4: Division");
+    Console.WriteLine("0: Exit");
+
+    // Await user input
+    Console.Write("Enter your choice: ");
+    string input = Console.ReadLine();
+
+    // Exit app condition
+    if (input == "0")
+    {
+        Console.WriteLine("Thank you for using the calculator. Goodbye!");
+        break;
+    }
+
+    // Store the first number if it is really a number
+    Console.Write("Enter the first number: ");
+    if (!double.TryParse(Console.ReadLine(), out double num1))
+    {
+        Console.WriteLine("Invalid input. Please enter a valid number.");
+        continue;
+    }
+
+    // Store the second number if it is really a number
+    Console.Write("Enter the second number: ");
+    if (!double.TryParse(Console.ReadLine(), out double num2))
+    {
+        Console.WriteLine("Invalid input. Please enter a valid number.");
+        continue;
+    }
+
+    // Initialize the mathematical operation depending on the switch
+    IOperation operation = input switch
+    {
+        "1" => new Addition(),
+        "2" => new Subtraction(),
+        "3" => new Multiplication(),
+        "4" => new Division(),
+        _ => null
+    };
+
+    if (operation == null)
+    {
+        Console.WriteLine("Invalid choice. Please select a valid operation.");
+    }
+    else
+    {
+        try
+        {
+            // Execute the mathematical operation
+            double result = operation.Execute(num1, num2);
+            Console.WriteLine($"Result: {result}");
+        }
+        catch (Exception ex)
+        {
+            // Display error if execute operation failed
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}</code></pre>
+    
+        <p>If we run the app we can see the mathematical operations are running:</p>
+        <img src="../images/blog-images/008_unit_tests/running-the-app.png" />
+
+        <h2>The Case for Unit Testing</h2>
+        <p>Imagine dividing by zero in your calculator app. Without proper handling, you’ll likely encounter an unpleasant surprise:</p>
+    
+        <img src="../images/divide-by-zero.png" />
+
+        <p>The application outputs ∞ as the result when dividing by zero. For our simple calculator, we want to prevent the calculation from running and display an error to the user saying you cannot divide by zero.</p>
+
+        <h3>Step 4: Write a Unit Test for Division</h3>
+        <p>Using xUnit, we’ll write a test to handle the divide-by-zero scenario:</p>
+        <pre class="code-block"><code>[Fact]
+public void Division_ThrowsExceptionOnDivideByZero() {
+    var division = new Division();
+    Action act = () => division.Execute(10, 0);
+    act.Should().Throw&lt;DivideByZeroException&gt;()
+        .WithMessage("Division by zero is not allowed.");
+}</code></pre>
+
+        <p>Run the test and see that the unit test fails because our division method does not throw an exception (yet!):</p>
+        <img src="../images/blog-images/008_unit_tests/unit-test-failing.png" style="width: 45em; height: auto; margin: 0 auto; display: block;" />
+
+        <h3>Step 5: Fix the Code and Re-Test</h3>
+        <p>Update the <code>Division</code> class to throw the exception as per below:</p>
+        <pre class="code-block"><code>public class Division : IOperation 
+{
+    public double Execute(double num1, double num2) 
+    {
+        if (num2 == 0) throw new DivideByZeroException("Division by zero is not allowed.");
+        return num1 / num2;
+    }
+}</code></pre>
+    
+        <p>Re-run the test, and now it passes! This means our divide-by-zero scenario is clear and properly handled.</p>
+        <pre><code>Passed Lebiru.Calculator.Tests.OperationTests.Division_ThrowsExceptionOnDivideByZero(num1: 10, num2: 0) [< 1 ms]</code></pre>
+
+        <h2>Testing Multiple Scenarios Using Theory Attribute</h2>
+        <p>The beauty of unit testing is how easily you can scale it. By using xUnit’s <code>[Theory]</code> and <code>[InlineData]</code> attributes, you can run multiple scenarios without duplicating code.</p>
+    
+        <h3>Parameterize Your Tests</h3>
+        <p>Each inline data parameter corresponds to the function arguments in order. So, for the first inline data attribute
+            num1 is 2, num2 is 3, and expected is 5. By parameterizing the test method we can open up different testing scenarios easily and ensure the code passes
+            by also passing the expected value and relying on the unit test to "run" the actual value.
+        </p>
+        <pre class="code-block"><code>[Theory]
+[InlineData(2, 3, 5)]
+[InlineData(-1, -1, -2)]
+[InlineData(0, 0, 0)]
+[InlineData(100, 200, 300)]
+public void Addition_ReturnsCorrectResult(double num1, double num2, double expected) 
+{
+    var addition = new Addition();
+    var result = addition.Execute(num1, num2);
+    result.Should().Be(expected);
+}</code></pre>
+    
+<h3>Run the Tests</h3>
+<p>Running the tests is where all the hard work pays off. With parameterized tests, you can validate multiple scenarios without duplicating code, making your suite both efficient and comprehensive. Each test run acts as a checkpoint, ensuring your app behaves as expected across a variety of inputs. When all tests pass, it’s a green light to proceed with confidence, knowing that your code is robust and reliable. And when something fails, the precise feedback guides you directly to the issue, saving valuable debugging time. This iterative process not only solidifies your app’s foundation but also reinforces a culture of continuous improvement. Testing is no longer a chore—it becomes a rewarding step in crafting high-quality software.</p>
+
+<h3>Clone the Lebiru.Calculator App and Try It Out!</h3>
+<p>You can clone the repo and try running this application locally on your computer!</p>
+<a target="_blank" href="https://github.com/lebiru/Lebiru.Calculator">View the Repo on GitHub</a>
+
+<h2>Bonus: Add Advanced Operations</h2>
+<p>If you’re ready to take your skills to the next level, consider adding more complex mathematical operations, such as <code>Power</code> and <code>Log</code>. These operations will challenge you to handle edge cases and refine your testing techniques. For instance, what happens when you raise a number to the power of zero, or take the logarithm of a negative number? Writing unit tests for these scenarios not only deepens your understanding of the math involved but also strengthens your ability to anticipate and address potential issues in your code.</p>
+
+<h2>Conclusion</h2>
+<p>Unit testing is more than just a safety net; it’s a powerful tool that empowers developers to write better, more reliable code. By incorporating unit tests into your workflow, you gain the confidence to make changes without fear of breaking existing functionality. Unit tests document the expected behavior of your code, making it easier for other developers (and your future self) to understand and maintain it. They also foster a culture of collaboration, where testing becomes an integral part of the development process rather than an afterthought.</p>
+
+<p>Adopting unit tests doesn’t just protect your code from bugs; it streamlines your workflow by identifying issues early in the development cycle. This proactive approach saves countless hours of debugging and ensures a smoother user experience. Additionally, testing frameworks like xUnit provide powerful tools such as the `Theory` attribute, allowing you to cover multiple scenarios with minimal effort. This scalability makes unit testing a long-term investment in the quality and maintainability of your application.</p>
+
+<p>So, the next time you sit down to write code, remember the value of testing as an integral part of the process. Don’t just focus on getting the code to work once—ensure it works every time, under every condition. By embracing unit testing, you’re not just building software; you’re crafting solutions that are robust, reliable, and ready to stand the test of time.</p>
+
+
+        <div id="disqus_thread"></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url = "https://lebiru.github.io/blog/008_unit_tests.html";
+                this.page.identifier = "008_unit_tests";
+            };
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://lebiru.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a target="_blank"
+                href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
