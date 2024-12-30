@@ -218,7 +218,7 @@ while (true)
         <p>The application outputs ∞ as the result when dividing by zero. For our simple calculator, we want to prevent the calculation from running and display an error to the user saying you cannot divide by zero.</p>
 
         <h3>Step 4: Write a Unit Test for Division</h3>
-        <p>Using xUnit, we’ll write a test to handle the divide-by-zero scenario:</p>
+        <p>Using xUnit and <a target="_blank" href="https://github.com/fluentassertions/fluentassertions">FluentAssertions</a> we’ll write a test to handle the divide-by-zero scenario:</p>
         <pre class="code-block"><code>[Fact]
 public void Division_ThrowsExceptionOnDivideByZero() {
     var division = new Division();
