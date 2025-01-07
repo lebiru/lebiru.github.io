@@ -198,6 +198,7 @@ input[type="range"] {
   align-items: center;
   margin-top: 20px;
   font-family: Arial, sans-serif;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 .author-pic {
@@ -212,6 +213,7 @@ input[type="range"] {
 .author-details {
   display: flex;
   flex-direction: column;
+  flex: 1; /* Ensures the details take up available space */
 }
 
 .author-name {
