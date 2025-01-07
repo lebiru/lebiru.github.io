@@ -199,11 +199,15 @@ input[type="range"] {
   margin-top: 20px;
   font-family: Arial, sans-serif;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  width: 100%; /* Ensures it uses the full width of the container */
+  max-width: 500px; /* Prevents it from becoming too wide */
 }
 
 .author-pic {
   width: 50px;
   height: 50px;
+  max-width: 50px; /* Ensures the image doesn't scale beyond this size */
+  max-height: 50px;
   border-radius: 50%;
   margin-right: 15px;
   object-fit: cover;
@@ -213,7 +217,8 @@ input[type="range"] {
 .author-details {
   display: flex;
   flex-direction: column;
-  flex: 1; /* Ensures the details take up available space */
+  flex: 1; /* Ensures the details take up the available space */
+  min-width: 0; /* Prevents overflow of text */
 }
 
 .author-name {
@@ -221,12 +226,16 @@ input[type="range"] {
   font-weight: bold;
   margin: 0;
   color: #333;
+  max-width: 100%; /* Prevents overflowing text */
+  word-wrap: break-word; /* Ensures long text breaks properly */
 }
 
 .post-date {
   font-size: 0.9em;
   color: #777;
   margin: 5px 0 0 0;
+  max-width: 100%; /* Prevents overflowing text */
+  word-wrap: break-word; /* Ensures long text breaks properly */
 }
 
 /* Responsive layout for smaller screens */
@@ -272,6 +281,8 @@ input[type="range"] {
   }
 
   .author-pic {
+    width: 40px;
+    height: 40px;
     margin-right: 0;
     margin-bottom: 10px; /* Add spacing between image and text */
   }
