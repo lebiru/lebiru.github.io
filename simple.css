@@ -238,6 +238,20 @@ input[type="range"] {
   word-wrap: break-word; /* Ensures long text breaks properly */
 }
 
+.image-caption {
+  font-style: italic;
+  color: darkgray;
+  text-align: center;
+  width: 100%;
+}
+
+.blog-hero-image {
+  width: 20em; 
+  height: auto; 
+  margin: 0 auto; 
+  display: block;
+}
+
 /* Responsive layout for smaller screens */
 @media (max-width: 600px) {
   .footer-links {
