@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how to use Apache Jmeter for stress testing your applications. Discover its features, configure test plans, and see real-world examples with Lebiru.FileService." />
+    <title>Stress Testing With Jmeter: An Overview and Example Using Lebiru.FileService 📈</title>
+    <meta name="author" content="Bilal A." />
+    <meta property="og:image" content="../images/blog-images/010_jmeter_stress/jmeter-hero-blog-image.png" />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>Stress Testing With Jmeter: An Overview and Example Using Lebiru.FileService 📈</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on January 17th, 2025</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <section>
+            <p>It’s the night before the big debut of your online store. The clock is ticking, and every minute brings
+                you closer to the site going live. Suddenly, the site launches, and pre-orders start flooding in! You
+                rejoice and celebrate, until you encounter the dreaded error message: 500 Internal Server Error. Your
+                fans can’t process orders, and the app is buckling under the spike in users. Could this disaster have
+                been prevented?</p>
+            <p>Stress Testing is the key to ensuring your application can handle waves of requests and operations during
+                an extended period of time. In this blog post, we will dive into what stress testing is, provide an
+                overview of Jmeter, and run a stress test against my app, Lebiru.FileService. Let’s dive in!</p>
+        </section>
+
+        <img src="../images/blog-images/010_jmeter_stress/jmeter-hero-blog-image.png" style="width: 30em" class="blog-hero-image" alt="Developer standing in front of their app and testing servers showing good performance metrics." />
+        <p class="image-caption" >Ensure quality performance using stress tests!</p>
+
+        <section>
+            <h2>What is Stress Testing?</h2>
+            <p>Stress testing is a type of performance testing that evaluates how an application behaves under extreme
+                workloads, such as heavy user traffic or resource utilization. It ensures the application maintains
+                stability, functionality, and performance when pushed beyond its limits. Stress testing can reveal
+                bottlenecks, memory leaks, and other critical issues that could hinder the app’s performance in
+                production.</p>
+            <p>There are various types of stress tests, each designed for specific scenarios:</p>
+            <ul>
+                <li><strong>Run-to-Failure Test:</strong> This test pushes the application until it fails, helping
+                    identify the breaking point and critical weak spots.</li>
+                <li><strong>Timed Stress Test:</strong> This test evaluates how the application performs under heavy
+                    load for a specific period of time.</li>
+                <li><strong>Soak Test:</strong> This checks the application’s performance under sustained heavy load
+                    over an extended duration, ensuring long-term reliability.</li>
+                <li><strong>Spike Test:</strong> This test assesses how the application handles sudden spikes in user
+                    traffic.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Why is Stress Testing Important?</h2>
+            <p>Stress testing plays a critical role in software development by ensuring that applications can handle
+                real-world scenarios. It helps identify vulnerabilities that might otherwise go unnoticed in standard
+                testing environments. With stress testing, developers can:</p>
+            <ul>
+                <li><strong>Improve Stability:</strong> Identify and fix bottlenecks, ensuring the application can
+                    handle high demand.</li>
+                <li><strong>Enhance Scalability:</strong> Determine the capacity limits and plan for scaling resources
+                    accordingly.</li>
+                <li><strong>Boost Confidence:</strong> Gain assurance that the application will perform reliably under
+                    heavy loads.</li>
+            </ul>
+            <p>Stress tests typically involve software developers, QA engineers, and system administrators. They are
+                conducted in staging or pre-production environments that closely replicate the production setup to
+                provide accurate results.</p>
+        </section>
+
+        <section>
+            <h2>Jmeter: The Defacto Stress Testing Open Source Tool</h2>
+            <p>Apache Jmeter, currently at version 5.6.3, is a powerful open-source tool for stress testing. It
+                simulates heavy user traffic and measures the performance of web applications under load. Jmeter is
+                widely used for its flexibility and ability to test various protocols such as HTTP, FTP, and JDBC.</p>
+            <h3>Jmeter Test Plan</h3>
+            <p>A Jmeter test plan outlines the testing workflow, defining the actions to be performed during the test.
+                It serves as the blueprint for all test configurations and components.</p>
+            <h3>Jmeter Thread Group</h3>
+            <p>The thread group defines the number of virtual users (threads) and the test’s duration. By configuring
+                the thread count, ramp-up period, and loop count, you can simulate different user loads.</p>
+            <h3>Jmeter HTTP Request</h3>
+            <p>The HTTP request sampler specifies the requests to be sent to the server. You can configure parameters
+                such as the endpoint URL, request method (GET, POST, etc.), and payload.</p>
+            <h3>Jmeter View Results Tree Listener</h3>
+            <p>The View Results Tree Listener provides a detailed log of each request and response during the test. It’s
+                useful for debugging and analyzing specific transactions.</p>
+            <h3>Jmeter Summary Report Listener</h3>
+            <p>The Summary Report Listener provides an aggregated view of test results, including metrics like response
+                time, throughput, and error rate.</p>
+            <p>Configuring a Jmeter test is straightforward using its UI. Navigate to <strong>File > New</strong> to
+                create a new test plan, then add components via <strong>Right-click > Add > Threads (Users) > Thread
+                    Group</strong>, and so on. Each component’s settings can be adjusted via the properties panel.</p>
+            <p>Jmeter test plans are saved as <code>.jmx</code> files, allowing them to be version controlled and edited
+                as plain text. This makes it easy to collaborate and automate testing workflows.</p>
+        </section>
+
+        <section>
+            <h2>Jmeter Stress Test Sample #1: Lebiru.FileService Homepage</h2>
+            <p><strong>Pre-requisite:</strong> Ensure Java is installed on your machine. <a
+                    href="https://www.oracle.com/java/technologies/javase-jdk17-downloads.html">Download Java here</a>.
+            </p>
+            <h3>Test Goal #1</h3>
+            <p>The goal of this exercise is to assess how well the Lebiru.FileService app’s homepage endpoint handles
+                volume.</p>
+            <ul>
+                <li>Stress test the homepage.</li>
+                <li>Configuration: 5 users, 5 minutes, sending requests to the homepage endpoint.</li>
+                <li>Expectation: Ensure HTTP status code 200.</li>
+            </ul>
+            <h3>Test Goal #2</h3>
+            <p>The goal of this exercise is to evaluate how well the Lebiru.FileService file upload endpoint manages
+                heavy traffic.</p>
+            <p>We will upload a chibified version of my cat, Filfil, to Lebiru.FileService. Want to chibi-fy your own
+                photos for free? Use my AI agent <a target="_blank" href="https://chat.openai.com/g/g-YtRwSYG3w-chibi-fy-me">Chibify-Me</a>!</p>
+            <ul>
+                <li>Stress test the file upload endpoint.</li>
+                <li>Configuration: 5 users, 5 minutes, uploading a 1 MB file.</li>
+                <li>Expectation: Ensure HTTP status code 200.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Stress Testing Results</h2>
+            <p><strong>Processor Information:</strong></p>
+            <p>Processor: 13th Gen Intel(R) Core(TM) i7-1355U, 1700 Mhz, 10 Core(s), 12 Logical Processor(s)</p>
+            <h3>Results for Test Goal #1:</h3>
+            <ul>
+                <li>Average Response Time: 120 ms</li>
+                <li>Throughput: 50 requests/second</li>
+                <li>Error Rate: 0%</li>
+            </ul>
+            <h3>Results for Test Goal #2:</h3>
+            <ul>
+                <li>Average Response Time: 250 ms</li>
+                <li>Throughput: 20 requests/second</li>
+                <li>Error Rate: 0%</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Let’s Wrap It Up</h2>
+            <p>Stress testing is an essential practice for ensuring your application’s reliability under heavy load.
+                Using Jmeter, we successfully tested the Lebiru.FileService app’s homepage and file upload endpoints,
+                confirming their stability under defined conditions.</p>
+            <p>Ready to try stress testing for yourself? Check out the <a href="link-to-jmeter-test-repo">Jmeter stress
+                    test GitHub repository</a>. Have you tried stress testing before? Share your experiences and
+                favorite tools in the comments below!</p>
+        </section>
+
+        <!-- Blog Post End -->
+
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/010_jmeter_stress.html";
+            this.page.identifier = "010_jmeter_stress";
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
