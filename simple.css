@@ -31,7 +31,7 @@ article {
 }
 
 article p {
-  line-height: 1.5em;
+  line-height: 2.0em;
 }
 
 body {
@@ -250,6 +250,10 @@ input[type="range"] {
   height: auto; 
   margin: 0 auto; 
   display: block;
+}
+
+ul {
+  line-height: 2.0em;
 }
 
 /* Responsive layout for smaller screens */
