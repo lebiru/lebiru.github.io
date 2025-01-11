@@ -313,4 +313,12 @@ ul {
     font-size: 0.85em; /* Adjust font size for readability */
   }
 
+  ul {
+    line-height: 1.0em;
+  }
+
+  article p {
+    line-height: 1.5em;
+  }
+
 }
