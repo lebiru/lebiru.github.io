@@ -256,6 +256,32 @@ ul {
   line-height: 2.0em;
 }
 
+ol {
+  line-height: 2.0em;
+}
+
+.info-box {
+  padding: 15px;
+  margin: 15px 0;
+  border: 1px solid #bee5eb;
+  border-radius: 5px;
+  background-color: #d1ecf1;
+  color: #0c5460;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.tip-box {
+  padding: 15px;
+  margin: 15px 0;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  background-color: #d4edda;
+  color: #155724;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
 /* Responsive layout for smaller screens */
 @media (max-width: 600px) {
   .footer-links {
@@ -314,6 +340,10 @@ ul {
   }
 
   ul {
+    line-height: 1.0em;
+  }
+
+  ol {
     line-height: 1.0em;
   }
 

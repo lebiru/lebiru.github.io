@@ -13,10 +13,11 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn how to use Apache Jmeter for stress testing your applications. Discover its features, configure test plans, and see real-world examples with Lebiru.FileService." />
-    <title>Stress Testing With Jmeter: An Overview and Example Using Lebiru.FileService 📈</title>
+    <meta name="description"
+        content="Learn how to use Apache JMeter for stress testing your applications. Discover its features, configure test plans, and see real-world examples with Lebiru.FileService." />
+    <title>Stress Testing With JMeter: An Overview and Example Using Lebiru.FileService 📈</title>
     <meta name="author" content="Bilal A." />
-    <meta property="og:image" content="../images/blog-images/010_jmeter_stress/jmeter-hero-blog-image.png" />
+    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-hero-blog-image.png" />
     <link rel="stylesheet" href="../simple.css" type="text/css" />
     <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
@@ -40,24 +41,15 @@
             font-size: 16px;
             text-align: left;
         }
-
-        th,
-        td {
+        th, td {
             padding: 12px;
             border: 1px solid #ddd;
         }
-
         th {
             background-color: #f4f4f4;
-            font-weight: bold;
         }
-
         tr:nth-child(even) {
             background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
         }
     </style>
 </head>
@@ -72,7 +64,7 @@
         <a href="../games.html">Games</a>
     </header>
     <article>
-        <h1>Stress Testing With Jmeter: An Overview and Example Using Lebiru.FileService 📈</h1>
+        <h1>Stress Testing With JMeter: An Overview and Example Using Lebiru.FileService 📈</h1>
 
         <div class="author-info">
             <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
@@ -92,11 +84,12 @@
                 been prevented?</p>
             <p>Stress Testing is the key to ensuring your application can handle waves of requests and operations during
                 an extended period of time. In this blog post, we will dive into what stress testing is, provide an
-                overview of Jmeter, and run a stress test against my app, Lebiru.FileService. Let’s dive in!</p>
+                overview of JMeter, and run a stress test against my app, Lebiru.FileService. Let’s dive in!</p>
         </section>
 
-        <img src="../images/blog-images/010_jmeter_stress/jmeter-hero-blog-image.png" class="blog-hero-image" alt="Developer standing in front of their app and testing servers showing good performance metrics." />
-        <p class="image-caption" >Ensure quality performance using stress tests!</p>
+        <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-hero-blog-image.png" class="blog-hero-image"
+            alt="Developer standing in front of their app and testing servers showing good performance metrics." />
+        <p class="image-caption">Ensure quality performance using stress tests!</p>
 
         <section>
             <h2>What is Stress Testing?</h2>
@@ -135,83 +128,266 @@
         </section>
 
         <section>
-            <h2>Jmeter: The Defacto Stress Testing Open Source Tool</h2>
-            <p>Apache Jmeter, currently at version 5.6.3, is a powerful open-source tool for stress testing. It
-                simulates heavy user traffic and measures the performance of web applications under load. Jmeter is
+            <h2>JMeter: The Defacto Stress Testing Open Source Tool</h2>
+            <p>Apache JMeter, currently at version 5.6.3, is a powerful open-source tool for stress testing. It
+                simulates heavy user traffic and measures the performance of web applications under load. JMeter is
                 widely used for its flexibility and ability to test various protocols such as HTTP, FTP, and JDBC.</p>
-            <h3>Jmeter Test Plan</h3>
-            <p>A Jmeter test plan outlines the testing workflow, defining the actions to be performed during the test.
-                It serves as the blueprint for all test configurations and components.</p>
-            <h3>Jmeter Thread Group</h3>
-            <p>The thread group defines the number of virtual users (threads) and the test’s duration. By configuring
-                the thread count, ramp-up period, and loop count, you can simulate different user loads.</p>
-            <h3>Jmeter HTTP Request</h3>
-            <p>The HTTP request sampler specifies the requests to be sent to the server. You can configure parameters
-                such as the endpoint URL, request method (GET, POST, etc.), and payload.</p>
-            <h3>Jmeter View Results Tree Listener</h3>
-            <p>The View Results Tree Listener provides a detailed log of each request and response during the test. It’s
-                useful for debugging and analyzing specific transactions.</p>
-            <h3>Jmeter Summary Report Listener</h3>
-            <p>The Summary Report Listener provides an aggregated view of test results, including metrics like response
-                time, throughput, and error rate.</p>
-            <p>Configuring a Jmeter test is straightforward using its UI. Navigate to <strong>File > New</strong> to
-                create a new test plan, then add components via <strong>Right-click > Add > Threads (Users) > Thread
-                    Group</strong>, and so on. Each component’s settings can be adjusted via the properties panel.</p>
-            <p>Jmeter test plans are saved as <code>.jmx</code> files, allowing them to be version controlled and edited
-                as plain text. This makes it easy to collaborate and automate testing workflows.</p>
+
+            <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-logo.png" class="blog-hero-image"
+            alt="Apache JMeter Logo" />
+            <p class="image-caption">Apache JMeter</p>
+            
         </section>
 
         <section>
-            <h2>Jmeter Stress Test Sample #1: Lebiru.FileService Homepage</h2>
-            <p><strong>Pre-requisite:</strong> Ensure Java is installed on your machine. <a
+            <h1>How to Download and Install JMeter on Windows</h1>
+            <ol>
+                <li>
+                    <h3>Download JMeter</h3>
+                    <ol>
+                        <li>
+                            <p>Visit the official JMeter website:
+                                <a href="https://jmeter.apache.org/download_jmeter.cgi" target="_blank">Apache JMeter
+                                    Download Page</a>.
+                            </p>
+                        </li>
+                        <li>
+                            <p>Under the <strong>Binaries</strong> section, click the link for the latest
+                                <code>.zip</code> file to download the JMeter package.</p>
+                        </li>
+                    </ol>
+                </li>
+
+                <li>
+                    <h3>Install JMeter</h3>
+                    <ol>
+                        <li>
+                            <p>Extract the downloaded <code>.zip</code> file:</p>
+                            <ul>
+                                <li>Right-click the file and select <strong>Extract All</strong>.</li>
+                                <li>Choose a folder (e.g., <code>C:\apache-jmeter</code>) to extract the files.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>Navigate to the extracted JMeter directory (e.g., <code>C:\apache-jmeter-x.x</code>).</p>
+                        </li>
+                    </ol>
+                </li>
+
+                <li>
+                    <h3>Set Up Java (Prerequisite)</h3>
+                    <ol>
+                        <li>
+                            <p>Check if Java is installed:</p>
+                            <pre><code>java -version</code></pre>
+                            <p>If Java is not installed, download and install the latest
+                                <a href="https://www.oracle.com/java/technologies/javase-downloads.html"
+                                    target="_blank">Java Development Kit (JDK)</a>.
+                            </p>
+                        </li>
+                        <li>
+                            <p>Set the <code>JAVA_HOME</code> environment variable:</p>
+                            <ul>
+                                <li>Open the <strong>Start Menu</strong>, search for <strong>Environment
+                                        Variables</strong>, and select <em>Edit the system environment variables</em>.
+                                </li>
+                                <li>In the <strong>System Properties</strong> window, click <strong>Environment
+                                        Variables</strong>.</li>
+                                <li>Under <strong>System variables</strong>, click <strong>New</strong> and set:
+                                    <ul>
+                                        <li><strong>Variable Name</strong>: <code>JAVA_HOME</code></li>
+                                        <li><strong>Variable Value</strong>: Path to your Java installation (e.g.,
+                                            <code>C:\Program Files\Java\jdk-x.x.x</code>).</li>
+                                    </ul>
+                                </li>
+                                <li>Click <strong>OK</strong> to save.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+
+                <li>
+                    <h3>Run JMeter</h3>
+                    <ol>
+                        <li>
+                            <p>Navigate to the JMeter <code>bin</code> directory (e.g.,
+                                <code>C:\apache-jmeter-x.x\bin</code>).</p>
+                        </li>
+                        <li>
+                            <p>Double-click the <code>jmeter.bat</code> file to start JMeter.</p>
+                        </li>
+                        <li>
+                            <p><strong>Optional:</strong> Run JMeter via Command Line:</p>
+                            <pre><code>jmeter.bat</code></pre>
+                        </li>
+                    </ol>
+                </li>
+
+                <li>
+                    <h3>Verify the Installation</h3>
+                    <p>Once JMeter starts, you should see the JMeter GUI. From here, you can begin creating and running your tests.</p>
+                </li>
+            </ol>
+
+            <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-successful-install.png" class="blog-hero-image"
+            alt="An image of what JMeter GUI looks like after a successful installation" />
+            <p class="image-caption">This is the opening GUI when running JMeter</p>
+
+        </section>
+
+        <section>
+            <h2>JMeter Components Overview</h2>
+
+            <p>JMeter components are the building blocks of a performance test plan, each serving a specific purpose in defining and executing tests. From configuring user behavior to collecting and analyzing test results, these components work together to simulate real-world scenarios and measure application performance effectively.</p>
+            
+            <p>Configuring a JMeter test is straightforward using its UI. Navigate to <strong>File > New</strong> to create a new test plan, then add components via <strong>Right-click > Add > Threads (Users) > Thread Group</strong>, and so on. Each component’s settings can be adjusted via the properties panel.</p>
+            
+            <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-components-overview.png" class="blog-hero-image"
+            alt="An image of the 5 JMeter Components" />
+            <p class="image-caption">JMeter Components: Test Plan, Thread Group, HTTP Request, Results Tree, Summary Report</p>
+
+            <p>Let’s explore five key JMeter components and their roles in creating robust test plans.</p>
+
+            <h3>Test Plan</h3>
+            <p>A JMeter test plan outlines the testing workflow, defining the actions to be performed during the test. It serves as the blueprint for all test configurations and components.</p>
+            
+            <h3>Thread Group</h3>
+            <p>The thread group defines the number of virtual users (threads) and the test’s duration. By configuring the thread count, ramp-up period, and loop count, you can simulate different user loads.</p>
+            
+            <h3>HTTP Request</h3>
+            <p>The HTTP request sampler specifies the requests to be sent to the server. You can configure parameters such as the endpoint URL, request method (GET, POST, etc.), and payload.</p>
+            
+            <h3>View Results Tree Listener</h3>
+            <p>The View Results Tree Listener provides a detailed log of each request and response during the test. It’s useful for debugging and analyzing specific transactions.</p>
+            
+            <h3>Summary Report Listener</h3>
+            <p>The Summary Report Listener provides an aggregated view of test results, including metrics like response time, throughput, and error rate.</p>
+            
+            <p>JMeter test plans are saved as <code>.jmx</code> files, allowing them to be version controlled and edited as plain text. This makes it easy to collaborate and automate testing workflows.</p>
+            
+        </section>
+
+        <section>
+            <h2>JMeter Stress Test Sample #1: Lebiru.FileService Homepage</h2>
+            <p class="info-box">
+                <strong>Pre-requisite:</strong> Ensure Java is installed on your machine. <a
                     href="https://www.oracle.com/java/technologies/javase-jdk17-downloads.html">Download Java here</a>.
             </p>
+            <p class="info-box">
+                <strong>Pre-requisite:</strong> Ensure Docker is installed on your machine. <a
+                    href="https://docs.docker.com/get-started/get-docker/">Download Docker here</a>.
+            </p>
+            <p class="tip-box">
+                <strong>Pro-tip:</strong> Clone the repo from GitHub to easily follow along. <a
+                    href="https://github.com/lebiru/jmeter-stress-example">Clone repo here</a>.
+            </p>
+
             <h3>Test Goal #1</h3>
-            <p>The goal of this exercise is to assess how well the Lebiru.FileService app’s homepage endpoint handles
-                volume.</p>
-            <ul>
-                <li>Stress test the homepage.</li>
-                <li>Configuration: 5 users, 5 minutes, sending requests to the homepage endpoint.</li>
-                <li>Expectation: Ensure HTTP status code 200.</li>
-            </ul>
+            <p>The goal of this exercise is to assess how well Lebiru.FileService app’s homepage endpoint handles volume. By running the docker image of Lebiru.FileService and navigating to the URL <code>http://localhost:3000/File/Home</code> on your computer, you will be greeted with the homepage for Lebiru.FileService.</p>
+
+            <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/lebiru-fileservice-homepage.png" class="blog-hero-image"
+            alt="An image of Lebiru.FileService Homepage" />
+            <p class="image-caption">Lebiru.FileService Homepage</p>
+
+            <ol>
+                <li>Navigate to <code>jmeter-stress-example</code> repository and run the following bash command:
+                    <pre><code>bash run-lebiru-fileservice.sh</code></pre>
+                    This runs Lebiru.FileService on your server by pulling the latest docker image and runs the container using Docker. You should be able to navigate to <code>http://localhost:3000/File/Home</code> and see the homepage.
+                </li>
+                <li>Open the file <code>Test Plan #1 - Lebiru.FileService HomePage.jmx</code> using JMeter to see the populated JMeter Components on the left side.</li>
+                <li>Now click the big green button near the center of the button toolbar on the top to run the JMeter test.</li>
+            </ol>
+
+            <p>As the JMeter test executes, you will able to see live metrics being updated in "Results Tree" and "Summary Report". After 5 minutes the test should end and give the overall metrics of the test in the "Summary Report" view.</p>
+
+            <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-test-plan-results-1.png" class="blog-hero-image"
+            alt="An image of the first Test Scenario results" />
+            <p class="image-caption">Summary Report of Test Scenario #1</p>
+            
             <h3>Test Goal #2</h3>
-            <p>The goal of this exercise is to evaluate how well the Lebiru.FileService file upload endpoint manages
-                heavy traffic.</p>
+            <p>The goal of this exercise is to evaluate how well the Lebiru.FileService file upload endpoint manages under concurrent user file upload.</p>
             <p>We will upload a chibified version of my cat, Filfil, to Lebiru.FileService. Want to chibi-fy your own
-                photos for free? Use my AI agent <a target="_blank" href="https://chat.openai.com/g/g-YtRwSYG3w-chibi-fy-me">Chibify-Me</a>!</p>
-            <ul>
-                <li>Stress test the file upload endpoint.</li>
-                <li>Configuration: 5 users, 5 minutes, uploading a 1 MB file.</li>
-                <li>Expectation: Ensure HTTP status code 200.</li>
-            </ul>
+                photos? Use my AI agent <a target="_blank" href="https://chat.openai.com/g/g-YtRwSYG3w-chibi-fy-me">Chibify-Me</a>!</p>
+
+            <ol>
+                <li>Navigate to <code>jmeter-stress-example</code> repository and run the following bash command:
+                    <pre><code>bash run-lebiru-fileservice.sh</code></pre>
+                    This runs Lebiru.FileService on your server by pulling the latest docker image and runs the container using Docker. You should be able to navigate to <code>http://localhost:3000/File/Home</code> and see the homepage.
+                </li>
+                <li>Open the file <code>Test Plan #2 - Lebiru.FileService CreateDoc.jmx</code> using JMeter to see the populated JMeter Components on the left side.</li>
+                <li>Ensure the component "HTTP Request" is referencing the image in the repo <code>filfil-by-chibify-me.png</code></li>
+                <li>Now click the big green button near the center of the button toolbar on the top to run the JMeter test.</li>
+            </ol>
+
+            <p>As the JMeter test executes, you will able to see live metrics being updated in "Results Tree" and "Summary Report". Try also navigating to the homepage and see the dashboard update with multiple file images of Filfil. Isn't that cool? After 1 minute the test should end and give the overall metrics of the test in the "Summary Report" view.</p>
+
+            <img src="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-test-plan-results-2.png" class="blog-hero-image"
+            alt="An image of the second Test Scenario results" />
+            <p class="image-caption">Summary Report of Test Scenario #2</p>
+
         </section>
 
         <section>
             <h2>Stress Testing Results</h2>
-            <p><strong>Processor Information:</strong></p>
-            <p>Processor: 13th Gen Intel(R) Core(TM) i7-1355U, 1700 Mhz, 10 Core(s), 12 Logical Processor(s)</p>
-            <h3>Results for Test Goal #1:</h3>
-            <ul>
-                <li>Average Response Time: 120 ms</li>
-                <li>Throughput: 50 requests/second</li>
-                <li>Error Rate: 0%</li>
-            </ul>
-            <h3>Results for Test Goal #2:</h3>
-            <ul>
-                <li>Average Response Time: 250 ms</li>
-                <li>Throughput: 20 requests/second</li>
-                <li>Error Rate: 0%</li>
-            </ul>
+            <p>Below are the metrics my server was able to reach when running the two test scenarios. Seeing this gives me a confidence boost knowning that the app is able to handle stress volumes!</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Run</th>
+                        <th>Label</th>
+                        <th># Samples</th>
+                        <th>Average (ms)</th>
+                        <th>Min (ms)</th>
+                        <th>Max (ms)</th>
+                        <th>Std. Dev (ms)</th>
+                        <th>Error %</th>
+                        <th>Throughput (requests/sec)</th>
+                        <th>Received KB/sec</th>
+                        <th>Sent KB/sec</th>
+                        <th>Avg. Bytes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Run 1</td>
+                        <td>Homepage</td>
+                        <td>809,660</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>29</td>
+                        <td>0.89</td>
+                        <td>0.00%</td>
+                        <td>2,699.4</td>
+                        <td>41,366.16</td>
+                        <td>337.42</td>
+                        <td>15,692.0</td>
+                    </tr>
+                    <tr>
+                        <td>Run 2</td>
+                        <td>CreateDoc</td>
+                        <td>14,008</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>144</td>
+                        <td>5.55</td>
+                        <td>0.00%</td>
+                        <td>269.6</td>
+                        <td>47.39</td>
+                        <td>109,697.88</td>
+                        <td>180.0</td>
+                    </tr>
+                </tbody>
+            </table>
+
         </section>
 
         <section>
             <h2>Let’s Wrap It Up</h2>
             <p>Stress testing is an essential practice for ensuring your application’s reliability under heavy load.
-                Using Jmeter, we successfully tested the Lebiru.FileService app’s homepage and file upload endpoints,
+                Using JMeter, we successfully tested the Lebiru.FileService app’s homepage and file upload endpoints,
                 confirming their stability under defined conditions.</p>
-            <p>Ready to try stress testing for yourself? Check out the <a href="link-to-jmeter-test-repo">Jmeter stress
-                    test GitHub repository</a>. Have you tried stress testing before? Share your experiences and
-                favorite tools in the comments below!</p>
+            <p>Have you tried stress testing before? Share your experiences and favorite tools in the comments below!</p>
         </section>
 
         <!-- Blog Post End -->
