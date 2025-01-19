@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Learn how to use Apache JMeter for stress testing your applications. Discover its features, configure test plans, and see real-world examples with Lebiru.FileService." />
+    <title>How To Revive Your PC With A Linux OS 🖥️</title>
+    <meta name="author" content="Bilal A." />
+    <meta property="og:image"
+        content="https://lebiru-github-io-assets.pages.dev/010_jmeter_stress/jmeter-hero-blog-image.png" />
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .steps-buttons {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .steps-buttons button {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Shine effect pseudo-element */
+        .steps-buttons button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: skewX(-45deg);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+
+        /* Hover shine animation */
+        .steps-buttons button:hover::before {
+            left: 150%;
+        }
+
+        /* Hover and focus effects */
+        .steps-buttons button:hover {
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .steps-buttons button:active {
+            transform: scale(0.95);
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .steps-buttons button:focus {
+            outline: none;
+        }
+
+        /* Ubuntu Button */
+        button[data-distro="ubuntu"] {
+            background: linear-gradient(90deg, #dd4814, #77216f);
+        }
+
+        /* Linux Mint Button */
+        button[data-distro="mint"] {
+            background: linear-gradient(90deg, #87cf3e, #3fa248);
+        }
+
+        /* Fedora Button */
+        button[data-distro="fedora"] {
+            background: linear-gradient(90deg, #3c6eb4, #294172);
+        }
+
+        /* Zorin OS Button */
+        button[data-distro="zorin"] {
+            background: linear-gradient(90deg, #0cc1f3, #008dcf);
+        }
+
+
+        .installation-steps {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .installation-steps.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .installation-steps h2 {
+            color: #333;
+        }
+
+        .installation-steps p {
+            margin: 10px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>How To Revive Your PC With A Linux OS 🖥️</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on January 24th, 2025</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <section>
+            <p>Have you ever wondered if an old PC gathering dust could still be useful? Many of us discard outdated
+                computers, thinking they’re no longer worth saving, but what if you could give them a second life?
+                Perhaps you're also tired of proprietary operating systems and want the freedom and flexibility of
+                open-source software. By installing a Linux operating system, you can breathe new life into your
+                machine, transforming it into a reliable and secure tool for daily use. Linux offers a wealth of
+                choices, allowing you to customize your experience and adapt your system to your needs. Whether you’re a
+                tech enthusiast or simply curious, this guide will show you how to revive your PC with ease. Get ready
+                to unleash the potential of your old hardware!</p>
+        </section>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/011_revive_pc/revive-pc-hero-blog-image.png"
+            class="blog-hero-image" alt="A picture of a system administrator healing a laptop." />
+        <p class="image-caption">Let's give your laptop a Second Wind!</p>
+
+        <h2>Primer on Booting a PC</h2>
+        <section>
+            <p>PCs are versatile machines capable of booting various operating systems. Think of operating systems like
+                the foundation upon which applications are built. Unlike regular apps, operating systems interact
+                closely with the hardware to manage resources and run programs.</p>
+        </section>
+        <section>
+            <p>While Windows and macOS dominate the market, there are plenty of other operating systems available. Among
+                these alternatives is Linux, an open-source powerhouse with a thriving ecosystem of distributions.</p>
+        </section>
+
+        <h2>Enter Linux OS</h2>
+        <section>
+            <p>Linux was created in 1991 by Linus Torvalds as a free and open-source alternative to proprietary
+                operating systems. What started as a small project grew into a global phenomenon, with developers and
+                enthusiasts contributing to its success.</p>
+        </section>
+        <section>
+            <p>Today, there are over <a href="https://truelist.co/blog/linux-statistics/?utm_source=chatgpt.com"
+                    target="_blank">600 Linux distributions</a>, each tailored to specific needs and preferences. Linux
+                is celebrated for its open-source nature, robust security, and unparalleled customization. Whether
+                you're a beginner or an advanced user, there's a Linux distribution for you.</p>
+        </section>
+
+        <h2>Let’s Revive Your PC</h2>
+        <section>
+            <p>To bring your old PC back to life with Linux, you'll need a few essentials:</p>
+            <ul>
+                <li>A computer to be revived</li>
+                <li>A USB flash drive with at least 2-5 Gigabytes of free space (depending on chosen OS)</li>
+                <li>An internet connection (Ethernet is preferred but Wi-Fi works too)</li>
+            </ul>
+        </section>
+        <section>
+            <div class="alert">
+                <strong>Disclaimer:</strong> Upgrading your PC is at your own risk. Back up your data and ensure your
+                machine is
+                in working order before proceeding. If unsure, consult a systems administrator for assistance.
+            </div>
+        </section>
+        <section>
+            <p class="info-box"><strong>Pre-Steps:</strong> Back up all your data and confirm your PC is free of
+                hardware issues.</p>
+        </section>
+
+        <section>
+            <h2>Select a Linux Distribution</h2>
+            <div class="steps-buttons">
+                <button data-distro="ubuntu">Ubuntu</button>
+                <button data-distro="mint">Linux Mint</button>
+                <button data-distro="fedora">Fedora</button>
+                <button data-distro="zorin">Zorin OS</button>
+            </div>
+        </section>
+
+        <section id="installation-steps" class="installation-steps">
+            <h2>Installation Steps</h2>
+            <div id="ubuntu" class="steps-content hidden">
+                <p>Ubuntu is a popular Linux distribution. Here's how to install it:</p>
+                <ol>
+                    <li>Download the Ubuntu ISO file from the <a href="https://ubuntu.com/download"
+                            target="_blank">official website</a>.</li>
+                    <li>Create a bootable USB drive using tools like Etcher.</li>
+                    <li>Boot from the USB drive and follow the on-screen installation instructions.</li>
+                </ol>
+            </div>
+            <div id="mint" class="steps-content hidden">
+                <p>Linux Mint is great for beginners. Follow these steps:</p>
+                <ol>
+                    <li>Download the Linux Mint ISO file from the <a href="https://linuxmint.com/download.php"
+                            target="_blank">official website</a>.</li>
+                    <li>Use a tool like Rufus to create a bootable USB drive.</li>
+                    <li>Reboot your computer and start the installation process.</li>
+                </ol>
+            </div>
+            <div id="fedora" class="steps-content hidden">
+                <p>Fedora is perfect for developers. Here's how to install:</p>
+                <ol>
+                    <li>Download the Fedora ISO from the <a href="https://getfedora.org/" target="_blank">official
+                            website</a>.</li>
+                    <li>Use Fedora Media Writer to create a bootable USB drive.</li>
+                    <li>Boot from the USB drive and complete the installation.</li>
+                </ol>
+            </div>
+            <div id="zorin" class="steps-content hidden">
+                <p>Zorin OS is designed for Windows users transitioning to Linux:</p>
+                <ol>
+                    <li>Download the Zorin OS ISO file from the <a href="https://zorin.com/os/" target="_blank">official
+                            website</a>.</li>
+                    <li>Prepare a bootable USB drive using Balena Etcher.</li>
+                    <li>Follow the on-screen instructions to install Zorin OS.</li>
+                </ol>
+            </div>
+        </section>
+        <script>
+            const buttons = document.querySelectorAll('.steps-buttons button');
+            const stepsContainer = document.getElementById('installation-steps');
+            const stepsContents = document.querySelectorAll('.steps-content');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Hide all steps
+                    stepsContents.forEach(content => content.classList.add('hidden'));
+
+                    // Show relevant steps
+                    const distro = button.getAttribute('data-distro');
+                    const activeContent = document.getElementById(distro);
+                    if (activeContent) {
+                        activeContent.classList.remove('hidden');
+                    }
+
+                    // Add animation
+                    stepsContainer.classList.add('active');
+                });
+            });
+        </script>
+
+        <section>
+            <h2>Post-Installation</h2>
+            <section>
+                <p>After installing your chosen Linux distribution, it's crucial to ensure your system is up-to-date.
+                    Most distributions come with a built-in package manager or update tool that makes this process
+                    simple:</p>
+                <ul>
+                    <li>Open the update manager or terminal.</li>
+                    <li>Run the system update command (e.g., <code>sudo apt update && sudo apt upgrade</code> for
+                        Ubuntu-based systems).</li>
+                    <li>Follow any prompts to complete the update process.</li>
+                </ul>
+                <p>Keeping your system updated ensures you have the latest features, security patches, and improvements
+                    from the Linux community.</p>
+            </section>
+            <section>
+                <p><strong>Congratulations!</strong> You are now a Linux user! 🐧 Explore your new operating system, try
+                    out its features, and enjoy the flexibility and performance it brings to your PC.</p>
+            </section>
+        </section>
+
+
+        <h2>Let’s Wrap It Up</h2>
+        <section>
+            <p>Reviving your PC with a Linux OS is a relatively simple process. By following these steps and referring
+                to the official guides for your chosen distribution, you can breathe new life into any old computer.
+                Welcome to the world of Linux!</p>
+        </section>
+
+        <!-- Blog Post End -->
+
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/011_revive_pc.html";
+            this.page.identifier = "011_revive_pc";
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>

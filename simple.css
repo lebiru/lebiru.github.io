@@ -282,6 +282,17 @@ ol {
   font-size: 14px;
 }
 
+.alert {
+  padding: 15px;
+  background-color: #fff3cd; /* Light yellow background */
+  border: 1px solid #ffeeba; /* Border color */
+  color: #856404; /* Text color */
+  border-radius: 5px;
+  margin: 20px 0;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
 /* Responsive layout for smaller screens */
 @media (max-width: 600px) {
   .footer-links {
