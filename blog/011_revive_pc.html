@@ -155,6 +155,73 @@
         .hidden {
             display: none;
         }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            /* Center within the article */
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        /* Keyframes for spinning animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Keyframes for fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Media query for mobile devices */
+        @media screen and (max-width: 600px) {
+            .steps-buttons {
+                flex-direction: column;
+                gap: 10px;
+                /* Adjust spacing for smaller screens */
+            }
+
+            .steps-buttons button {
+                width: 100%;
+                /* Full width for mobile */
+                max-width: none;
+                /* Remove width restriction */
+            }
+        }
     </style>
 </head>
 
@@ -224,7 +291,7 @@
             <p>To bring your old PC back to life with Linux, you'll need a few essentials:</p>
             <ul>
                 <li>A computer to be revived</li>
-                <li>A USB flash drive with at least 2-5 Gigabytes of free space (depending on chosen OS)</li>
+                <li>A USB flash drive with at least 4 Gigabytes of free space</li>
                 <li>An internet connection (Ethernet is preferred but Wi-Fi works too)</li>
             </ul>
         </section>
@@ -241,7 +308,7 @@
         </section>
 
         <section>
-            <h2>Select a Linux Distribution</h2>
+            <h2>Tap on a Linux Distribution</h2>
             <div class="steps-buttons">
                 <button data-distro="ubuntu">Ubuntu</button>
                 <button data-distro="mint">Linux Mint</button>
@@ -250,52 +317,523 @@
             </div>
         </section>
 
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <p>Awaiting User Selection...</p>
+        </div>
+
         <section id="installation-steps" class="installation-steps">
-            <h2>Installation Steps</h2>
             <div id="ubuntu" class="steps-content hidden">
-                <p>Ubuntu is a popular Linux distribution. Here's how to install it:</p>
+                <h1>Ubuntu Installation Guide</h1>
+
+                <h2>1. Download the ISO File</h2>
                 <ol>
-                    <li>Download the Ubuntu ISO file from the <a href="https://ubuntu.com/download"
-                            target="_blank">official website</a>.</li>
-                    <li>Create a bootable USB drive using tools like Etcher.</li>
-                    <li>Boot from the USB drive and follow the on-screen installation instructions.</li>
+                    <li>Visit the <a href="https://ubuntu.com/download" target="_blank">official Ubuntu website</a>.
+                    </li>
+                    <li>Select the version of Ubuntu you want to install (e.g., Ubuntu Desktop for general use).</li>
+                    <li>Choose the architecture suitable for your computer (e.g., 64-bit for most modern PCs).</li>
+                    <li>Click the download button and save the ISO file to an accessible folder on your current
+                        computer.</li>
+                </ol>
+
+                <h2>2. Create a Bootable USB Drive using Etcher</h2>
+                <ol>
+                    <li>Download and install <a href="https://www.balena.io/etcher/" target="_blank">Balena Etcher</a>
+                        on your current computer.</li>
+                    <li>Insert a USB flash drive (at least 4GB or larger) into your computer.</li>
+                    <li>Open Etcher and:
+                        <ol>
+                            <li>Select the Ubuntu ISO file you downloaded.</li>
+                            <li>Choose your USB drive as the target device.</li>
+                            <li>Click "Flash" to start creating the bootable USB.</li>
+                        </ol>
+                    </li>
+                    <li>Once completed, safely eject the USB drive.</li>
+                </ol>
+
+                <h2>3. Boot From the USB Drive</h2>
+                <ol>
+                    <li>Restart your computer and access the Boot Menu. Common keys to access it are <code>F12</code>,
+                        <code>Esc</code>, <code>F2</code>, or <code>Delete</code> (this varies by manufacturer).
+                    </li>
+                    <li>In the Boot Menu, select your USB drive as the boot device.</li>
+                    <li>Save the changes (if needed) and exit the BIOS or Boot Menu. Your computer will boot into the
+                        Ubuntu USB.</li>
+                </ol>
+
+                <h2>4. Explore the Live Environment</h2>
+                <ol>
+                    <li>When the Ubuntu installer loads, you’ll have the option to "Try Ubuntu" without installing it.
+                    </li>
+                    <li>Select "Try Ubuntu" to explore the live environment.</li>
+                    <li>Test hardware compatibility (e.g., Wi-Fi, audio, and display) to ensure everything works
+                        properly before installing.</li>
+                </ol>
+
+                <h2>5. Start the Installation</h2>
+                <ol>
+                    <li>When you're ready, double-click the "Install Ubuntu" icon on the desktop.</li>
+                    <li>Select your preferred language and click "Continue."</li>
+                </ol>
+
+                <h2>6. Configure Settings</h2>
+                <ol>
+                    <li><strong>Keyboard Layout:</strong>
+                        <ul>
+                            <li>Choose your keyboard layout or let Ubuntu detect it automatically.</li>
+                            <li>Test typing in the provided box to ensure it's correct.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Updates and Other Software:</strong>
+                        <ul>
+                            <li>Select whether to install third-party software (e.g., for graphics and Wi-Fi hardware).
+                            </li>
+                            <li>Choose "Normal Installation" (recommended) or "Minimal Installation" for a lightweight
+                                setup.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Installation Type:</strong>
+                        <ul>
+                            <li>For beginners, choose "Erase disk and install Ubuntu" (this will delete all existing
+                                data on the drive).</li>
+                            <li>Advanced users can manually partition the drive.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Location:</strong> Select your time zone by clicking on the map or typing your city.
+                    </li>
+                    <li><strong>User Account:</strong>
+                        <ul>
+                            <li>Enter your name, choose a username, and set a strong password.</li>
+                            <li>Decide if you want Ubuntu to log in automatically or require a password.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>7. Install and Finalize</h2>
+                <ol>
+                    <li>Review your selections and click "Install Now."</li>
+                    <li>Wait for the installation process to complete. This may take 10-30 minutes depending on your
+                        system.</li>
+                    <li>Once done, remove the USB drive when prompted and click "Restart Now."</li>
+                    <li>After rebooting, your computer will load into Ubuntu.</li>
+                </ol>
+
+                <h2>8. Post-Installation Setup</h2>
+                <ol>
+                    <li><strong>Update the System:</strong>
+                        <pre>sudo apt update && sudo apt upgrade -y</pre>
+                    </li>
+                    <li><strong>Install Additional Software:</strong>
+                        <ul>
+                            <li>Use the Ubuntu Software Center to browse and install applications.</li>
+                            <li>Alternatively, use the terminal for package installation (e.g.,
+                                <code>sudo apt install &lt;package-name&gt;</code>).
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Configure Settings:</strong> Set up your preferred system settings (e.g., display
+                        resolution, power management, and keyboard shortcuts).</li>
+                    <li><strong>Explore:</strong> Familiarize yourself with the Ubuntu desktop environment, and enjoy
+                        your new Linux system!</li>
                 </ol>
             </div>
             <div id="mint" class="steps-content hidden">
-                <p>Linux Mint is great for beginners. Follow these steps:</p>
+                <h1>Linux Mint Installation Guide</h1>
+
+                <h2>1. Download the ISO File</h2>
                 <ol>
-                    <li>Download the Linux Mint ISO file from the <a href="https://linuxmint.com/download.php"
-                            target="_blank">official website</a>.</li>
-                    <li>Use a tool like Rufus to create a bootable USB drive.</li>
-                    <li>Reboot your computer and start the installation process.</li>
+                    <li>Visit the <a href="https://linuxmint.com/download.php" target="_blank">official Linux Mint
+                            website</a>.</li>
+                    <li>Select the edition of Linux Mint that suits your preferences:
+                        <ul>
+                            <li><strong>Cinnamon</strong> – A modern and feature-rich desktop environment.</li>
+                            <li><strong>MATE</strong> – A lightweight and traditional desktop environment.</li>
+                            <li><strong>Xfce</strong> – The most lightweight option, ideal for older hardware.</li>
+                        </ul>
+                    </li>
+                    <li>Choose the appropriate architecture for your system (e.g., 64-bit for most modern PCs).</li>
+                    <li>Click the download button and save the ISO file to an easily accessible folder on your current
+                        computer.</li>
+                </ol>
+
+                <h2>2. Create a Bootable USB Drive using Etcher</h2>
+                <ol>
+                    <li>Download and install <a href="https://www.balena.io/etcher/" target="_blank">Balena Etcher</a>.
+                    </li>
+                    <li>Insert a USB flash drive with at least 4GB of free space into your computer.</li>
+                    <li>Open Etcher and:
+                        <ol>
+                            <li>Click "Select Image" and choose the Linux Mint ISO file you downloaded.</li>
+                            <li>Select your USB flash drive as the target device.</li>
+                            <li>Click "Flash" to create the bootable USB drive.</li>
+                        </ol>
+                    </li>
+                    <li>Wait for the flashing process to complete, then safely eject the USB drive.</li>
+                </ol>
+
+                <h2>3. Boot From the USB Drive</h2>
+                <ol>
+                    <li>Restart your computer and access the Boot Menu. Common keys for this include <code>F12</code>,
+                        <code>Esc</code>, <code>F2</code>, or <code>Delete</code> (depending on your system).
+                    </li>
+                    <li>Select your USB drive from the Boot Menu and press Enter.</li>
+                    <li>Your computer will boot into the Linux Mint installation environment.</li>
+                </ol>
+
+                <h2>4. Explore the Live Environment</h2>
+                <ol>
+                    <li>Choose the "Start Linux Mint" option from the boot menu.</li>
+                    <li>Linux Mint will load a live environment that allows you to try the system without installing it.
+                    </li>
+                    <li>Test your hardware (e.g., Wi-Fi, sound, and display) to ensure everything works as expected.
+                    </li>
+                </ol>
+
+                <h2>5. Start the Installation</h2>
+                <ol>
+                    <li>Double-click the "Install Linux Mint" icon on the desktop to start the installation process.
+                    </li>
+                    <li>Select your preferred language and click "Continue."</li>
+                </ol>
+
+                <h2>6. Configure Settings</h2>
+                <ol>
+                    <li><strong>Keyboard Layout:</strong>
+                        <ul>
+                            <li>Select your keyboard layout or let Linux Mint detect it automatically.</li>
+                            <li>Type in the test field to ensure the layout is correct.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Updates and Other Software:</strong>
+                        <ul>
+                            <li>Choose whether to install third-party software (e.g., for graphics drivers and
+                                multimedia codecs).</li>
+                            <li>Select "Normal Installation" for a full-featured setup or "Minimal Installation" for a
+                                lightweight environment.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Installation Type:</strong>
+                        <ul>
+                            <li>Select "Erase disk and install Linux Mint" for a clean installation (this will delete
+                                all existing data).</li>
+                            <li>Advanced users can select "Something else" to manually partition their disk.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Location:</strong>
+                        <ul>
+                            <li>Select your time zone by clicking on the map or typing your city name.</li>
+                        </ul>
+                    </li>
+                    <li><strong>User Account:</strong>
+                        <ul>
+                            <li>Enter your name, choose a username, and set a strong password.</li>
+                            <li>Decide whether to log in automatically or require a password on boot.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>7. Install and Finalize</h2>
+                <ol>
+                    <li>Click "Install Now" to begin the installation process.</li>
+                    <li>Linux Mint will copy files and install the operating system, which may take 10-30 minutes.</li>
+                    <li>When prompted, remove the USB drive and click "Restart Now."</li>
+                    <li>After rebooting, your system will load into the new Linux Mint installation.</li>
+                </ol>
+
+                <h2>8. Post-Installation Setup</h2>
+                <ol>
+                    <li><strong>Update the System:</strong>
+                        <pre>sudo apt update && sudo apt upgrade -y</pre>
+                    </li>
+                    <li><strong>Install Additional Software:</strong>
+                        <ul>
+                            <li>Use the Software Manager to install applications you need.</li>
+                            <li>Alternatively, use the terminal for package installation (e.g.,
+                                <code>sudo apt install &lt;package-name&gt;</code>).
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Configure Settings:</strong>
+                        <ul>
+                            <li>Customize your desktop environment, including themes, icons, and wallpaper.</li>
+                            <li>Set up power management and other system preferences.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Explore:</strong> Familiarize yourself with Linux Mint and enjoy your new system!</li>
                 </ol>
             </div>
             <div id="fedora" class="steps-content hidden">
-                <p>Fedora is perfect for developers. Here's how to install:</p>
+                <h1>Fedora Installation Guide</h1>
+
+                <h2>1. Download the ISO File</h2>
                 <ol>
-                    <li>Download the Fedora ISO from the <a href="https://getfedora.org/" target="_blank">official
-                            website</a>.</li>
-                    <li>Use Fedora Media Writer to create a bootable USB drive.</li>
-                    <li>Boot from the USB drive and complete the installation.</li>
+                    <li>Visit the <a href="https://getfedora.org/" target="_blank">official Fedora website</a>.</li>
+                    <li>Choose the edition of Fedora you want to install:
+                        <ul>
+                            <li><strong>Fedora Workstation</strong> – Best for desktops and laptops.</li>
+                            <li><strong>Fedora Server</strong> – Ideal for servers.</li>
+                            <li><strong>Fedora IoT</strong> – For embedded devices and IoT environments.</li>
+                        </ul>
+                    </li>
+                    <li>Download the ISO file for your system architecture (e.g., 64-bit for most modern systems).</li>
+                    <li>Save the ISO file to an easily accessible folder on your computer.</li>
+                </ol>
+
+                <h2>2. Create a Bootable USB Drive using Etcher</h2>
+                <ol>
+                    <li>Download and install <a href="https://www.balena.io/etcher/" target="_blank">Balena Etcher</a>
+                        on your current computer.</li>
+                    <li>Insert a USB flash drive (at least 4GB) into your computer.</li>
+                    <li>Open Etcher and:
+                        <ol>
+                            <li>Click "Select Image" and choose the Fedora ISO file you downloaded.</li>
+                            <li>Select your USB flash drive as the target device.</li>
+                            <li>Click "Flash" to create the bootable USB drive.</li>
+                        </ol>
+                    </li>
+                    <li>Wait for the process to complete, then safely eject the USB drive.</li>
+                </ol>
+
+                <h2>3. Boot From the USB Drive</h2>
+                <ol>
+                    <li>Restart your computer and access the Boot Menu. Common keys for this include <code>F12</code>,
+                        <code>Esc</code>, or <code>Delete</code>.
+                    </li>
+                    <li>Select your USB drive from the Boot Menu and press Enter.</li>
+                    <li>Your computer will boot into the Fedora installation environment.</li>
+                </ol>
+
+                <h2>4. Explore the Live Environment</h2>
+                <ol>
+                    <li>Select "Start Fedora Workstation" (or the appropriate option for your edition).</li>
+                    <li>The live environment will load, allowing you to try Fedora without installing it.</li>
+                    <li>Test your hardware compatibility, such as Wi-Fi, sound, and display functionality.</li>
+                </ol>
+
+                <h2>5. Start the Installation</h2>
+                <ol>
+                    <li>Double-click the "Install to Hard Drive" icon on the desktop.</li>
+                    <li>Select your preferred language and click "Continue."</li>
+                </ol>
+
+                <h2>6. Configure Settings</h2>
+                <ol>
+                    <li><strong>Keyboard Layout:</strong>
+                        <ul>
+                            <li>Choose your keyboard layout or let Fedora detect it automatically.</li>
+                            <li>Test by typing in the provided test field to ensure it works correctly.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Installation Destination:</strong>
+                        <ul>
+                            <li>Select the disk where Fedora should be installed.</li>
+                            <li>Choose "Automatic Partitioning" for beginners or "Custom Partitioning" for advanced
+                                users.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Time and Date:</strong>
+                        <ul>
+                            <li>Set your time zone by clicking on the map or selecting from the dropdown menu.</li>
+                        </ul>
+                    </li>
+                    <li><strong>User Account:</strong>
+                        <ul>
+                            <li>Create a root password and a regular user account with a strong password.</li>
+                            <li>Check the option to make the user an administrator, if needed.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>7. Install and Finalize</h2>
+                <ol>
+                    <li>Click "Begin Installation" to start the process.</li>
+                    <li>Fedora will copy files and configure the system. This may take 15-30 minutes.</li>
+                    <li>Once the installation is complete, remove the USB drive and click "Reboot" to restart your
+                        computer.</li>
+                    <li>Fedora will load for the first time after rebooting.</li>
+                </ol>
+
+                <h2>8. Post-Installation Setup</h2>
+                <ol>
+                    <li><strong>Update the System:</strong>
+                        <pre>sudo dnf update -y</pre>
+                    </li>
+                    <li><strong>Install Additional Software:</strong>
+                        <ul>
+                            <li>Use the "Software" application to browse and install applications.</li>
+                            <li>Alternatively, use the terminal for package installation:
+                                <pre>sudo dnf install &lt;package-name&gt;</pre>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Configure System Settings:</strong>
+                        <ul>
+                            <li>Set up display preferences, power management, and other system options.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Explore Fedora:</strong>
+                        <ul>
+                            <li>Get familiar with the GNOME desktop environment and its features.</li>
+                            <li>Enjoy the flexibility and power of Fedora!</li>
+                        </ul>
+                    </li>
                 </ol>
             </div>
             <div id="zorin" class="steps-content hidden">
-                <p>Zorin OS is designed for Windows users transitioning to Linux:</p>
+                <h1>Zorin OS Installation Guide</h1>
+
+                <h2>1. Download the ISO File</h2>
                 <ol>
-                    <li>Download the Zorin OS ISO file from the <a href="https://zorin.com/os/" target="_blank">official
-                            website</a>.</li>
-                    <li>Prepare a bootable USB drive using Balena Etcher.</li>
-                    <li>Follow the on-screen instructions to install Zorin OS.</li>
+                    <li>Visit the <a href="https://zorin.com/os/" target="_blank">official Zorin OS website</a>.</li>
+                    <li>Select the version of Zorin OS you want to install:
+                        <ul>
+                            <li><strong>Zorin OS Core</strong> – The standard version with essential features.</li>
+                            <li><strong>Zorin OS Pro</strong> – A premium version with extra applications and layouts
+                                (paid).</li>
+                            <li><strong>Zorin OS Lite</strong> – A lightweight version for older computers.</li>
+                        </ul>
+                    </li>
+                    <li>Click "Download" and save the ISO file to an easily accessible folder on your computer.</li>
+                </ol>
+
+                <h2>2. Create a Bootable USB Drive using Etcher</h2>
+                <ol>
+                    <li>Download and install <a href="https://www.balena.io/etcher/" target="_blank">Balena Etcher</a>.
+                    </li>
+                    <li>Insert a USB flash drive (at least 4GB or larger) into your computer.</li>
+                    <li>Open Etcher and:
+                        <ol>
+                            <li>Click "Select Image" and choose the Zorin OS ISO file you downloaded.</li>
+                            <li>Select your USB flash drive as the target device.</li>
+                            <li>Click "Flash" to create the bootable USB drive.</li>
+                        </ol>
+                    </li>
+                    <li>Wait for the process to complete, then safely eject the USB drive.</li>
+                </ol>
+
+                <h2>3. Boot From the USB Drive</h2>
+                <ol>
+                    <li>Restart your computer and access the Boot Menu. Common keys for this include <code>F12</code>,
+                        <code>Esc</code>, or <code>Delete</code>.
+                    </li>
+                    <li>In the Boot Menu, select your USB drive as the boot device and press Enter.</li>
+                    <li>Your computer will boot into the Zorin OS installation environment.</li>
+                </ol>
+
+                <h2>4. Explore the Live Environment</h2>
+                <ol>
+                    <li>When the Zorin OS installer loads, select "Try Zorin OS" to explore the live environment.</li>
+                    <li>The live environment allows you to use Zorin OS without installing it, giving you the
+                        opportunity to test hardware compatibility (e.g., Wi-Fi, sound, and display).</li>
+                    <li>Verify that your system works well with Zorin OS before proceeding with the installation.</li>
+                </ol>
+
+                <h2>5. Start the Installation</h2>
+                <ol>
+                    <li>Double-click the "Install Zorin OS" icon on the desktop to start the installation process.</li>
+                    <li>Select your preferred language and click "Continue."</li>
+                </ol>
+
+                <h2>6. Configure Settings</h2>
+                <ol>
+                    <li><strong>Keyboard Layout:</strong>
+                        <ul>
+                            <li>Select your keyboard layout or let Zorin OS detect it automatically.</li>
+                            <li>Type in the test field to ensure the layout is correct.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Updates and Other Software:</strong>
+                        <ul>
+                            <li>Choose whether to install third-party software (e.g., for graphics drivers and
+                                multimedia codecs).</li>
+                            <li>Select "Normal Installation" for a full-featured setup or "Minimal Installation" for a
+                                lightweight environment.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Installation Type:</strong>
+                        <ul>
+                            <li>Select "Erase disk and install Zorin OS" for a clean installation (this will delete all
+                                existing data).</li>
+                            <li>Advanced users can select "Something else" to manually partition their disk.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Location:</strong>
+                        <ul>
+                            <li>Set your time zone by clicking on the map or selecting your city from the list.</li>
+                        </ul>
+                    </li>
+                    <li><strong>User Account:</strong>
+                        <ul>
+                            <li>Enter your name, create a username, and set a strong password.</li>
+                            <li>Decide whether to enable automatic login or require a password to log in.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>7. Install and Finalize</h2>
+                <ol>
+                    <li>Click "Install Now" to begin the installation process.</li>
+                    <li>Wait while Zorin OS copies files and configures the system. This may take 15-30 minutes.</li>
+                    <li>When the installation is complete, remove the USB drive and click "Restart Now."</li>
+                    <li>After rebooting, your computer will boot into your new Zorin OS installation.</li>
+                </ol>
+
+                <h2>8. Post-Installation Setup</h2>
+                <ol>
+                    <li><strong>Update the System:</strong>
+                        <pre>sudo apt update && sudo apt upgrade -y</pre>
+                    </li>
+                    <li><strong>Install Additional Software:</strong>
+                        <ul>
+                            <li>Use the Zorin OS Software Store to browse and install applications.</li>
+                            <li>Alternatively, use the terminal for package installation:
+                                <pre>sudo apt install &lt;package-name&gt;</pre>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Configure Settings:</strong>
+                        <ul>
+                            <li>Customize your desktop environment, including themes, icons, and layouts.</li>
+                            <li>Set up power management and system preferences to your liking.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Explore Zorin OS:</strong>
+                        <ul>
+                            <li>Familiarize yourself with Zorin OS and its user-friendly features.</li>
+                            <li>Enjoy the flexibility and performance of your new operating system!</li>
+                        </ul>
+                    </li>
                 </ol>
             </div>
         </section>
+
+        <section id="congratulations" style="display: none;">
+            <p><strong>Congratulations!</strong> You are now a Linux user! 🐧 Explore your new operating system, try
+                out its features, and enjoy the flexibility and performance it brings to your PC.</p>
+        </section>
+
+        <section>
+            <h2>Let’s Wrap It Up</h2>
+            <p>Reviving your PC with a Linux OS is a relatively simple process. By following these steps and referring
+                to the official guides for your chosen distribution, you can breathe new life into any old computer.
+                Welcome to the world of Linux!</p>
+        </section>
+
+        <!-- Blog Post End -->
+
         <script>
             const buttons = document.querySelectorAll('.steps-buttons button');
             const stepsContainer = document.getElementById('installation-steps');
             const stepsContents = document.querySelectorAll('.steps-content');
+            const congratulationsSection = document.getElementById('congratulations');
+            const loadingContainer = document.getElementById('loading');
 
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
+
+                    // Show the hidden section when any button is clicked
+                    congratulationsSection.style.display = 'block';
+
                     // Hide all steps
                     stepsContents.forEach(content => content.classList.add('hidden'));
 
@@ -308,40 +846,16 @@
 
                     // Add animation
                     stepsContainer.classList.add('active');
+
+                    // Hide the loading div after a delay to simulate loading
+                    setTimeout(() => {
+                        loadingContainer.style.display = 'none';
+                        congratulationsSection.style.display = 'block';
+                    }, 50); // 50 millisecond delay for animation
+
                 });
             });
         </script>
-
-        <section>
-            <h2>Post-Installation</h2>
-            <section>
-                <p>After installing your chosen Linux distribution, it's crucial to ensure your system is up-to-date.
-                    Most distributions come with a built-in package manager or update tool that makes this process
-                    simple:</p>
-                <ul>
-                    <li>Open the update manager or terminal.</li>
-                    <li>Run the system update command (e.g., <code>sudo apt update && sudo apt upgrade</code> for
-                        Ubuntu-based systems).</li>
-                    <li>Follow any prompts to complete the update process.</li>
-                </ul>
-                <p>Keeping your system updated ensures you have the latest features, security patches, and improvements
-                    from the Linux community.</p>
-            </section>
-            <section>
-                <p><strong>Congratulations!</strong> You are now a Linux user! 🐧 Explore your new operating system, try
-                    out its features, and enjoy the flexibility and performance it brings to your PC.</p>
-            </section>
-        </section>
-
-
-        <h2>Let’s Wrap It Up</h2>
-        <section>
-            <p>Reviving your PC with a Linux OS is a relatively simple process. By following these steps and referring
-                to the official guides for your chosen distribution, you can breathe new life into any old computer.
-                Welcome to the world of Linux!</p>
-        </section>
-
-        <!-- Blog Post End -->
 
 
     </article>
