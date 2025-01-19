@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cannon Defender Game - Lebiru</title>
+    <meta description="You command a cannon to defend your castle. Ensure the boulders do not hit your castle!" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+    <style>
+        #game-container {
+            position: relative;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        body {
+            margin: 1em auto 2em auto;
+            background-color: #f0f0f0;
+        }
+
+        .hud {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .hud span {
+            font-size: 16px;
+        }
+
+        .game-over-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            display: none;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            margin: 20px auto;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 50px 50px 50px;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .controls button {
+            width: 50px;
+            height: 50px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #restart-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px;
+        }
+
+        header,
+        footer {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        footer .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-links li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        #pause-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+
+    <h3 style="text-align: center;">Cannon Defender Game - Lebiru</h1>
+        <div id="game-container">
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <!-- D-pad on the left -->
+            <div class="controls">
+                <div></div> <!-- Placeholder for centering "up" button -->
+                <button id="up">↑</button>
+                <div></div> <!-- Placeholder for centering -->
+
+                <button id="left">←</button>
+                <div></div> <!-- Placeholder for centering "middle" -->
+                <button id="right">→</button>
+
+                <div></div> <!-- Placeholder for centering -->
+                <button id="down">↓</button>
+                <div></div> <!-- Placeholder for centering -->
+            </div>
+
+            <!-- Pause and Restart buttons -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <button id="pause-button">Pause</button>
+                <button id="restart-button">Restart</button>
+            </div>
+        </div>
+
+        <script>
+
+            class MainScene extends Phaser.Scene {
+                constructor() {
+                    super('MainScene');
+                }
+
+                preload() {
+                    // Load assets
+                    this.load.image('cannon', 'assets/cannon_defender/cannon.png');
+                    this.load.image('boulder', 'assets/cannon_defender/boulder.png');
+                    this.load.image('heart', 'assets/cannon_defender/heart.png');
+                    this.load.audio('shot', 'assets/cannon_defender/shot.mp3');
+                    this.load.audio('enemy-die', 'assets/cannon_defender/enemy-die.mp3');
+                    this.load.audio('player-die', 'assets/cannon_defender/player-die.mp3');
+                    this.load.audio('win-wave-music', 'assets/cannon_defender/win-wave-music.mp3');
+                }
+
+                create() {
+                    // Background music
+                    this.music = this.sound.add('win-wave-music', { loop: true });
+                    this.music.play();
+
+                    // Player setup
+                    this.cannon = this.physics.add.sprite(400, 500, 'cannon');
+                    this.cannon.setCollideWorldBounds(true);
+                    this.cannon.angleSpeed = 2;
+                    this.cannon.shotSpeed = 300;
+                    this.cannon.shotPower = 1;
+
+                    // Input
+                    this.keys = this.input.keyboard.addKeys({
+                        left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+                        right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+                        fire: Phaser.Input.Keyboard.KeyCodes.A
+                    });
+
+                    // Health and Coins
+                    this.health = 3;
+                    this.coins = 0;
+                    this.hearts = this.add.group();
+                    for (let i = 0; i < this.health; i++) {
+                        this.hearts.create(30 + i * 40, 30, 'heart');
+                    }
+
+                    // Boulders
+                    this.boulders = this.physics.add.group();
+                    this.time.addEvent({
+                        delay: 1000,
+                        callback: this.spawnBoulder,
+                        callbackScope: this,
+                        loop: true
+                    });
+
+                    // Collisions
+                    this.projectiles = this.physics.add.group();
+                    this.physics.add.overlap(this.projectiles, this.boulders, this.hitBoulder, null, this);
+                }
+
+                update() {
+                    // Rotate cannon
+                    if (this.keys.left.isDown) {
+                        this.cannon.angle -= this.cannon.angleSpeed;
+                    } else if (this.keys.right.isDown) {
+                        this.cannon.angle += this.cannon.angleSpeed;
+                    }
+
+                    // Fire cannon
+                    if (Phaser.Input.Keyboard.JustDown(this.keys.fire)) {
+                        this.fireProjectile();
+                    }
+                }
+
+                spawnBoulder() {
+                    const x = Phaser.Math.Between(50, 750);
+                    const boulder = this.boulders.create(x, 0, 'boulder');
+                    boulder.setVelocity(0, 100);
+                }
+
+                fireProjectile() {
+                    const projectile = this.projectiles.create(this.cannon.x, this.cannon.y, 'boulder'); // Placeholder for projectile sprite
+                    this.sound.play('shot');
+                    this.physics.velocityFromRotation(
+                        Phaser.Math.DegToRad(this.cannon.angle - 90),
+                        this.cannon.shotSpeed,
+                        projectile.body.velocity
+                    );
+                }
+
+                hitBoulder(projectile, boulder) {
+                    boulder.destroy();
+                    projectile.destroy();
+                    this.sound.play('enemy-die');
+                    this.cameras.main.shake(100, 0.01);
+                    this.coins += 3;
+                }
+
+                damagePlayer() {
+                    this.health--;
+                    this.hearts.getChildren()[this.health].destroy();
+                    this.sound.play('player-die');
+
+                    if (this.health <= 0) {
+                        this.scene.start('GameOverScene', { coins: this.coins });
+                    }
+                }
+            }
+
+            class ShopScene extends Phaser.Scene {
+                constructor() {
+                    super('ShopScene');
+                }
+
+                create() {
+                    // Display coins
+                    this.add.text(300, 100, 'Shop', { fontSize: '32px', color: '#fff' });
+                    this.add.text(300, 200, `Coins: ${this.coins}`, { fontSize: '24px', color: '#fff' });
+
+                    // Upgrade buttons
+                    this.add.text(300, 300, '1) Shot Speed: 10 coins', { fontSize: '20px', color: '#fff' });
+                    this.add.text(300, 350, '2) Shot Power: 15 coins', { fontSize: '20px', color: '#fff' });
+                    this.add.text(300, 400, '3) Angle Speed: 5 coins', { fontSize: '20px', color: '#fff' });
+
+                    // Continue button
+                    const continueButton = this.add.text(300, 500, 'Continue', { fontSize: '24px', color: '#fff' });
+                    continueButton.setInteractive();
+                    continueButton.on('pointerdown', () => {
+                        this.scene.start('MainScene');
+                    });
+                }
+            }
+
+            class GameOverScene extends Phaser.Scene {
+                constructor() {
+                    super('GameOverScene');
+                }
+
+                create(data) {
+                    this.add.text(300, 200, 'Game Over', { fontSize: '32px', color: '#fff' });
+                    this.add.text(300, 300, `Coins: ${data.coins}`, { fontSize: '24px', color: '#fff' });
+                    const restartButton = this.add.text(300, 400, 'Restart', { fontSize: '24px', color: '#fff' });
+                    restartButton.setInteractive();
+                    restartButton.on('pointerdown', () => {
+                        this.scene.start('MainScene');
+                    });
+                }
+            }
+
+            // Phaser.js Castle Defense Game
+            const config = {
+                type: Phaser.AUTO,
+                width: 800,
+                height: 600,
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        gravity: { y: 0 },
+                        debug: false
+                    }
+                },
+                scene: [MainScene, ShopScene, GameOverScene]
+            };
+
+            const game = new Phaser.Game(config);
+
+        </script>
+        <footer>
+            <div class="footer-container">
+                <ul class="footer-links">
+                    <li><a href="../index.html">About Me</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
+                    <li><a href="../gpts.html">CustomGPTs</a></li>
+                    <li><a href="../blog.html">Blog</a></li>
+                    <li><a href="../apps.html">Apps</a></li>
+                    <li><a href="../games.html">Games</a></li>
+                    <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                    <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                    <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+                </ul>
+            </div>
+            <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+            <script>
+                document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            </script>
+        </footer>
+</body>
+
+</html>
