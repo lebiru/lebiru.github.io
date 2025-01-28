@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover my top 5 free Windows productivity apps that can help you work smarter and faster. These tools are perfect for developers and professionals alike!">
+    <title>My Top 5 Free Windows Productivity Apps 💡</title>
+    <meta name="author" content="Bilal A." />
+    
+    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/012_top_5_apps/top-5-apps-blog-hero-image.png" />
+    
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .steps-buttons {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .steps-buttons button {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Shine effect pseudo-element */
+        .steps-buttons button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: skewX(-45deg);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+
+        /* Hover shine animation */
+        .steps-buttons button:hover::before {
+            left: 150%;
+        }
+
+        /* Hover and focus effects */
+        .steps-buttons button:hover {
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .steps-buttons button:active {
+            transform: scale(0.95);
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .steps-buttons button:focus {
+            outline: none;
+        }
+
+        /* Ubuntu Button */
+        button[data-distro="ubuntu"] {
+            background: linear-gradient(90deg, #dd4814, #77216f);
+        }
+
+        /* Linux Mint Button */
+        button[data-distro="mint"] {
+            background: linear-gradient(90deg, #87cf3e, #3fa248);
+        }
+
+        /* Fedora Button */
+        button[data-distro="fedora"] {
+            background: linear-gradient(90deg, #3c6eb4, #294172);
+        }
+
+        /* Zorin OS Button */
+        button[data-distro="zorin"] {
+            background: linear-gradient(90deg, #0cc1f3, #008dcf);
+        }
+
+
+        .installation-steps {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .installation-steps.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .installation-steps h2 {
+            color: #333;
+        }
+
+        .installation-steps p {
+            margin: 10px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            /* Center within the article */
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        /* Keyframes for spinning animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Keyframes for fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Media query for mobile devices */
+        @media screen and (max-width: 600px) {
+            .steps-buttons {
+                flex-direction: column;
+                gap: 10px;
+                /* Adjust spacing for smaller screens */
+            }
+
+            .steps-buttons button {
+                width: 100%;
+                /* Full width for mobile */
+                max-width: none;
+                /* Remove width restriction */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>My Top 5 Free Windows Productivity Apps 💡</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on January 31st, 2025</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <p>Are you looking for ways to make your Windows PC work for you, not against you? With the right tools, you can streamline your workflow and tackle tasks more efficiently. In this post, I’ll share five incredible and completely free apps that have transformed how I work. Whether you’re a developer, designer, or multitasker, these tools are sure to save you time and frustration. Let’s dive in and unlock your PC’s productivity potential!</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/012_top_5_apps/top-5-apps-blog-hero-image.png"
+            class="blog-hero-image" alt="A picture of a developer standing in front of glowing orbs" />
+        <p class="image-caption">Unlock your productivity potential with these 5 apps!</p>
+
+        <h2><a href="#zoomit" id="zoomit">1. ZoomIt</a></h2>
+        <p>ZoomIt is a screen zoom and annotation tool designed for presentations. Whether you’re highlighting key details or sketching out ideas during a meeting, this tool keeps your audience engaged. I was able to guide knowledge transfer sessions with my developer team easier by using ZoomIt’s draw and clock tools to keep meetings efficient and on time.</p>
+        <p>One of the standout features of ZoomIt is its ease of use. With customizable hotkeys, you can quickly zoom in on specific parts of your screen or annotate important points. It’s a must-have for professionals who frequently present or collaborate remotely.</p>
+        <p>Additionally, ZoomIt’s timer feature is perfect for keeping meetings on track. Whether you’re conducting a coding review or delivering a keynote, you’ll always know how much time you have left to make your points clear.</p>
+        <p><a href="https://learn.microsoft.com/en-us/sysinternals/downloads/zoomit" target="_blank">Download ZoomIt</a></p>
+
+        <h2><a href="#everything" id="everything">2. Everything by VoidTools</a></h2>
+        <p>Everything by VoidTools is a lightning-fast search engine for your Windows files. Unlike the built-in search, it delivers near-instant results. Countless times I’ve had to search for an archive document or some Excel file that was on the tip of my tongue. Everything helped me find them quickly and without frustration.</p>
+        <p>Its lightweight design ensures that it doesn’t slow down your system while indexing your files. Whether you’re managing a large project or looking for old documents, Everything can retrieve results in milliseconds.</p>
+        <p>The interface is intuitive and easy to navigate, making it accessible for all users, from tech enthusiasts to casual users. It’s a game-changer for anyone who values efficiency in file management.</p>
+        <p><a href="https://www.voidtools.com/" target="_blank">Download Everything by VoidTools</a></p>
+
+        <h2><a href="#devtoys" id="devtoys">3. DevToys</a></h2>
+        <p>DevToys is a versatile toolkit for developers, packed with features like JSON formatting, base64 encoding/decoding, and even SSL certificate management. From managing SSL certificates to formatting JSONs, DevToys is the Swiss army knife for developers.</p>
+        <p>This app centralizes many small tools that developers frequently need, eliminating the hassle of switching between multiple programs or browser tabs. Whether you’re debugging or optimizing workflows, DevToys simplifies complex tasks.</p>
+        <p>Another great aspect of DevToys is its community-driven updates, which ensure it stays relevant to the evolving needs of developers. It’s an indispensable tool for both seasoned professionals and those just starting their coding journey.</p>
+        <p><a href="https://devtoys.app/" target="_blank">Download DevToys</a></p>
+
+        <h2><a href="#paintnet" id="paintnet">4. Paint.NET</a></h2>
+        <p>Paint.NET is a lightweight yet powerful image editor for Windows. With its intuitive interface, it’s perfect for quick edits or more complex design tasks without the learning curve of more advanced tools.</p>
+        <p>The software offers a wide range of features, including layer support, special effects, and an active online community where you can find plugins and tutorials. Whether you’re tweaking a photo or designing graphics, Paint.NET has you covered.</p>
+        <p>One of the best things about Paint.NET is its performance. Unlike many resource-heavy editors, it runs smoothly even on older systems. This makes it a fantastic choice for users who need powerful editing capabilities without sacrificing speed.</p>
+        <p><a href="https://www.getpaint.net/" target="_blank">Download Paint.NET</a></p>
+
+        <h2><a href="#clipx" id="clipx">5. ClipX</a></h2>
+        <p>ClipX is a clipboard management tool that allows you to store and retrieve multiple items from your clipboard history. If you frequently copy and paste, ClipX will save you countless clicks and keystrokes.</p>
+        <p>This tool is especially useful for multitaskers. Imagine copying a string of code, a URL, and an email address—all of which you can retrieve effortlessly with ClipX’s history management.</p>
+        <p>Its compact size and straightforward design make it a favorite among productivity enthusiasts. Once you start using it, you’ll wonder how you ever managed without a clipboard manager.</p>
+        <p><a href="https://bluemars.org/clipx/" target="_blank">Download ClipX</a></p>
+
+        <h2>Let’s Wrap It Up</h2>
+        <p>These five free tools—ZoomIt, Everything, DevToys, Paint.NET, and ClipX—can supercharge your productivity and help you get more done in less time. What are your go-to apps for boosting productivity? Let me know in the comments or share your favorites with me!</p>
+
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/012_top_5_apps.html";
+            this.page.identifier = "012_top_5_apps";
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
