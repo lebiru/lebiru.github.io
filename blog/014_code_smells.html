@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Discover three common code smells—Magic Strings, Nesting, and Bloaters. Learn how to identify them and implement cleaner coding practices.">
+    <title>Magic Strings, Nesting, And Bloaters, Oh My! 🧙‍♂️</title>
+    <meta name="author" content="Bilal A." />
+
+    <meta property="og:image"
+        content="https://lebiru-github-io-assets.pages.dev/014_code_smells/hero-image.png" />
+
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .steps-buttons {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .steps-buttons button {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Shine effect pseudo-element */
+        .steps-buttons button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: skewX(-45deg);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+
+        /* Hover shine animation */
+        .steps-buttons button:hover::before {
+            left: 150%;
+        }
+
+        /* Hover and focus effects */
+        .steps-buttons button:hover {
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .steps-buttons button:active {
+            transform: scale(0.95);
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .steps-buttons button:focus {
+            outline: none;
+        }
+
+        /* Ubuntu Button */
+        button[data-distro="ubuntu"] {
+            background: linear-gradient(90deg, #dd4814, #77216f);
+        }
+
+        /* Linux Mint Button */
+        button[data-distro="mint"] {
+            background: linear-gradient(90deg, #87cf3e, #3fa248);
+        }
+
+        /* Fedora Button */
+        button[data-distro="fedora"] {
+            background: linear-gradient(90deg, #3c6eb4, #294172);
+        }
+
+        /* Zorin OS Button */
+        button[data-distro="zorin"] {
+            background: linear-gradient(90deg, #0cc1f3, #008dcf);
+        }
+
+
+        .installation-steps {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .installation-steps.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .installation-steps h2 {
+            color: #333;
+        }
+
+        .installation-steps p {
+            margin: 10px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            /* Center within the article */
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        /* Keyframes for spinning animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Keyframes for fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Media query for mobile devices */
+        @media screen and (max-width: 600px) {
+            .steps-buttons {
+                flex-direction: column;
+                gap: 10px;
+                /* Adjust spacing for smaller screens */
+            }
+
+            .steps-buttons button {
+                width: 100%;
+                /* Full width for mobile */
+                max-width: none;
+                /* Remove width restriction */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>Magic Strings, Nesting, And Bloaters, Oh My! 🧙‍♂️</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on February 14th, 2025</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <p>Have you ever come across a piece of code that just felt... off? Maybe it was difficult to read, hard to
+            modify, or just plain messy. In software development, there are certain patterns—known as “code smells”—that
+            can make our codebase harder to maintain and scale over time.</p>
+
+        <p>Today, we’re going to take a closer look at three particularly common code smells: <strong>Magic
+                Strings</strong>, <strong>Nesting</strong>, and <strong>Bloaters</strong>. By the end of this post,
+            you’ll have a better understanding of how to identify them and, more importantly, how to fix them. Let's
+            dive in!</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/014_code_smells/hero-image.png"
+            class="blog-hero-image"
+            alt="A picture of a developer standing in front of the three code smell beasts: Magic Strings, Nesting, and Bloater" />
+        <p class="image-caption">Vanquish these three code smells from your application!</p>
+
+        <h2>1. Magic Strings</h2>
+        <p>Magic Strings refer to hardcoded string values used directly in code. These strings are often sprinkled
+            throughout a codebase without explanation, making them difficult to manage and refactor.</p>
+
+        <p>For example, let’s say you’re working on a system where user roles determine access:</p>
+        <pre>
+        if (userRole == "admin") {
+            grantAccess();
+        }
+        </pre>
+        <p>At first glance, this seems straightforward. But what if “admin” is referenced in multiple places? What if
+            you later decide to rename it to “superuser”? You’d have to hunt down every occurrence and change it
+            manually—an error-prone and inefficient process.</p>
+
+        <p><strong>Solution:</strong> Define constants or use enums to give meaning to these values and make the code
+            more maintainable.</p>
+        <pre>
+        const ROLE_ADMIN = "admin";
+        if (userRole == ROLE_ADMIN) {
+            grantAccess();
+        }
+        </pre>
+        <p>By replacing magic strings with constants, you make your code more readable, easier to update, and less prone
+            to errors.</p>
+
+        <h2>2. Nesting</h2>
+        <p>Nesting refers to placing multiple conditional statements inside one another, creating deeply indented code.
+            This can quickly become hard to read and follow.</p>
+
+        <p>Here’s an example of deeply nested code:</p>
+        <pre>
+        if (user) {
+            if (user.isActive) {
+                if (user.hasPermission) {
+                    executeTask();
+                }
+            }
+        }
+        </pre>
+        <p>The issue here is that as nesting grows, the logic becomes harder to follow. This can make debugging and
+            maintaining the code more difficult over time.</p>
+
+        <p><strong>Solution:</strong> Use guard clauses to simplify your logic and improve readability.</p>
+        <pre>
+        if (!user || !user.isActive || !user.hasPermission) return;
+        executeTask();
+        </pre>
+        <p>By reducing unnecessary nesting, we make the code more linear and easier to understand. This improves
+            maintainability and reduces cognitive load.</p>
+
+        <h2>3. Bloaters</h2>
+        <p>Bloaters occur when a piece of code—be it a function, class, or module—grows too large, making it difficult
+            to read and modify.</p>
+
+        <p>Here’s an example of a bloated class method:</p>
+        <pre>
+        class User {
+            function processUserData() {
+                validateUser();
+                checkPermissions();
+                logActivity();
+                sendNotification();
+            }
+        }
+        </pre>
+        <p>The problem? This method is trying to do too many things at once. A method should ideally have a single
+            responsibility.</p>
+
+        <p><strong>Solution:</strong> Break down large functions into smaller, well-defined methods.</p>
+        <pre>
+        class User {
+            function processUserData() {
+                validateUser();
+                handleUserPermissions();
+                notifyUser();
+            }
+        
+            function handleUserPermissions() {
+                checkPermissions();
+                logActivity();
+            }
+        }
+        </pre>
+        <p>By breaking methods down, each function has a clear, singular purpose, making the code easier to test, read,
+            and maintain.</p>
+
+        <h2>Let’s Wrap It Up</h2>
+        <p>Code smells like Magic Strings, Nesting, and Bloaters are common but avoidable pitfalls that can make code
+            harder to maintain over time. By following best practices—such as replacing hardcoded values with constants,
+            reducing nesting with guard clauses, and breaking large methods into smaller functions—you can improve your
+            code’s readability and maintainability.</p>
+
+        <p>Writing clean, scalable code is an ongoing process, but by keeping an eye out for these common issues, you’ll
+            be well on your way to developing high-quality software. Happy coding!</p>
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/014_code_smells.html";
+            this.page.identifier = "014_code_smells";
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
