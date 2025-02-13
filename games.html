@@ -29,14 +29,15 @@
         <a href="index.html">About Me</a> /
         <a href="projects.html">Projects</a> /
         <a href="gpts.html">CustomGPTs</a> /
-        <a href="blog.html">Blog</a> / 
+        <a href="blog.html">Blog</a> /
         <a href="apps.html">Apps</a> /
         <a href="games.html">Games</a>
     </header>
     <div class="container">
         <h1>Lebiru - Games Directory</h1>
         <h3 style="font-style: italic; color: gray;">Click on a row to start the game</h2>
-            <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search games..." oninput="filterPosts()" />
+            <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search games..."
+                oninput="filterPosts()" />
             <table id="blogTable" style="width: 100%;">
                 <tbody id="blogPosts"></tbody>
             </table>
@@ -45,13 +46,13 @@
     <script>
         // most recent up top
         const blogPosts = [
-            // {
-            //     title: 'Post #002 - Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
-            //     date: 'November 22nd, 2024',
-            //     content:
-            //         "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability. I have had the privilege of guiding junior programmers in multiple teams and seen their growth firsthand...",
-            //     url: 'blog/002_mentoring_tips.html',
-            // },
+            {
+                title: '[ 🏓 Game #002 - Pong]',
+                date: '',
+                content:
+                    'Play the classic game Pong in your browser now! 🏓',
+                url: 'games/001_snake.html',
+            },
             {
                 title: '[ 🐍 Game #001 - Snake]',
                 date: '',
@@ -103,24 +104,25 @@
         });
     </script>
 
-<footer>
-    <div class="footer-container">
-      <ul class="footer-links">
-        <li><a href="index.html">About Me</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="gpts.html">CustomGPTs</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="apps.html">Apps</a></li>
-        <li><a href="games.html">Games</a></li>
-        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-        <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
-      </ul> 
-    </div>
-    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
-    <script>
-      document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>   
-  </footer>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="index.html">About Me</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="gpts.html">CustomGPTs</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="apps.html">Apps</a></li>
+                <li><a href="games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
 </body>
+
 </html>
