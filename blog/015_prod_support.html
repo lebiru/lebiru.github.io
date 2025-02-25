@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Learn essential tips and best practices for Production Support as a Software Developer, including handling incidents, teamwork, war rooms, and retrospectives.">
+    <title>A Primer on Production Support ⚡</title>
+    <meta name="author" content="Bilal A." />
+
+    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/015_prod_support/hero-image.png" />
+
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>A Primer on Production Support ⚡</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on February 28th, 2025</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <p>Have you ever been on call for a production system and faced a sudden issue that needed immediate attention?
+            Many developers find production support intimidating, as it requires real-time problem-solving and rapid
+            decision-making. However, understanding the core principles and having a structured approach can make
+            handling production incidents much more manageable. Production support is a critical aspect of software
+            development that ensures the smooth operation of applications in a live environment. Without proper
+            production support, businesses risk service outages, decreased customer satisfaction, and loss of revenue.
+        </p>
+        <p>In this post, we will cover key tips and best practices for handling production support effectively. You will
+            learn how to categorize issues, collaborate efficiently with your team, and improve system stability. By the
+            end, you’ll have a solid understanding of how to manage incidents, work under pressure, and proactively
+            prevent issues before they escalate.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/015_prod_support/hero-image.png" class="blog-hero-image"
+            alt="A picture of a developer that is awaiting a ring from the production support phone" />
+        <p class="image-caption">Be prepared for that production support call!</p>
+
+        <h2>1. What is Production Support</h2>
+        <p>Production support involves maintaining and monitoring a software application once it is live. Developers
+            supporting production ensure that the system remains stable, available, and functional for users. It
+            requires a mix of debugging skills, analytical thinking, and effective communication. Unlike traditional
+            development, where the focus is on creating new features, production support emphasizes resolving issues
+            quickly and minimizing disruptions.</p>
+        <p>Many teams implement a rotating on-call schedule for production support. For example, one developer might
+            handle support for a week before passing the responsibility to the next person. This ensures that the burden
+            is distributed evenly among team members while providing hands-on experience to everyone. During an on-call
+            shift, a developer must be prepared to diagnose problems, coordinate with other teams, and deploy fixes if
+            necessary. Having a well-documented support protocol in place is essential to handle incidents efficiently.
+        </p>
+        <p>Production support incidents are categorized based on severity levels. <strong>SEV1</strong> issues are
+            critical outages affecting a large number of users, requiring immediate resolution. <strong>SEV2</strong>
+            incidents are major issues impacting significant functionality but with a workaround available. Finally,
+            <strong>SEV3</strong> issues are minor bugs with minimal user impact, which can be scheduled for a later
+            fix. Understanding these levels helps teams prioritize responses and allocate resources effectively.</p>
+
+        <h2>2. There’s No “I” in “TEAM”</h2>
+        <p>Production support is a team effort. The primary goal is to stabilize the system and minimize recurring
+            incidents. When an issue arises, the whole team should be aware of it, even if only one person is on call.
+            Keeping everyone in the loop ensures a faster resolution and prevents knowledge silos. A well-coordinated
+            team can reduce the frequency of production support calls by proactively addressing root causes and
+            implementing long-term solutions.</p>
+        <p>To ensure smooth coordination, teams should use a centralized channel to log and archive production support
+            tickets. This serves as a historical record that can be referenced in future incidents. Additionally,
+            setting up alerts and notifications ensures that everyone is informed of ongoing issues and can provide
+            input if needed. Rotating production support duties among team members helps distribute knowledge and
+            ensures that everyone gains experience handling real-world system issues.</p>
+
+        <h2>3. War Rooms</h2>
+        <p>When a major production issue arises, a "War Room" may be formed. A War Room is a dedicated space (physical
+            or virtual) where key stakeholders collaborate to resolve the issue. It brings together developers,
+            operations engineers, and business representatives to address critical problems in real time. The purpose of
+            a War Room is to streamline communication, align priorities, and deploy fixes as quickly as possible.</p>
+        <p>During high-pressure incidents, clear communication is essential. Everyone should be aligned on the root
+            cause, impact, and resolution plan. Having predefined roles within the War Room, such as a lead coordinator,
+            technical troubleshooters, and status communicators, helps keep the process efficient. The ultimate goal is
+            to "Put Out the Fire" as quickly as possible while ensuring that any long-term improvements are noted for
+            future implementation.</p>
+
+        <h2>4. Reflect and Retrospective</h2>
+        <p>After resolving a production issue, conducting a retrospective is essential. This step involves documenting
+            key details such as who was involved, what caused the issue, why it happened, how it was resolved, and how
+            similar incidents can be prevented in the future. Without proper documentation, teams may find themselves
+            solving the same issues repeatedly without learning from past experiences.</p>
+        <p>Keeping a record of past incidents helps teams handle similar situations more efficiently in the future. It
+            also allows teams to implement proactive solutions, such as improved monitoring, automation, or code
+            changes, to reduce the likelihood of the issue recurring. Retrospectives foster a culture of continuous
+            improvement and ensure that production support becomes more streamlined over time.</p>
+
+        <h2>Let’s Wrap It Up</h2>
+        <p>Production support is a crucial aspect of software development that requires a proactive approach. From
+            handling incidents to collaborating with your team and learning from past issues, every aspect of production
+            support contributes to system stability. Developers who actively participate in production support gain
+            valuable insights into system behavior, real-world application performance, and troubleshooting strategies.
+        </p>
+        <p>By following these best practices, you can improve your skills and ensure a smoother experience for your
+            users. Production support may seem daunting at first, but with the right mindset, teamwork, and preparation,
+            it becomes a valuable learning experience that enhances your development career.</p>
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/015_prod_support.html";
+            this.page.identifier = "015_prod_support";
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
