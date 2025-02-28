@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple/red/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="152x152" href="images/apple/red/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="120x120" href="images/apple/red/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76"   href="images/apple/red/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple/red/apple-touch-icon-76x76.png">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
         <a href="index.html">About Me</a> /
         <a href="projects.html">Projects</a> /
         <a href="gpts.html">CustomGPTs</a> /
-        <a href="blog.html">Blog</a> / 
+        <a href="blog.html">Blog</a> /
         <a href="apps.html">Apps</a> /
         <a href="games.html">Games</a>
     </header>
@@ -45,6 +45,13 @@
     <script>
         // most recent up top
         const blogPosts = [
+            {
+                title: 'Post #015 - A Primer on Production Support ⚡',
+                date: 'February 28th, 2025',
+                content:
+                    "Have you ever been on call for a production system and faced a sudden issue that needed immediate attention? Many developers find production support intimidating, as it requires real-time problem-solving and rapid decision-making. However, understanding the core principles and having a structured approach can make handling production incidents much more manageable...",
+                url: 'blog/015_prod_support.html',
+            },
             {
                 title: 'Post #014 - Magic Strings, Nesting, And Bloaters, Oh My! 🧙‍♂️',
                 date: 'February 21st, 2025',
@@ -187,24 +194,25 @@
         });
     </script>
 
-<footer>
-    <div class="footer-container">
-      <ul class="footer-links">
-        <li><a href="index.html">About Me</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="gpts.html">CustomGPTs</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="apps.html">Apps</a></li>
-        <li><a href="games.html">Games</a></li>
-        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
-        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
-        <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
-      </ul> 
-    </div>
-    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
-    <script>
-      document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    </script>   
-  </footer>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="index.html">About Me</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="gpts.html">CustomGPTs</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="apps.html">Apps</a></li>
+                <li><a href="games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
 </body>
+
 </html>
