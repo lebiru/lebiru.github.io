@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about application security and how to protect your applications from common vulnerabilities like SQL Injection, Insecure Direct Object Reference, and Cross Site Scripting.">
+    <title>Application Security from Common Vulnerabilities 🔒</title>
+    <meta name="author" content="Bilal A." />
+
+    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/016_app_security/hero-image.png" />
+
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a> /
+        <a href="../projects.html">Projects</a> /
+        <a href="../gpts.html">CustomGPTs</a> /
+        <a href="../blog.html">Blog</a> /
+        <a href="../apps.html">Apps</a> /
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>Application Security from Common Vulnerabilities 🔒</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on March 7th, 2025</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <p>Have you ever wondered how secure your web applications really are? With cyber threats constantly evolving, ensuring robust application security is crucial. Developers play a vital role in safeguarding sensitive data and protecting users from malicious attacks. In this article, we’ll explore common security vulnerabilities - SQL Injection, Insecure Direct Object Reference (IDOR), and Cross Site Scripting (XSS) - and provide best practices to keep your applications safe.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/016_app_security/hero-image.png" class="blog-hero-image"
+            alt="A picture of a security developer ensuring the apps are secure" />
+        <p class="image-caption">Let's secure our applications!</p>
+
+        <h2>What is Application Security</h2>
+    <p>Application security refers to the measures and best practices that developers implement to protect applications from cyber threats. Ensuring security means safeguarding sensitive user data, preventing unauthorized access, and maintaining system integrity. When an application is not secure, attackers can exploit vulnerabilities to steal information, disrupt services, or even take full control of a system. The consequences can range from data breaches to financial losses and legal penalties. One of the most well-known resources for understanding and preventing application security issues is the Open Web Application Security Project (OWASP), which provides guidelines and a top 10 list of critical security risks. OWASP also offers various security tools and testing frameworks to help developers detect and mitigate vulnerabilities before deployment. Staying updated with OWASP’s evolving best practices is crucial for maintaining security resilience in applications.</p>
+    
+    <h2>SQL Injection</h2>
+    <p>SQL Injection (SQLi) is like handing a stranger the master key to your database. It occurs when attackers manipulate an application's database queries by injecting malicious SQL statements. A successful SQL Injection attack can allow hackers to access sensitive data, delete records, or even take control of the entire database. This vulnerability is particularly dangerous because it can be exploited with simple input manipulation, making unprotected systems easy targets. Organizations that experience SQL Injection attacks often suffer from severe data leaks, leading to reputational damage and financial losses. To protect against SQL Injection, always use prepared statements with parameterized queries, validate user inputs, and avoid constructing SQL queries directly from user inputs. Additionally, limiting database permissions and employing web application firewalls (WAFs) can help mitigate risks and provide extra layers of security.</p>
+    
+    <h2>Insecure Direct Object References</h2>
+    <p>Imagine giving every hotel guest a single key that opens all the rooms - that’s essentially what Insecure Direct Object Reference (IDOR) is. This vulnerability occurs when an application exposes internal objects, such as database records, through predictable URLs or parameters without proper authorization checks. Attackers can manipulate these references to access or modify unauthorized data. The impact of IDOR can be devastating, especially when sensitive personal or financial information is exposed. Many large-scale data breaches have been linked to IDOR vulnerabilities that allowed unauthorized users to access confidential records. Prevent IDOR by implementing proper access controls, using authentication and authorization checks, and avoiding predictable URLs for sensitive data. Furthermore, ensuring that object permissions are enforced at both the client and server levels adds an extra layer of protection against unauthorized access.</p>
+    
+    <h2>Cross Site Scripting</h2>
+    <p>Cross Site Scripting (XSS) is like allowing strangers to insert their messages into your private conversations. This attack occurs when an attacker injects malicious scripts into a website that gets executed in another user’s browser. A successful XSS attack can lead to stolen cookies, session hijacking, and defaced websites. Attackers often use XSS to impersonate users, steal sensitive data, or distribute malware. There are three main types of XSS attacks: stored XSS, reflected XSS, and DOM-based XSS, each with varying levels of severity. To mitigate XSS risks, always sanitize and escape user inputs, use Content Security Policy (CSP) headers, and implement secure coding practices. Regular security audits, penetration testing, and the use of frameworks that automatically escape untrusted input can significantly reduce XSS vulnerabilities.</p>
+    
+    <h2>Let’s Wrap It Up</h2>
+    <p>Application security is not just an option - it’s a necessity. By understanding and mitigating vulnerabilities like SQL Injection, Insecure Direct Object Reference, and Cross Site Scripting, developers can build more secure applications and protect users from potential cyber threats. Following OWASP guidelines, implementing secure coding practices, and continuously testing for vulnerabilities can go a long way in ensuring a safe and trustworthy application environment. Security is an ongoing process, and developers must stay informed about emerging threats and evolving best practices to keep their applications safe. By prioritizing security in the development lifecycle, businesses can build a more resilient digital ecosystem.</p>
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/016_app_security.html";
+            this.page.identifier = "016_app_security";
+        };
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    </article>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
