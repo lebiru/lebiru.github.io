@@ -9,7 +9,8 @@ html {
 
 body {
   max-width: 800px;
-  margin: 4em auto 2em auto;
+  margin: 0 auto 2em auto;
+  padding-top: 50px;
   font-family: 'helvetica', sans-serif;
 }
 
@@ -21,6 +22,7 @@ a {
 header {
   font-size: small;
   text-align: right;
+  margin-top: 50px;
 }
 
 article {
@@ -38,6 +40,56 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.featured-product-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.25rem;
+  box-sizing: border-box;
+  background: linear-gradient(110deg, #292f80, #27d756);
+  color: #fff;
+  font-family: 'helvetica', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1000;
+}
+
+.featured-product-bar__message {
+  margin: 0;
+  line-height: 1;
+}
+
+.featured-product-bar__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.featured-product-bar__cta:hover,
+.featured-product-bar__cta:focus-visible {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 /* Footer styling */
