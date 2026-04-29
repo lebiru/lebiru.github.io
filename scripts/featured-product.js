@@ -1,8 +1,8 @@
 (() => {
   const featuredProduct = {
-    message: 'Build visibility, trust, and impact in your software engineering career',
-    cta: 'Get the Presentation',
-    href: 'https://lebiru.gumroad.com/l/scaling-your-career-brand'
+    message: 'Bake warmth into your home with simple, reliable recipes that deliver every time.',
+    cta: 'Get the Cozy Cookbook',
+    href: 'https://lebiru.gumroad.com/l/cozy-cafe-bakes'
   };
 
   const bar = document.createElement('section');

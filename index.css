@@ -109,23 +109,26 @@
 }
 
 .carousel-item--1 .carousel-item__image{
+  background-image: url('images/hero/book-cover-hero-cozy.png');
+}
+
+.carousel-item--2 .carousel-item__image{
   background-image: url('images/hero/book-cover-hero-5.png');
 }
 
-
-.carousel-item--2 .carousel-item__image{
+.carousel-item--3 .carousel-item__image{
   background-image: url('images/hero/hero-1.png');
 }
 
-.carousel-item--3 .carousel-item__image{
+.carousel-item--4 .carousel-item__image{
   background-image: url('images/hero/hero-2.png');
 }
 
-.carousel-item--4 .carousel-item__image{
+.carousel-item--5 .carousel-item__image{
   background-image: url('images/hero/hero-3.png');
 }
 
-.carousel-item--5 .carousel-item__image{
+.carousel-item--6 .carousel-item__image{
   background-image: url('images/hero/hero-4.png');
 } 
 
