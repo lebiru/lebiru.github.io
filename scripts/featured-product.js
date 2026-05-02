@@ -5,6 +5,19 @@
     href: 'https://lebiru.gumroad.com/l/cozy-cafe-bakes'
   };
 
+  const trackEvent = (eventName, link) => {
+    if (typeof window.gtag !== 'function') {
+      return;
+    }
+
+    window.gtag('event', eventName, {
+      event_category: 'engagement',
+      event_label: link.textContent.trim(),
+      destination_url: link.href,
+      page_location: window.location.href
+    });
+  };
+
   const bar = document.createElement('section');
   bar.className = 'featured-product-bar';
   bar.setAttribute('aria-live', 'polite');
@@ -20,6 +33,7 @@
   cta.target = '_blank';
   cta.rel = 'noopener noreferrer';
   cta.textContent = featuredProduct.cta;
+  cta.addEventListener('click', () => trackEvent('top_featured_product_cta_click', cta));
 
   bar.append(message, cta);
 
@@ -30,5 +44,10 @@
     body.insertBefore(bar, header);
   } else {
     body.prepend(bar);
+  }
+
+  const landingCta = document.querySelector('.feature-product-landing__cta');
+  if (landingCta) {
+    landingCta.addEventListener('click', () => trackEvent('featured_product_cta_click', landingCta));
   }
 })();
