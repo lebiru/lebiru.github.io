@@ -5,6 +5,81 @@
     href: 'https://lebiru.gumroad.com/l/cozy-cafe-bakes'
   };
 
+  const currentScript = document.currentScript;
+  const basePath = ((currentScript && currentScript.getAttribute('src')) || '')
+    .replace(/scripts\/featured-product\.js(?:\?.*)?$/, '');
+
+  const navLinks = [
+    { href: 'index.html', label: 'About Me' },
+    { href: 'projects.html', label: 'Projects' },
+    { href: 'digital-products.html', label: 'Digital Products' },
+    { href: 'gpts.html', label: 'CustomGPTs' },
+    { href: 'blog.html', label: 'Blog' },
+    { href: 'apps.html', label: 'Apps' },
+    { href: 'games.html', label: 'Games' }
+  ];
+
+  const footerLinks = [
+    ...navLinks,
+    { href: 'https://www.linkedin.com/in/bilalakabi/', label: 'LinkedIn', external: true },
+    { href: 'https://github.com/lebiru', label: 'GitHub', external: true },
+    { href: 'https://lebiru.gumroad.com/subscribe', label: 'Subscribe', external: true }
+  ];
+
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+  const resolveHref = (href, external = false) => {
+    if (external) {
+      return href;
+    }
+
+    return `${basePath}${href}`;
+  };
+
+  const syncHeaderNavigation = () => {
+    document.querySelectorAll('header').forEach((header) => {
+      header.replaceChildren();
+
+      navLinks.forEach((link, index) => {
+        const anchor = document.createElement('a');
+        anchor.href = resolveHref(link.href);
+        anchor.textContent = link.label;
+
+        if (currentPage === link.href) {
+          anchor.setAttribute('aria-current', 'page');
+        }
+
+        header.appendChild(anchor);
+
+        if (index < navLinks.length - 1) {
+          header.append(' / ');
+        }
+      });
+    });
+  };
+
+  const syncFooterNavigation = () => {
+    document.querySelectorAll('.footer-links').forEach((footerList) => {
+      footerList.replaceChildren();
+
+      footerLinks.forEach((link) => {
+        const item = document.createElement('li');
+        const anchor = document.createElement('a');
+
+        anchor.href = resolveHref(link.href, link.external);
+        anchor.textContent = link.label;
+
+        if (link.external) {
+          anchor.target = '_blank';
+          anchor.rel = 'noopener noreferrer';
+        }
+
+        item.appendChild(anchor);
+        footerList.appendChild(item);
+      });
+    });
+  };
+
   const trackEvent = (eventName, link) => {
     if (typeof window.gtag !== 'function') {
       return;
@@ -17,6 +92,9 @@
       page_location: window.location.href
     });
   };
+
+  syncHeaderNavigation();
+  syncFooterNavigation();
 
   const bar = document.createElement('section');
   bar.className = 'featured-product-bar';

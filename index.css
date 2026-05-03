@@ -88,6 +88,11 @@
   text-align: left;
 }
 
+.about-me__title {
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
 .about-me__image-frame {
   position: relative;
   width: 248px;

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-22VNQG7W7C');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lebiru digital products directory featuring polished guides and downloads.">
+  <title>Lebiru - Digital Products</title>
+  <meta name="author" content="Bilal A." />
+  <link rel="stylesheet" href="simple.css" type="text/css" />
+  <link rel="stylesheet" href="digital-products.css" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple/red/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="images/apple/red/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="images/apple/red/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="images/apple/red/apple-touch-icon-76x76.png">
+  <script src="scripts/featured-product.js" defer></script>
+  <script src="scripts/digital-products.js" defer></script>
+</head>
+
+<body class="digital-products-body">
+  <header>
+    <a href="index.html">About Me</a> /
+    <a href="projects.html">Projects</a> /
+    <a href="gpts.html">CustomGPTs</a> /
+    <a href="blog.html">Blog</a> /
+    <a href="apps.html">Apps</a> /
+    <a href="games.html">Games</a>
+  </header>
+
+  <article class="digital-products-page">
+    <section aria-labelledby="digital-products-list-title">
+      <div class="digital-products-section-heading">
+        <h1 id="digital-products-list-title">Lebiru Digital Products</h1>
+        <p>Simple, useful digital products from Lebiru.</p>
+      </div>
+      <div id="digital-products-list" class="digital-products-list" aria-live="polite"></div>
+    </section>
+  </article>
+
+  <footer>
+    <div class="footer-container">
+      <ul class="footer-links">
+        <li><a href="index.html">About Me</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="gpts.html">CustomGPTs</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="apps.html">Apps</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+        <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+        <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+      </ul>
+    </div>
+    <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+    <script>
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+</body>
+
+</html>
