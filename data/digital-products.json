@@ -1,0 +1,32 @@
+{
+  "products": [
+    {
+      "title": "Cozy Cafe Bakes",
+      "description": "Bring the warmth of a cozy café into your kitchen with a beautifully designed collection of easy-to-follow baking recipes created for comfort, simplicity, and delicious results.",
+      "ctaText": "Get the Cozy Cookbook",
+      "linkText": "lebiru.gumroad.com/l/cozy-cafe-bakes",
+      "href": "https://lebiru.gumroad.com/l/cozy-cafe-bakes",
+      "dp": "images/hero/book-cover-hero-cozy.png",
+      "themeColors": [
+        "#6B4637",
+        "#A56B4F",
+        "#F2D0A7",
+        "#FFF1DC"
+      ]
+    },
+    {
+      "title": "Scaling Your Career Brand",
+      "description": "A polished 32-slide career guide designed to help you sharpen your professional story, strengthen your visibility, and position your personal brand for long-term growth.",
+      "ctaText": "Buy the Career Guide",
+      "linkText": "lebiru.gumroad.com/l/scaling-your-career-brand",
+      "href": "https://lebiru.gumroad.com/l/scaling-your-career-brand",
+      "dp": "images/hero/book-cover-hero-5.png",
+      "themeColors": [
+        "#203A5B",
+        "#4E6E9E",
+        "#8CB7E8",
+        "#DCEEFF"
+      ]
+    }
+  ]
+}
