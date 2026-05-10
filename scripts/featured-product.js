@@ -1,8 +1,8 @@
 (() => {
   const featuredProduct = {
-    message: 'Bake warmth into your home with simple, reliable recipes that deliver every time.',
-    cta: 'Get the Cozy Cookbook',
-    href: 'https://lebiru.gumroad.com/l/cozy-cafe-bakes'
+    message: 'Help your child learn the Arabic alphabet through fun tracing and coloring!',
+    cta: 'Get the Coloring Book',
+    href: 'https://lebiru.gumroad.com/l/kids-coloring-arabic'
   };
 
   const currentScript = document.currentScript;

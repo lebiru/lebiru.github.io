@@ -291,6 +291,12 @@
     margin-bottom: 35px;
 }
 
+.carousel-item--kids-arabic .carousel-item__image {
+  background-image: url('images/hero/book-cover-hero-arabic.png');
+  background-color: #3B5B2E;
+  background-blend-mode: soft-light;
+}
+
 .carousel-item--1 .carousel-item__image{
   background-image: url('images/hero/book-cover-hero-cozy.png');
 }

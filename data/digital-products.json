@@ -1,6 +1,20 @@
 {
   "products": [
     {
+      "title": "Kids Coloring: Arabic Letters",
+      "description": "Help your child explore the Arabic alphabet through fun tracing and coloring activities designed for ages 3–7. This 28-page printable workbook features beginner-friendly tracing practice, cute illustrations, and clean easy-to-color layouts that make learning feel playful and engaging.",
+      "ctaText": "Get the Coloring Book",
+      "linkText": "lebiru.gumroad.com/l/kids-coloring-arabic",
+      "href": "https://lebiru.gumroad.com/l/kids-coloring-arabic",
+      "dp": "",
+      "themeColors": [
+        "#3B5B2E",
+        "#6A9C50",
+        "#C8E6A0",
+        "#F0FAE8"
+      ]
+    },
+    {
       "title": "Cozy Cafe Bakes",
       "description": "Bring the warmth of a cozy café into your kitchen with a beautifully designed collection of easy-to-follow baking recipes created for comfort, simplicity, and delicious results.",
       "ctaText": "Get the Cozy Cookbook",
