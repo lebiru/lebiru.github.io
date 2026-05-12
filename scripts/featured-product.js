@@ -2,7 +2,7 @@
   const featuredProduct = {
     message: 'Help your child learn the Arabic alphabet through fun tracing and coloring!',
     cta: 'Get the Coloring Book',
-    href: 'https://lebiru.gumroad.com/l/kids-coloring-arabic'
+    href: 'https://payhip.com/b/Z0zNl'
   };
 
   const currentScript = document.currentScript;

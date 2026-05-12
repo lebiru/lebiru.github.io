@@ -13,6 +13,7 @@
         linkText: 'lebiru.gumroad.com/l/kids-coloring-arabic',
         href: 'https://lebiru.gumroad.com/l/kids-coloring-arabic',
         dp: 'images/hero/book-cover-hero-arabic.png',
+        payhipHref: 'https://payhip.com/b/Z0zNl',
         themeColors: ['#3B5B2E', '#6A9C50', '#C8E6A0', '#F0FAE8']
       },
       {
@@ -22,6 +23,7 @@
         linkText: 'lebiru.gumroad.com/l/cozy-cafe-bakes',
         href: 'https://lebiru.gumroad.com/l/cozy-cafe-bakes',
         dp: 'images/hero/book-cover-hero-cozy.png',
+        payhipHref: 'https://payhip.com/b/ZVp62',
         themeColors: ['#6B4637', '#A56B4F', '#F2D0A7', '#FFF1DC']
       },
       {
@@ -31,6 +33,7 @@
         linkText: 'lebiru.gumroad.com/l/scaling-your-career-brand',
         href: 'https://lebiru.gumroad.com/l/scaling-your-career-brand',
         dp: 'images/hero/book-cover-hero-5.png',
+        payhipHref: 'https://payhip.com/b/K9i3x',
         themeColors: ['#203A5B', '#4E6E9E', '#8CB7E8', '#DCEEFF']
       }
     ]
@@ -91,6 +94,17 @@
     footer.className = 'digital-product-card__footer';
 
     footer.append(cta);
+
+    if (product.payhipHref) {
+      const payhip = document.createElement('a');
+      payhip.className = 'digital-product-card__cta digital-product-card__cta--payhip';
+      payhip.href = product.payhipHref;
+      payhip.target = '_blank';
+      payhip.rel = 'noopener noreferrer';
+      payhip.textContent = 'Buy on Payhip';
+      payhip.addEventListener('click', () => trackEvent({ ...product, href: product.payhipHref }));
+      footer.append(payhip);
+    }
     content.append(meta, footer);
     article.appendChild(content);
 
