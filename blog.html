@@ -22,198 +22,343 @@
     <link rel="apple-touch-icon" sizes="152x152" href="images/apple/red/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="120x120" href="images/apple/red/apple-touch-icon-120x120.png">
     <link rel="apple-touch-icon" sizes="76x76" href="images/apple/red/apple-touch-icon-76x76.png">
-  <script src="scripts/featured-product.js" defer></script>
+    <style>
+        .blog-directory {
+            max-width: 740px;
+            margin: 0 auto;
+        }
+
+        .blog-directory__heading {
+            margin: 0 0 0.25rem;
+            font-size: 1.75rem;
+            color: #1a1a1a;
+        }
+
+        .blog-directory__subheading {
+            margin: 0 0 1.75rem;
+            color: #6b7280;
+            font-size: 0.95rem;
+            font-style: normal;
+        }
+
+        .blog-search {
+            display: block;
+            width: 100%;
+            padding: 0.7rem 1rem;
+            margin-bottom: 1.75rem;
+            font-size: 0.95rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+            background: #fafafa;
+            color: #1a1a1a;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .blog-search:focus {
+            border-color: #10AA94;
+            box-shadow: 0 0 0 3px rgba(16, 170, 148, 0.12);
+            background: #fff;
+        }
+
+        .blog-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .blog-list__item {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fff;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .blog-list__item:hover {
+            border-color: #10AA94;
+            box-shadow: 0 4px 14px rgba(16, 170, 148, 0.1);
+            background: #f9fffe;
+        }
+
+        .blog-list__link {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding: 1rem 1.25rem;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .blog-list__link:hover {
+            color: inherit;
+        }
+
+        .blog-list__meta {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .blog-list__number {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #10AA94;
+        }
+
+        .blog-list__date {
+            font-size: 0.78rem;
+            color: #9ca3af;
+        }
+
+        .blog-list__title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .blog-list__preview {
+            font-size: 0.85rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-list__empty {
+            text-align: center;
+            color: #9ca3af;
+            padding: 2.5rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .blog-list__preview {
+                display: none;
+            }
+
+            .blog-list__link {
+                padding: 0.85rem 1rem;
+            }
+        }
+    </style>
+    <script src="scripts/featured-product.js" defer></script>
 </head>
 
 <body>
     <header>
-        <a href="index.html">About Me</a> /
-        <a href="projects.html">Projects</a> /
-        <a href="gpts.html">CustomGPTs</a> /
-        <a href="blog.html">Blog</a> /
-        <a href="apps.html">Apps</a> /
+        <a href="index.html">About Me</a>
+        <a href="projects.html">Projects</a>
+        <a href="digital-products.html">Digital Products</a>
+        <a href="gpts.html">CustomGPTs</a>
+        <a href="blog.html">Blog</a>
+        <a href="apps.html">Apps</a>
         <a href="games.html">Games</a>
     </header>
-    <div class="container">
-        <h1>Lebiru - Blog Directory</h1>
-        <h3 style="font-style: italic; color: gray;">Click on a row to read the post</h2>
-            <input type="text" id="searchBox" placeholder="Search posts..." oninput="filterPosts()" />
-            <table id="blogTable">
-                <tbody id="blogPosts"></tbody>
-            </table>
-    </div>
+    <article>
+        <div class="blog-directory">
+            <h1 class="blog-directory__heading">Blog</h1>
+            <p class="blog-directory__subheading">Thoughts on software engineering, career growth, and building things that last.</p>
+            <input type="text" id="searchBox" class="blog-search" placeholder="Search posts..." oninput="filterPosts()" aria-label="Search blog posts" />
+            <ul class="blog-list" id="blogList"></ul>
+        </div>
+    </article>
 
     <script>
-        // most recent up top
         const blogPosts = [
             {
-                title: 'Post #018 - The Hidden Engineering Skill That Keeps APIs From Breaking Production',
+                title: 'The Hidden Engineering Skill That Keeps APIs From Breaking Production',
+                number: '018',
                 date: 'May 23rd, 2026',
-                content:
-                    "Modern software systems are constantly evolving. But underneath all of that innovation sits one of the most difficult responsibilities in software engineering: keeping existing systems working while everything around them changes...",
+                content: "Modern software systems are constantly evolving. But underneath all of that innovation sits one of the most difficult responsibilities in software engineering: keeping existing systems working while everything around them changes.",
                 url: 'blog/018_backwards_comp.html',
             },
             {
-                title: 'Post #017 - Neural Heuristics for Creative Problem Solving 🧠',
+                title: 'Neural Heuristics for Creative Problem Solving 🧠',
+                number: '017',
                 date: 'March 14th, 2025',
-                content:
-                    "Our brains are wired to seek solutions, but sometimes traditional problem-solving methods don’t cut it. What if there was a way to harness cognitive shortcuts to generate innovative ideas?...",
+                content: "Our brains are wired to seek solutions, but sometimes traditional problem-solving methods don't cut it. What if there was a way to harness cognitive shortcuts to generate innovative ideas?",
                 url: 'blog/017_neural_heuristics.html',
             },
             {
-                title: 'Post #016 - Application Security from Common Vulnerabilities 🔒',
+                title: 'Application Security from Common Vulnerabilities 🔒',
+                number: '016',
                 date: 'March 7th, 2025',
-                content:
-                    "Have you ever wondered how secure your web applications really are? With cyber threats constantly evolving, ensuring robust application security is crucial. Developers play a vital role in safeguarding sensitive data and protecting users from malicious attacks...",
+                content: "Have you ever wondered how secure your web applications really are? With cyber threats constantly evolving, ensuring robust application security is crucial.",
                 url: 'blog/016_app_security.html',
             },
             {
-                title: 'Post #015 - A Primer on Production Support ⚡',
+                title: 'A Primer on Production Support ⚡',
+                number: '015',
                 date: 'February 28th, 2025',
-                content:
-                    "Have you ever been on call for a production system and faced a sudden issue that needed immediate attention? Many developers find production support intimidating, as it requires real-time problem-solving and rapid decision-making. However, understanding the core principles and having a structured approach can make handling production incidents much more manageable...",
+                content: "Have you ever been on call for a production system and faced a sudden issue that needed immediate attention? Understanding the core principles and having a structured approach can make handling production incidents much more manageable.",
                 url: 'blog/015_prod_support.html',
             },
             {
-                title: 'Post #014 - Magic Strings, Nesting, And Bloaters, Oh My! 🧙‍♂️',
+                title: 'Magic Strings, Nesting, And Bloaters, Oh My! 🧙‍♂️',
+                number: '014',
                 date: 'February 21st, 2025',
-                content:
-                    "Have you ever come across a piece of code that just felt... off? Maybe it was difficult to read, hard to modify, or just plain messy. In software development, there are certain patterns—known as “code smells” - that can make our codebase harder to maintain and scale over time...",
+                content: "Have you ever come across a piece of code that just felt off? In software development, there are certain patterns—known as code smells—that can make our codebase harder to maintain and scale over time.",
                 url: 'blog/014_code_smells.html',
             },
             {
-                title: 'Post #013 - The Tar Pit and the Golden Pit of Success',
+                title: 'The Tar Pit and the Golden Pit of Success',
+                number: '013',
                 date: 'February 7th, 2025',
-                content:
-                    "In 1982, Alan Perlis wrote a collection of Epigrams on Programming, packed with timeless wisdom about software development. One of his sharpest observations hinted at what we might call the Tarpit Theory...",
+                content: "In 1982, Alan Perlis wrote a collection of Epigrams on Programming, packed with timeless wisdom about software development. One of his sharpest observations hinted at what we might call the Tarpit Theory.",
                 url: 'blog/013_golden_pit.html',
             },
             {
-                title: 'Post #012 - My Top 5 Free Windows Productivity Apps 💡',
+                title: 'My Top 5 Free Windows Productivity Apps 💡',
+                number: '012',
                 date: 'January 31st, 2025',
-                content:
-                    "Are you looking for ways to make your Windows PC work for you, not against you? With the right tools, you can streamline your workflow and tackle tasks more efficiently...",
+                content: "Are you looking for ways to make your Windows PC work for you, not against you? With the right tools, you can streamline your workflow and tackle tasks more efficiently.",
                 url: 'blog/012_top_5_apps.html',
             },
             {
-                title: 'Post #011 - How To Revive Your PC With A Linux OS 🖥️',
+                title: 'How To Revive Your PC With A Linux OS 🖥️',
+                number: '011',
                 date: 'January 24th, 2025',
-                content:
-                    "Have you ever wondered if an old PC gathering dust could still be useful? Many of us discard outdated computers, thinking they’re no longer worth saving, but what if you could give them a second life?...",
+                content: "Have you ever wondered if an old PC gathering dust could still be useful? Many of us discard outdated computers, thinking they're no longer worth saving, but what if you could give them a second life?",
                 url: 'blog/011_revive_pc.html',
             },
             {
-                title: 'Post #010 - Stress Testing With JMeter: An Overview and Example Using Lebiru.FileService 📈',
+                title: 'Stress Testing With JMeter: An Overview and Example Using Lebiru.FileService 📈',
+                number: '010',
                 date: 'January 17th, 2025',
-                content:
-                    "It’s the night before the big debut of your online store. The clock is ticking, and every minute brings you closer to the site going live. Suddenly, the site launches, and pre-orders start flooding in! You rejoice and celebrate, until you encounter the dreaded error message: 500 Internal Server Error. Your fans can’t process orders, and the app is buckling under the spike in users. Could this disaster have been prevented?...",
+                content: "It's the night before the big debut of your online store. The clock is ticking, and every minute brings you closer to the site going live. Could a disaster have been prevented with stress testing?",
                 url: 'blog/010_jmeter_stress.html',
             },
             {
-                title: 'Post #009 - The Next 5 Years of Software',
+                title: 'The Next 5 Years of Software',
+                number: '009',
                 date: 'January 10th, 2025',
-                content:
-                    "What groundbreaking innovations will define the next era of technology? In an industry marked by constant evolution, software is on the cusp of a major transformation. Recent breakthroughs in artificial intelligence (AI), cloud computing, and automation have turbocharged innovation, setting the stage for a thrilling five years ahead for developers, businesses, and users alike...",
+                content: "What groundbreaking innovations will define the next era of technology? Recent breakthroughs in AI, cloud computing, and automation have turbocharged innovation, setting the stage for a thrilling five years ahead.",
                 url: 'blog/009_next_5_years.html',
             },
             {
-                title: 'Post #008 - Unit Testing in .NET: Automated Quality Assurance for Your Code ⚗️',
+                title: 'Unit Testing in .NET: Automated Quality Assurance for Your Code ⚗️',
+                number: '008',
                 date: 'January 3rd, 2025',
-                content:
-                    "Have you ever imagined a job where your work is automatically checked and graded almost instantly? For programmers, this dream is a reality, thanks to unit testing. Like an engineering architect ensuring their blueprints are structurally sound, programmers use unit tests to validate the foundations of their code before building on it...",
+                content: "Have you ever imagined a job where your work is automatically checked and graded almost instantly? For programmers, this dream is a reality, thanks to unit testing.",
                 url: 'blog/008_unit_tests.html',
             },
             {
-                title: 'Post #007 - The Art of Conventional Commits 🖋️',
+                title: 'The Art of Conventional Commits 🖋️',
+                number: '007',
                 date: 'December 27th, 2024',
-                content:
-                    "Picture this: It's deployment day, and the production server is on fire. Your team is scrambling to identify the cause, but the commit history looks like a cryptic diary: 'fixed stuff', 'updates', 'another fix.' Frustration mounts as no one can trace the issue quickly, and the team burns hours trying to untangle the mess...",
+                content: "Picture this: it's deployment day, and the production server is on fire. Your team is scrambling to identify the cause, but the commit history looks like a cryptic diary: 'fixed stuff', 'updates', 'another fix.'",
                 url: 'blog/007_conventional_commits.html',
             },
             {
-                title: 'Post #006 - The Flow of Programming',
+                title: 'The Flow of Programming',
+                number: '006',
                 date: 'December 20th, 2024',
-                content:
-                    "How do successful teams consistently ship high-quality software while managing the chaos of constant code updates? Take for example the Linux Operating System, which averages about 202 code commits per day. How is software at this scale managed in a way to know what is going out, while also developing for what's to come in the future?...",
+                content: "How do successful teams consistently ship high-quality software while managing the chaos of constant code updates? Take for example the Linux Operating System, which averages about 202 code commits per day.",
                 url: 'blog/006_flow.html',
             },
             {
-                title: 'Post #005 - The Power of Semantic Versioning: Communicating Software Updates Effectively',
+                title: 'The Power of Semantic Versioning: Communicating Software Updates Effectively',
+                number: '005',
                 date: 'December 13th, 2024',
-                content:
-                    "What system can provide meaningful information about your application releases at a glance? For developers, Semantic Versioning (“SemVer”) offers a standardized approach to label software versions...",
+                content: "What system can provide meaningful information about your application releases at a glance? For developers, Semantic Versioning offers a standardized approach to label software versions.",
                 url: 'blog/005_semver.html',
             },
             {
-                title: 'Post #004 - Debug Stance: The Root Skill',
+                title: 'Debug Stance: The Root Skill',
+                number: '004',
                 date: 'December 6th, 2024',
-                content:
-                    "Picture this: you’re a lone samurai facing an unseen opponent. The battlefield is your code, and the enemy is a bug—hidden, clever, and unrelenting. Do you have the discipline to face it head-on? Debugging is the way of the programmer, a practice that sharpens your focus, strengthens your resolve, and transforms chaos into clarity. In this post, we’ll hone your “Debug Stance,” equipping you with the mental and technical tools to face any challenge with precision. Ready your keyboard, because by the end of this, you won’t just debug—you’ll master the art of the code duel...",
+                content: "Picture this: you're a lone samurai facing an unseen opponent. The battlefield is your code, and the enemy is a bug—hidden, clever, and unrelenting. Debugging is the way of the programmer.",
                 url: 'blog/004_debug_stance.html',
             },
             {
-                title: 'Post #003 - 5 Programming Books That Shaped My Career 📚',
+                title: '5 Programming Books That Shaped My Career 📚',
+                number: '003',
                 date: 'November 29th, 2024',
-                content:
-                    "What if a single book could fundamentally change how you think about programming? Or provide the breakthrough you needed to solve a tough technical challenge? As developers, we’re constantly learning, and sometimes, the right book at the right time can make all the difference...",
+                content: "What if a single book could fundamentally change how you think about programming? As developers, we're constantly learning, and sometimes the right book at the right time can make all the difference.",
                 url: 'blog/003_top_5_books.html',
             },
             {
-                title: 'Post #002 - Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
+                title: 'Tips on Mentoring Junior Programmers: Building the Next Generation of Developers 🚀',
+                number: '002',
                 date: 'November 22nd, 2024',
-                content:
-                    "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability. I have had the privilege of guiding junior programmers in multiple teams and seen their growth firsthand...",
+                content: "Mentoring junior programmers is a rewarding responsibility that not only helps them grow but also strengthens your team's overall capability.",
                 url: 'blog/002_mentoring_tips.html',
             },
             {
-                title: 'Post #001 - Supercharging .NET Microservices: My Top 5 NuGet Packages',
+                title: 'Supercharging .NET Microservices: My Top 5 NuGet Packages',
+                number: '001',
                 date: 'November 15th, 2024',
-                content:
-                    'Imagine this: it’s a Monday morning, and your microservice that handles critical payment transactions has just hit a record-breaking number of requests. Everything seems fine — until it’s not...',
+                content: "Imagine this: it's a Monday morning, and your microservice that handles critical payment transactions has just hit a record-breaking number of requests. Everything seems fine — until it's not.",
                 url: 'blog/001_top_5_nugets.html',
             }
         ];
 
-        // Display blog posts
-        const displayPosts = (posts) => {
-            const tableBody = document.getElementById('blogPosts');
-            tableBody.innerHTML = '';
+        const renderPosts = (posts) => {
+            const list = document.getElementById('blogList');
+            list.innerHTML = '';
+
+            if (posts.length === 0) {
+                list.innerHTML = '<li class="blog-list__empty">No posts found. Try a different search.</li>';
+                return;
+            }
 
             posts.forEach((post) => {
-                const row = document.createElement('tr');
-                row.onclick = () => (window.location.href = post.url);
+                const li = document.createElement('li');
+                li.className = 'blog-list__item';
 
-                const titleCell = document.createElement('td');
-                titleCell.textContent = post.title;
-                row.appendChild(titleCell);
+                const a = document.createElement('a');
+                a.className = 'blog-list__link';
+                a.href = post.url;
 
-                const dateCell = document.createElement('td');
-                dateCell.textContent = post.date;
-                row.appendChild(dateCell);
+                const meta = document.createElement('div');
+                meta.className = 'blog-list__meta';
 
-                const previewCell = document.createElement('td');
-                previewCell.textContent = post.content.split('. ').slice(0, 2).join('. ');
-                row.appendChild(previewCell);
+                const num = document.createElement('span');
+                num.className = 'blog-list__number';
+                num.textContent = `#${post.number}`;
 
-                tableBody.appendChild(row);
+                const date = document.createElement('span');
+                date.className = 'blog-list__date';
+                date.textContent = post.date;
+
+                meta.append(num, date);
+
+                const title = document.createElement('p');
+                title.className = 'blog-list__title';
+                title.textContent = post.title;
+
+                const preview = document.createElement('p');
+                preview.className = 'blog-list__preview';
+                preview.textContent = post.content;
+
+                a.append(meta, title, preview);
+                li.appendChild(a);
+                list.appendChild(li);
             });
         };
 
-        // Filter blog posts
         const filterPosts = () => {
-            const searchText = document.getElementById('searchBox').value.toLowerCase();
-            const filteredPosts = blogPosts.filter(
-                (post) =>
-                    post.title.toLowerCase().includes(searchText) ||
-                    post.content.toLowerCase().includes(searchText)
+            const q = document.getElementById('searchBox').value.toLowerCase();
+            const filtered = blogPosts.filter(p =>
+                p.title.toLowerCase().includes(q) ||
+                p.content.toLowerCase().includes(q)
             );
-            displayPosts(filteredPosts);
+            renderPosts(filtered);
         };
 
-        // Initialize table with all posts
-        document.addEventListener('DOMContentLoaded', () => {
-            displayPosts(blogPosts);
-        });
+        document.addEventListener('DOMContentLoaded', () => renderPosts(blogPosts));
     </script>
 
     <footer>
@@ -221,6 +366,7 @@
             <ul class="footer-links">
                 <li><a href="index.html">About Me</a></li>
                 <li><a href="projects.html">Projects</a></li>
+                <li><a href="digital-products.html">Digital Products</a></li>
                 <li><a href="gpts.html">CustomGPTs</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="apps.html">Apps</a></li>
