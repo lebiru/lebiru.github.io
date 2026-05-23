@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Discover the hidden engineering skill that keeps APIs from breaking production: backward compatibility. Learn how large-scale systems evolve safely without disrupting consumers." />
+    <title>The Hidden Engineering Skill That Keeps APIs From Breaking Production</title>
+    <meta name="author" content="Bilal A." />
+
+    <link rel="stylesheet" href="../simple.css" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: black;
+            color: limegreen;
+            font-family: Consolas, monospace;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .callout {
+            background: #f0f4f8;
+            border-left: 5px solid #10AA94;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+    </style>
+    <script src="../scripts/featured-product.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../digital-products.html">Digital Products</a>
+        <a href="../gpts.html">CustomGPTs</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../apps.html">Apps</a>
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>The Hidden Engineering Skill That Keeps APIs From Breaking Production</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on May 23rd, 2026</p>
+            </div>
+        </div>
+
+        <!-- Blog Post Start -->
+
+        <p>Modern software systems are constantly evolving.</p>
+
+        <p>New features get released. Infrastructure gets upgraded. Security requirements change. Teams refactor services, modernize platforms, and migrate workloads to new architectures.</p>
+
+        <p>But underneath all of that innovation sits one of the most difficult responsibilities in software engineering:</p>
+
+        <p>Keeping existing systems working while everything around them changes.</p>
+
+        <p>This is the world of backward compatibility.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/018_backwards_comp/hero-image.png"
+            class="blog-hero-image" alt="A picture of a developer looking at previous versions of their API" />
+        <p class="image-caption">Support multiple versions of your API with this hidden technique</p>
+
+        <p>It is not the flashy side of engineering. It rarely appears in product demos. Most users never notice it when it works correctly.</p>
+
+        <p>But when it fails, entire platforms feel it immediately.</p>
+
+        <p>Broken integrations. Failed deployments. Mobile apps crashing in production. Downstream services timing out. Customer workflows unexpectedly failing because a "small" API change was pushed without understanding who depended on it.</p>
+
+        <p>At scale, backward compatibility is not just an engineering best practice.</p>
+
+        <p>It is survival.</p>
+
+        <hr>
+
+        <h2>APIs Are Contracts, Not Just Code</h2>
+
+        <p>One of the biggest mindset shifts engineers experience over time is realizing that APIs stop belonging solely to the development team the moment they are released.</p>
+
+        <p>Once consumers integrate with your API, your implementation details become operational dependencies.</p>
+
+        <p>Clients may rely on:</p>
+
+        <ul>
+            <li>field names,</li>
+            <li>response structures,</li>
+            <li>status codes,</li>
+            <li>retry behavior,</li>
+            <li>pagination formats,</li>
+            <li>timeout expectations,</li>
+            <li>or even undocumented quirks.</li>
+        </ul>
+
+        <p>Over time, those assumptions become embedded into production systems.</p>
+
+        <p>This means changing an API is rarely isolated. Even a seemingly harmless modification can create ripple effects across dozens of services and integrations.</p>
+
+        <p>Adding a field may be safe.</p>
+
+        <p>Removing one may break revenue-generating systems.</p>
+
+        <hr>
+
+        <h2>The Reality of Large-Scale Systems</h2>
+
+        <p>Backward compatibility becomes exponentially harder in distributed environments.</p>
+
+        <p>Different systems upgrade at different times.</p>
+
+        <p>Some mobile clients may remain outdated for months. Internal applications may deploy weekly. Third-party vendors may only upgrade quarterly. Event queues may still contain payloads produced by older versions of services.</p>
+
+        <p>Now imagine trying to evolve a platform safely while all of those systems continue operating simultaneously.</p>
+
+        <p>During my time working on enterprise-scale API systems at UPS, I worked on flows handling over 250 million API calls per week.</p>
+
+        <p>Maintaining backward compatibility at that scale was far more than simply preserving JSON fields.</p>
+
+        <p>Every deployment involved balancing:</p>
+
+        <ul>
+            <li>business feature delivery,</li>
+            <li>infrastructure modernization,</li>
+            <li>integration stability,</li>
+            <li>deployment sequencing,</li>
+            <li>and operational risk.</li>
+        </ul>
+
+        <p>The challenge was ensuring the <em>entire API flow</em> remained stable while systems underneath it evolved continuously.</p>
+
+        <p>One of the biggest lessons from that experience was understanding that backward compatibility is not solved in a single layer.</p>
+
+        <p>It requires understanding:</p>
+
+        <ul>
+            <li>infrastructure,</li>
+            <li>networking,</li>
+            <li>service orchestration,</li>
+            <li>API contracts,</li>
+            <li>deployment pipelines,</li>
+            <li>observability,</li>
+            <li>rollback strategies,</li>
+            <li>and consumer behavior.</li>
+        </ul>
+
+        <p>Feature Flags became one of the most valuable tools in reducing deployment risk.</p>
+
+        <p>Instead of exposing new functionality to everyone immediately, Feature Flags allowed us to:</p>
+
+        <ul>
+            <li>gradually enable behavior,</li>
+            <li>isolate deployments safely,</li>
+            <li>validate production traffic incrementally,</li>
+            <li>and quickly disable problematic functionality without full rollbacks.</li>
+        </ul>
+
+        <p>That level of fine-grained deployment control significantly reduced outages while still allowing teams to move forward with modernization efforts and business initiatives.</p>
+
+        <p>At enterprise scale, safe deployments are rarely accidental.</p>
+
+        <p>They are engineered deliberately.</p>
+
+        <hr>
+
+        <h2>The Smallest API Changes Can Cause the Biggest Problems</h2>
+
+        <p>Many production issues come from changes that initially appear minor.</p>
+
+        <p>Examples include:</p>
+
+        <ul>
+            <li>renaming a field,</li>
+            <li>changing a data type,</li>
+            <li>tightening validation rules,</li>
+            <li>altering pagination behavior,</li>
+            <li>or modifying HTTP response semantics.</li>
+        </ul>
+
+        <p>An endpoint changing from:</p>
+
+        <ul>
+            <li><code>404 Not Found</code></li>
+        </ul>
+
+        <p>to:</p>
+
+        <ul>
+            <li><code>200 OK</code> with an empty payload</li>
+        </ul>
+
+        <p>may seem harmless internally.</p>
+
+        <p>But downstream retry logic, analytics pipelines, or business workflows may behave completely differently afterward.</p>
+
+        <p>This is why experienced engineers become cautious around API changes.</p>
+
+        <p>Not because they fear change —<br>but because they understand hidden dependencies.</p>
+
+        <hr>
+
+        <h2>Designing APIs That Survive Change</h2>
+
+        <p>Good API design assumes evolution from day one.</p>
+
+        <p>One of the safest principles in API design is:</p>
+
+        <div class="callout">
+            Prefer additive changes over destructive ones.
+        </div>
+
+        <p>Adding optional fields is usually safe.</p>
+
+        <p>Removing existing behavior is risky.</p>
+
+        <p>A mature API strategy also includes:</p>
+
+        <ul>
+            <li>versioning,</li>
+            <li>contract testing,</li>
+            <li>observability,</li>
+            <li>deprecation windows,</li>
+            <li>rollout controls,</li>
+            <li>and consumer communication.</li>
+        </ul>
+
+        <p>As systems grow larger, these practices stop being "nice to have."</p>
+
+        <p>They become operational requirements.</p>
+
+        <hr>
+
+        <h2>Stability Is an Engineering Feature</h2>
+
+        <p>One of the clearest indicators of engineering maturity is understanding that software longevity matters more than short-term implementation speed.</p>
+
+        <p>Fast feature delivery means little if systems become unstable after every deployment.</p>
+
+        <p>The strongest engineering organizations build platforms that can evolve safely over time.</p>
+
+        <p>That means:</p>
+
+        <ul>
+            <li>minimizing breaking changes,</li>
+            <li>reducing deployment risk,</li>
+            <li>protecting consumers,</li>
+            <li>and creating operational trust.</li>
+        </ul>
+
+        <p>Backward compatibility is ultimately about reliability.</p>
+
+        <p>And reliability builds confidence across teams, customers, and businesses.</p>
+
+        <hr>
+
+        <h2>Final Thoughts</h2>
+
+        <p>Software engineering is not only about creating new systems.</p>
+
+        <p>It is about evolving existing systems responsibly.</p>
+
+        <p>Anyone can build features in isolation.</p>
+
+        <p>The real challenge is introducing change into complex ecosystems without breaking the world around them.</p>
+
+        <p>That is where backward compatibility becomes one of the most valuable engineering disciplines in modern software development.</p>
+
+        <p>If you are interested in engineering growth, scalable systems, technical leadership, and building long-term impact in your career, check out my professional development guide, <em><a href="https://lebiru.gumroad.com/l/scaling-your-career-brand">Scaling Your Career Brand</a></em>, available through <a href="https://lebiru.gumroad.com/l/scaling-your-career-brand">Gumroad</a> and <a href="https://payhip.com/b/K9i3x">Payhip</a>.</p>
+
+        <!-- Blog Post End -->
+
+    </article>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/018_backwards_comp.html";
+            this.page.identifier = "018_backwards_comp";
+        };
+        (function () {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments
+            powered by Disqus.</a></noscript>
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../digital-products.html">Digital Products</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
