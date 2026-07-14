@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missile Command</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="hud">
+    <div class="hud__left">
+      <h1>Missile Command</h1>
+      <p id="status">Tap or click to defend the cities.</p>
+    </div>
+    <div class="hud__right">
+      <div>Score: <span id="score">0</span></div>
+      <div>Level: <span id="level">1</span></div>
+      <div>Ammo: <span id="ammo">30 / 30 / 30</span></div>
+      <button id="restart" type="button">Restart</button>
+    </div>
+  </div>
+  <canvas id="renderCanvas"></canvas>
+
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
