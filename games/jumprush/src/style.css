@@ -1,0 +1,8 @@
+:root { color-scheme: dark; background: #050611; font-family: Arial, sans-serif; }
+* { box-sizing: border-box; }
+html, body, #game-shell { width: 100%; min-height: 100%; margin: 0; overflow: hidden; }
+body { min-height: 100vh; display: grid; place-items: center; background: radial-gradient(circle at 50% 0%, #182550 0%, #090b18 42%, #050611 100%); }
+#game-shell { display: grid; place-items: center; padding: 12px; }
+#game { width: min(100%, 960px); box-shadow: 0 0 0 1px #3275ff, 0 20px 80px #000a, 0 0 65px #3275ff44; border-radius: 8px; overflow: hidden; }
+canvas { display: block; width: 100% !important; height: auto !important; touch-action: none; }
+@media (max-width: 600px) { #game-shell { padding: 0; } #game { width: 100vw; border-radius: 0; } }
