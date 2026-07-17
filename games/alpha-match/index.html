@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#77c9ff" />
+  <meta name="description" content="Alpha Match is a calm alphabet memory game for young learners." />
+  <title>Alpha Match</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+    <div class="cloud cloud-three"></div>
+  </div>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <button id="homeButton" class="sprite-button hidden" type="button" aria-label="Return to menu"><img src="./assets/sprites/home.png" alt=""></button>
+      <div class="brand">
+        <img class="brand-star sprite-pixel" src="./assets/sprites/star.png" alt="">
+        <h1>Alpha Match</h1>
+      </div>
+      <button id="settingsButton" class="icon-button" type="button" aria-label="Open settings">⚙</button>
+    </header>
+
+    <section id="menuScreen" class="screen active" aria-labelledby="menuTitle">
+      <div class="hero-card">
+        <div class="mascot" aria-hidden="true">
+          <div class="mascot-face">
+            <span class="eye left"></span>
+            <span class="eye right"></span>
+            <span class="smile"></span>
+          </div>
+          <div class="mascot-letter">A</div>
+        </div>
+        <p class="eyebrow">Learn, listen, and match</p>
+        <h2 id="menuTitle">Match the letters!</h2>
+        <p class="hero-copy">Flip two cards, hear each letter, and find every matching pair.</p>
+        <button id="playButton" class="primary-button" type="button">Play</button>
+        <button id="howToButton" class="secondary-button" type="button">How to Play</button>
+      </div>
+    </section>
+
+    <section id="levelScreen" class="screen" aria-labelledby="levelTitle">
+      <div class="panel">
+        <p class="eyebrow">Choose a board</p>
+        <h2 id="levelTitle">Pick a level</h2>
+        <div id="levelGrid" class="level-grid"></div>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen" aria-labelledby="gameTitle">
+      <div class="game-header">
+        <div>
+          <p class="eyebrow" id="gameModeLabel">Easy</p>
+          <h2 id="gameTitle">Find the pairs</h2>
+        </div>
+        <div class="status-group" aria-label="Game status">
+          <span class="status-pill"><strong id="movesValue">0</strong> moves</span>
+          <span class="status-pill"><strong id="pairsValue">0</strong>/<span id="pairsTotal">2</span> pairs</span>
+        </div>
+      </div>
+      <div id="gameBoard" class="game-board" aria-live="polite"></div>
+      <div class="game-actions">
+        <button id="restartButton" class="sprite-action" type="button"><img src="./assets/sprites/restart.png" alt=""><span>Restart</span></button>
+        <button id="repeatButton" class="sprite-action" type="button"><img src="./assets/sprites/sound.png" alt=""><span>Repeat</span></button>
+      </div>
+    </section>
+
+    <section id="winScreen" class="screen" aria-labelledby="winTitle">
+      <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+      <div class="hero-card win-card">
+        <div class="win-star"><img class="sprite-pixel" src="./assets/sprites/star.png" alt=""></div>
+        <p class="eyebrow">You did it</p>
+        <h2 id="winTitle">Great job!</h2>
+        <p id="winMessage" class="hero-copy">You matched all the letters.</p>
+        <div class="win-stats">
+          <span><strong id="winMoves">0</strong> moves</span>
+          <span><strong id="winGames">1</strong> games completed</span>
+        </div>
+        <button id="nextButton" class="primary-button" type="button">Next Level</button>
+        <button id="playAgainButton" class="secondary-button" type="button">Play Again</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog" class="modal">
+    <div class="modal-header">
+      <h2>Settings</h2>
+      <button id="closeSettingsButton" class="icon-button" type="button" aria-label="Close settings">×</button>
+    </div>
+    <div class="setting-row">
+      <div>
+        <strong>Sound effects</strong>
+        <p>Match and victory sounds</p>
+      </div>
+      <label class="switch">
+        <input id="soundToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div>
+        <strong>Letter voice</strong>
+        <p>Speak letters when cards flip</p>
+      </div>
+      <label class="switch">
+        <input id="voiceToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div>
+        <strong>Gentle music</strong>
+        <p>Soft background tones</p>
+      </div>
+      <label class="switch">
+        <input id="musicToggle" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </dialog>
+
+  <dialog id="howToDialog" class="modal">
+    <div class="modal-header">
+      <h2>How to Play</h2>
+      <button id="closeHowToButton" class="icon-button" type="button" aria-label="Close instructions">×</button>
+    </div>
+    <ol class="instructions">
+      <li>Tap a card to reveal a letter.</li>
+      <li>Listen to the letter name.</li>
+      <li>Tap another card and find its match.</li>
+      <li>Match every pair to finish the level.</li>
+    </ol>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="./src/game.js"></script>
+</body>
+</html>
