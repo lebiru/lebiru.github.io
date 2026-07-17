@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f0df">
+  <title>Slice Club</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-22VNQG7W7C');
+  </script>
+  <meta name="description" content="Slice fruit, build combos, and chase your best score.">
+  <style>
+    :root{--cream:#f6f0df;--ink:#26231f;--orange:#ee6e2b;--dark:#d8521e;--yellow:#f1c93d}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--cream)}
+    body{color:var(--ink);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+    button{font:inherit;-webkit-tap-highlight-color:transparent}
+    .page{min-height:100vh;display:flex;flex-direction:column;padding:0 clamp(12px,4vw,64px);background:radial-gradient(circle at 10% 12%,rgba(255,255,255,.8),transparent 25%),var(--cream)}
+    header{height:88px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid rgba(38,35,31,.22)}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:18px}.mark{font-size:25px;color:var(--orange);transform:rotate(-10deg)}
+    .best{display:flex;gap:12px;align-items:baseline}.best span,.score span{font-size:10px;letter-spacing:2px;font-weight:800;opacity:.62}.best strong{letter-spacing:1.5px}
+    .actions{justify-self:end;display:flex;gap:10px}.round,.pause{height:38px;border:1px solid rgba(38,35,31,.24);background:rgba(255,255,255,.3);cursor:pointer}
+    .round{width:38px;border-radius:50%;font-size:18px;font-weight:900}.pause{border-radius:999px;padding:0 18px;font-size:10px;font-weight:900;letter-spacing:1.2px}
+    .shell{width:min(1180px,100%);margin:18px auto 0;flex:1;display:flex;flex-direction:column}.hud{height:54px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 4px}
+    .score{display:flex;align-items:baseline;gap:11px}.score strong{color:var(--dark);font-size:28px;letter-spacing:1.5px}.lives{justify-self:end;display:flex;gap:7px;font-size:18px}
+    .life{color:transparent;-webkit-text-stroke:1.5px rgba(38,35,31,.28)}.life.on{color:var(--orange);-webkit-text-stroke:0}.combo{opacity:0;transform:translateY(6px);background:var(--yellow);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:900;letter-spacing:1px;transition:.2s}.combo.show{opacity:1;transform:none}
+    .arena{position:relative;height:min(66vh,650px);min-height:480px;overflow:hidden;border-radius:28px;border:1px solid rgba(38,35,31,.22);background:radial-gradient(circle at 50% 34%,#f8f5d5 0,#dce3bd 48%,#cbd3a8 100%);box-shadow:0 18px 50px rgba(71,66,43,.13);isolation:isolate}
+    .arena:after{content:"";position:absolute;z-index:0;inset:auto 0 0;height:7px;background:var(--orange)}
+    canvas{position:absolute;inset:0;z-index:2;touch-action:none;cursor:crosshair}
+    .overlay{position:absolute;z-index:3;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}.overlay button{pointer-events:auto}
+    .eyebrow{margin:0 0 5px;color:var(--dark);font-size:11px;font-weight:900;letter-spacing:3.4px}.overlay h1,.overlay h2{margin:0;font-family:Impact,"Arial Black",sans-serif;font-size:clamp(62px,9vw,126px);line-height:.91;letter-spacing:-3px;transform:scaleX(.86)}
+    .tagline{font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:clamp(18px,2vw,25px);line-height:1.35;margin:20px 0 24px}
+    .play{width:190px;height:52px;padding:0 6px 0 22px;border:0;border-radius:999px;color:#fff;background:var(--orange);display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:0 9px 20px rgba(184,70,25,.2)}
+    .play span{font-size:11px;font-weight:900;letter-spacing:1.5px}.play b{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--orange);display:grid;place-items:center;font-size:20px}.hint{margin:18px 0 0;font-size:11px;font-weight:700;opacity:.58}.hidden{display:none}.shade{background:rgba(231,232,199,.78);backdrop-filter:blur(8px)}.shade h2{font-size:clamp(58px,8vw,100px);margin-bottom:24px}.final{margin:-12px 0 22px;font-size:14px;font-weight:900;letter-spacing:2px}
+    footer{min-height:62px;display:flex;justify-content:space-between;align-items:center;width:min(1180px,100%);margin:auto;color:rgba(38,35,31,.53);font-size:9px;font-weight:800;letter-spacing:1.3px}footer em{color:var(--orange);font-style:normal}
+    @media(max-width:700px){header{height:70px;grid-template-columns:1fr auto}.best,.pause{display:none}.brand{font-size:15px}.arena{height:calc(100vh - 188px);min-height:520px;border-radius:22px}.hud{height:48px}.overlay h1{font-size:62px}footer p:last-child{display:none}}
+    @media(max-height:700px) and (min-width:701px){header{height:66px}.shell{margin-top:8px}.arena{min-height:430px;height:calc(100vh - 158px)}footer{display:none}.overlay h1{font-size:76px}.tagline{margin:12px 0 16px}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <div class="brand"><span class="mark">◢</span> SLICE CLUB</div>
+    <div class="best"><span>BEST SCORE</span><strong id="best">00000</strong></div>
+    <div class="actions"><button class="round" id="sound" aria-label="Mute sound">♪</button><button class="pause" id="pause">HOW TO PLAY</button></div>
+  </header>
+  <section class="shell">
+    <div class="hud">
+      <div class="score"><span>SCORE</span><strong id="score">00000</strong></div>
+      <div class="combo" id="combo">×2 COMBO</div>
+      <div class="lives" id="lives" aria-label="3 lives remaining"><span class="life on">♥</span><span class="life on">♥</span><span class="life on">♥</span></div>
+    </div>
+    <div class="arena" id="arena">
+      <canvas id="game" aria-label="Fruit slicing game area"></canvas>
+      <div class="overlay" id="intro">
+        <p class="eyebrow">WELCOME TO</p><h1>SLICE CLUB</h1>
+        <p class="tagline">Slice fruit. Build combos.<br>Don’t let them drop.</p>
+        <button class="play" id="play"><span>PLAY NOW</span><b>→</b></button>
+        <p class="hint">⌁ &nbsp; Swipe your cursor to slice</p>
+      </div>
+      <div class="overlay shade hidden" id="paused">
+        <p class="eyebrow">TAKE A BREATH</p><h2>PAUSED</h2>
+        <button class="play" id="resume"><span>KEEP SLICING</span><b>→</b></button>
+      </div>
+      <div class="overlay shade hidden" id="over">
+        <p class="eyebrow">ROUND COMPLETE</p><h2>JUICY RUN!</h2>
+        <p class="final" id="final">0 POINTS</p>
+        <button class="play" id="again"><span>PLAY AGAIN</span><b>↻</b></button>
+      </div>
+    </div>
+  </section>
+  <footer><p>© 2026 SLICE CLUB</p><p>MADE WITH <em>♥</em> &amp; LOTS OF FRUIT</p></footer>
+</main>
+<script>
+(() => {
+  const canvas=document.querySelector("#game"),arena=document.querySelector("#arena"),ctx=canvas.getContext("2d");
+  const $=s=>document.querySelector(s), fruits=[], particles=[], trail=[];
+  const palettes={
+    watermelon:{skin:"#56b755",flesh:"#fa526c",points:20},orange:{skin:"#f28a20",flesh:"#ffbf3f",points:10},
+    kiwi:{skin:"#8b5b35",flesh:"#91c83e",points:15},apple:{skin:"#e9463f",flesh:"#fff2c7",points:10},
+    lemon:{skin:"#f4d63c",flesh:"#fff19a",points:15},plum:{skin:"#7350ad",flesh:"#dda4df",points:20}
+  };
+  const kinds=Object.keys(palettes); let W=0,H=0,dpr=1,state="idle",score=0,lives=3,best=+(localStorage.getItem("slice-club-best")||0);
+  let spawn=0,elapsed=0,last=0,combo=0,comboTimer=0,muted=false,audio=null,pointer={x:0,y:0,on:false};
+  $("#best").textContent=String(best).padStart(5,"0");
+  function resize(){const r=arena.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+"px";canvas.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0)}
+  new ResizeObserver(resize).observe(arena);resize();
+  function tone(f,d=.07){if(muted)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext);const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=f;g.gain.setValueAtTime(.08,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+d);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+d)}catch(e){}}
+  function setOverlay(which){["intro","paused","over"].forEach(id=>$("#"+id).classList.toggle("hidden",id!==which))}
+  function updateHud(){$("#score").textContent=String(score).padStart(5,"0");[...$("#lives").children].forEach((e,i)=>e.classList.toggle("on",i<lives));$("#lives").setAttribute("aria-label",lives+" lives remaining")}
+  function start(){fruits.length=particles.length=trail.length=0;score=0;lives=3;elapsed=0;spawn=.2;combo=0;state="playing";updateHud();setOverlay("");$("#pause").textContent="PAUSE";tone(420,.1)}
+  function togglePause(){if(state==="playing"){state="paused";setOverlay("paused");$("#pause").textContent="RESUME"}else if(state==="paused"){state="playing";setOverlay("");$("#pause").textContent="PAUSE"}}
+  function end(){state="over";best=Math.max(best,score);localStorage.setItem("slice-club-best",best);$("#best").textContent=String(best).padStart(5,"0");$("#final").textContent=score+" POINTS";setOverlay("over");tone(130,.25)}
+  $("#play").onclick=$("#again").onclick=start;$("#resume").onclick=togglePause;$("#pause").onclick=()=>state==="playing"||state==="paused"?togglePause():0;
+  $("#sound").onclick=()=>{muted=!muted;$("#sound").textContent=muted?"×":"♪";$("#sound").setAttribute("aria-label",muted?"Turn sound on":"Mute sound")};
+  addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();state==="idle"||state==="over"?start():togglePause()}});
+  function addFruit(){const kind=kinds[Math.floor(Math.random()*kinds.length)],r=Math.max(25,Math.min(38,W*.045)),x=r+Math.random()*Math.max(10,W-r*2),peak=H*(.52+Math.random()*.28);fruits.push({kind,x,y:H+r,vx:(W*.5-x)*.09+(Math.random()-.5)*80,vy:-Math.sqrt(1520*peak),r,rot:Math.random()*6.28,spin:(Math.random()-.5)*3.5,sliced:false,missed:false})}
+  function drawFruit(f){const p=palettes[f.kind];ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.rot);ctx.shadowColor="rgba(33,24,14,.2)";ctx.shadowBlur=12;ctx.shadowOffsetY=7;ctx.fillStyle=p.skin;ctx.beginPath();ctx.ellipse(0,0,f.r,f.r*(f.kind==="lemon"?.8:1),0,0,6.29);ctx.fill();ctx.shadowColor="transparent";ctx.fillStyle="rgba(255,255,255,.22)";ctx.beginPath();ctx.ellipse(-f.r*.28,-f.r*.3,f.r*.22,f.r*.13,-.6,0,6.29);ctx.fill();if(f.kind==="watermelon"){ctx.strokeStyle="rgba(26,105,44,.55)";ctx.lineWidth=4;[-.45,0,.45].forEach(n=>{ctx.beginPath();ctx.ellipse(n*f.r,0,f.r*.16,f.r*.88,0,0,6.29);ctx.stroke()})}ctx.fillStyle="#547a32";ctx.beginPath();ctx.ellipse(4,-f.r*.92,f.r*.27,f.r*.11,-.45,0,6.29);ctx.fill();ctx.restore()}
+  function slice(f){if(f.sliced)return;f.sliced=true;const p=palettes[f.kind];score+=p.points;combo++;updateHud();$("#combo").textContent="×"+combo+" COMBO";$("#combo").classList.toggle("show",combo>1);clearTimeout(comboTimer);comboTimer=setTimeout(()=>{combo=0;$("#combo").classList.remove("show")},850);for(let i=0;i<16;i++){const a=Math.random()*6.29,s=70+Math.random()*190;particles.push({x:f.x,y:f.y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,life:.45+Math.random()*.35,color:i%3?p.flesh:p.skin,size:2+Math.random()*6})}tone(560+Math.random()*180)}
+  function dist(px,py,ax,ay,bx,by){const dx=bx-ax,dy=by-ay,l=dx*dx+dy*dy,t=l?Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/l)):0;return Math.hypot(px-(ax+t*dx),py-(ay+t*dy))}
+  function move(e){const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;if(pointer.on&&state==="playing"){trail.push({x,y,life:1});fruits.forEach(f=>!f.sliced&&dist(f.x,f.y,pointer.x,pointer.y,x,y)<f.r+8&&slice(f))}pointer={x,y,on:true}}
+  canvas.addEventListener("pointermove",move);canvas.addEventListener("pointerdown",move);["pointerup","pointerleave"].forEach(n=>canvas.addEventListener(n,()=>pointer.on=false));
+  function loop(t){const dt=Math.min((t-last)/1000||0,.034);last=t;ctx.clearRect(0,0,W,H);
+    if(state==="playing"){elapsed+=dt;spawn-=dt;if(spawn<=0){const n=Math.random()>.72?2:1;for(let i=0;i<n;i++)addFruit();spawn=Math.max(.46,1.05-elapsed*.006)}
+      for(let i=fruits.length-1;i>=0;i--){const f=fruits[i];f.vy+=760*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.rot+=f.spin*dt;if(!f.sliced&&!f.missed&&f.y-f.r>H){f.missed=true;lives--;updateHud();tone(170,.14);if(lives<=0)end()}if(f.y>H+f.r*3||f.sliced)fruits.splice(i,1)}
+      for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=420*dt;p.life-=dt;if(p.life<=0)particles.splice(i,1)}
+    }
+    fruits.forEach(drawFruit);particles.forEach(p=>{ctx.globalAlpha=Math.min(1,p.life*2);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,6.29);ctx.fill()});ctx.globalAlpha=1;
+    trail.forEach(p=>p.life-=dt*3.8);while(trail[0]&&trail[0].life<=0)trail.shift();if(trail.length>1){ctx.lineCap="round";ctx.lineJoin="round";for(let i=1;i<trail.length;i++){const a=trail[i-1],b=trail[i];ctx.strokeStyle=`rgba(255,255,255,${b.life*.85})`;ctx.shadowColor="#fff2bd";ctx.shadowBlur=10;ctx.lineWidth=3+b.life*5;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}ctx.shadowColor="transparent"}requestAnimationFrame(loop)}
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
