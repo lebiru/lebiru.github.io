@@ -1,0 +1,9 @@
+{
+  "name": "Alpha Match",
+  "short_name": "Alpha Match",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#77c9ff",
+  "theme_color": "#77c9ff",
+  "description": "A calm alphabet memory matching game for young learners."
+}
