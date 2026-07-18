@@ -8,21 +8,149 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-22VNQG7W7C');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Lebiru Games Directory">
     <title>Lebiru - Games Directory</title>
-    <meta name="author" content="Bilal A." />
-    <link rel="stylesheet" href="simple.css" type="text/css" />
+    <meta name="author" content="Bilal A.">
+    <link rel="stylesheet" href="simple.css" type="text/css">
     <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple/blue/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="152x152" href="images/apple/blue/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="120x120" href="images/apple/blue/apple-touch-icon-120x120.png">
     <link rel="apple-touch-icon" sizes="76x76" href="images/apple/blue/apple-touch-icon-76x76.png">
-  <script src="scripts/featured-product.js" defer></script>
+    <script src="scripts/featured-product.js" defer></script>
+    <style>
+        :root {
+            --games-muted: #94a3b8;
+            --games-surface: rgba(15, 23, 42, 0.78);
+            --games-border: rgba(148, 163, 184, 0.18);
+        }
+
+        .games-page {
+            max-width: 1120px;
+            margin-inline: auto;
+            padding-bottom: 4rem;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+
+        .game-card {
+            --card-start: #475569;
+            --card-end: #0f172a;
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 190px;
+            box-sizing: border-box;
+            padding: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 22px;
+            background: linear-gradient(135deg, var(--card-start), var(--card-end));
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 16px 32px rgba(2, 6, 23, 0.18);
+            transform: translateY(0) scale(1);
+            transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease, filter 220ms ease;
+            animation: card-in 420ms both;
+        }
+
+        .game-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.32), transparent 35%);
+            opacity: 0.7;
+            transition: transform 350ms ease, opacity 220ms ease;
+        }
+
+        .game-card::after {
+            content: "Play now  \2192";
+            position: absolute;
+            right: 1rem;
+            bottom: 0.85rem;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+
+        .game-card:hover,
+        .game-card:focus-visible {
+            color: #fff;
+            transform: translateY(-7px) scale(1.018);
+            filter: saturate(1.12);
+            box-shadow: 0 24px 44px rgba(2, 6, 23, 0.28);
+        }
+
+        .game-card:hover::before,
+        .game-card:focus-visible::before { transform: scale(1.16); opacity: 1; }
+
+        .game-card:hover::after,
+        .game-card:focus-visible::after { opacity: 0.9; transform: translateY(0); }
+
+        .game-card:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .game-card:active {
+            transform: translateY(-1px) scale(0.975);
+            transition-duration: 80ms;
+        }
+
+        .game-card-title {
+            max-width: 13ch;
+            font-size: clamp(1.45rem, 4vw, 2rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.035em;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .game-card-description {
+            max-width: 32ch;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            opacity: 0.85;
+        }
+
+        .games-empty {
+            display: none;
+            padding: 3rem 1rem;
+            color: var(--games-muted);
+            text-align: center;
+        }
+
+        @keyframes card-in {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .game-card { animation: none; transition: none; }
+            .game-card::before, .game-card::after { transition: none; }
+        }
+
+        @media (min-width: 820px) {
+            .games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+    </style>
 </head>
 
 <body>
@@ -34,102 +162,101 @@
         <a href="apps.html">Apps</a> /
         <a href="games.html">Games</a>
     </header>
-    <div class="container">
+
+    <div class="container games-page">
         <h1>Lebiru - Games Directory</h1>
-        <h3 style="font-style: italic; color: gray;">Click on a row to start the game</h2>
-            <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search games..."
-                oninput="filterPosts()" />
-            <table id="blogTable" style="width: 100%;">
-                <tbody id="blogPosts"></tbody>
-            </table>
+        <h3 style="font-style: italic; color: gray;">Click on a card to start the game</h3>
+        <input type="text" style="margin: 25px 0px;" id="searchBox" placeholder="Search games..."
+            aria-label="Search games">
+        <main>
+            <div class="games-grid" id="gamesGrid" aria-live="polite"></div>
+            <p class="games-empty" id="gamesEmpty">No games match your search.</p>
+        </main>
     </div>
 
     <script>
-        // most recent up top
-        const blogPosts = [
+        // Most recent first. Existing game URLs are preserved.
+        const games = [
             {
-                title: '[ 🍊 Game #006 - Slice Club]',
-                date: '',
-                content:
-                    'A fun and engaging slicing game with colorful graphics.',
+                title: 'Slice Club',
+                description: 'A fun and engaging slicing game with colorful graphics.',
                 url: 'games/slice-club/index.html',
+                colors: ['#fb7185', '#f97316']
             },
             {
-                title: '[ 🍎 Game #005 - Alpha Match]',
-                date: '',
-                content:
-                    'A child-friendly 2D pixel-art browser memory game for learning uppercase English letters.',
+                title: 'Alpha Match',
+                description: 'A child-friendly pixel-art memory game for learning uppercase English letters.',
                 url: 'games/alpha-match/index.html',
+                colors: ['#22c55e', '#0ea5e9']
             },
             {
-                title: '[ ⚡ Game #004 - JumpRush]',
-                date: '',
-                content:
-                    'Rush through a neon endless runner and chase perfect landings! ⚡',
+                title: 'JumpRush',
+                description: 'Rush through a neon endless runner and chase perfect landings!',
                 url: 'games/jumprush/index.html',
+                colors: ['#a855f7', '#06b6d4']
             },
             {
-                title: '[ 🚀 Game #003 - Missile Command]',
-                date: '',
-                content:
-                    'Defend your cities from incoming missiles in this classic-inspired game! 🚀',
+                title: 'Missile Command',
+                description: 'Defend your cities from incoming missiles in this classic-inspired game!',
                 url: 'games/missle-command/index.html',
+                colors: ['#f43f5e', '#312e81']
             },
             {
-                title: '[ 🏓 Game #002 - Pong]',
-                date: '',
-                content:
-                    'Play the classic game Pong in your browser now! 🏓',
+                title: 'Pong',
+                description: 'Play the classic game Pong in your browser now!',
                 url: 'games/002_pong.html',
+                colors: ['#475569', '#020617']
             },
             {
-                title: '[ 🐍 Game #001 - Pixel Snake]',
-                date: '',
-                content:
-                    'Play the classic game Snake in your browser now! 🐍',
+                title: 'Pixel Snake',
+                description: 'Play the classic game Snake in your browser now!',
                 url: 'games/snake/index.html',
+                colors: ['#84cc16', '#15803d']
             }
         ];
 
-        // Display blog posts
-        const displayPosts = (posts) => {
-            const tableBody = document.getElementById('blogPosts');
-            tableBody.innerHTML = '';
+        const displayGames = (items) => {
+            const grid = document.getElementById('gamesGrid');
+            const empty = document.getElementById('gamesEmpty');
+            grid.innerHTML = '';
 
-            posts.forEach((post) => {
-                const row = document.createElement('tr');
-                row.onclick = () => (window.location.href = post.url);
+            items.forEach((game, index) => {
+                const card = document.createElement('a');
+                card.className = 'game-card';
+                card.href = game.url;
+                card.setAttribute('aria-label', `Play ${game.title}: ${game.description}`);
+                card.style.setProperty('--card-start', game.colors[0]);
+                card.style.setProperty('--card-end', game.colors[1]);
+                card.style.animationDelay = `${index * 60}ms`;
 
-                const titleCell = document.createElement('td');
-                titleCell.textContent = post.title;
-                row.appendChild(titleCell);
+                const title = document.createElement('span');
+                title.className = 'game-card-title';
+                title.textContent = game.title;
+                card.appendChild(title);
 
-                const dateCell = document.createElement('td');
-                dateCell.textContent = post.date;
-                row.appendChild(dateCell);
+                const description = document.createElement('span');
+                description.className = 'game-card-description';
+                description.textContent = game.description;
+                card.appendChild(description);
 
-                const previewCell = document.createElement('td');
-                previewCell.textContent = post.content.split('. ').slice(0, 2).join('. ');
-                row.appendChild(previewCell);
-
-                tableBody.appendChild(row);
+                grid.appendChild(card);
             });
+
+            empty.style.display = items.length ? 'none' : 'block';
         };
 
-        // Filter blog posts
-        const filterPosts = () => {
-            const searchText = document.getElementById('searchBox').value.toLowerCase();
-            const filteredPosts = blogPosts.filter(
-                (post) =>
-                    post.title.toLowerCase().includes(searchText) ||
-                    post.content.toLowerCase().includes(searchText)
+        const filterGames = () => {
+            const searchText = document.getElementById('searchBox').value.trim().toLowerCase();
+            const filteredGames = games.filter((game) =>
+                game.title.toLowerCase().includes(searchText) ||
+                game.description.toLowerCase().includes(searchText)
             );
-            displayPosts(filteredPosts);
+            displayGames(filteredGames);
         };
 
-        // Initialize table with all posts
         document.addEventListener('DOMContentLoaded', () => {
-            displayPosts(blogPosts);
+            document.getElementById('searchBox').addEventListener('input', filterGames);
+            displayGames(games);
         });
     </script>
 
@@ -147,7 +274,7 @@
                 <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
             </ul>
         </div>
-        <p>© <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <p>&copy; <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
         <script>
             document.getElementById('copyright-year').textContent = new Date().getFullYear();
         </script>
