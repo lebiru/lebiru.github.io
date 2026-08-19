@@ -295,6 +295,37 @@
   background-image: url('images/hero/book-cover-hero-arabic.png');
 }
 
+.carousel-item--bastion .carousel-item__image {
+  background-color: #101b2d;
+  background-image: url('images/bastion-tactics-logo.png');
+  background-position: center;
+  background-size: contain;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.38);
+}
+
+.carousel-item--bastion .carousel-item__info {
+  background: linear-gradient(155deg, #ffffff 0%, #edf4fb 65%, #fff0bd 100%);
+}
+
+.carousel-item--bastion .carousel-item__subtitle {
+  color: #c86a10;
+}
+
+.carousel-item--bastion .carousel-item__title {
+  color: #163f78;
+}
+
+.carousel-item--bastion .carousel-item__btn {
+  display: inline-flex;
+  width: auto;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d28717;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #f6d979, #e99518);
+  color: #17243a;
+  box-shadow: 0 8px 20px rgba(200, 106, 16, 0.2);
+}
+
 .carousel-item--1 .carousel-item__image{
   background-image: url('images/hero/book-cover-hero-cozy.png');
 }

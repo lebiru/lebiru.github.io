@@ -56,7 +56,7 @@ body {
   gap: 1rem;
   padding: 0 1.5rem;
   box-sizing: border-box;
-  background: linear-gradient(110deg, #3B5B2E, #6A9C50, #C8E6A0);
+  background: linear-gradient(110deg, #101b2d 0%, #163f78 38%, #d96b12 72%, #f6b92e 100%);
   color: #fff;
   font-family: 'helvetica', sans-serif;
   font-weight: 600;
@@ -69,7 +69,15 @@ body {
 
 .featured-product-bar__message {
   margin: 0;
+  color: #fff;
   line-height: 1;
+}
+
+.featured-product-bar__message:hover,
+.featured-product-bar__message:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .featured-product-bar__cta {

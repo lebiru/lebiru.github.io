@@ -1,8 +1,10 @@
 (() => {
   const featuredProduct = {
-    message: 'Help your child learn the Arabic alphabet through fun tracing and coloring!',
-    cta: 'Get the Coloring Book',
-    href: 'https://payhip.com/b/Z0zNl'
+    message: 'Hold the Line. Build the Bastions. Play Bastion Tactics!',
+    cta: 'Discover the Game',
+    href: 'https://www.lebiru.com/games/bastion-tactics.html',
+    external: true,
+    newTab: false
   };
 
   const currentScript = document.currentScript;
@@ -80,7 +82,7 @@
     });
   };
 
-  const trackEvent = (eventName, link) => {
+  const trackEvent = (eventName, link, eventParameters = {}) => {
     if (typeof window.gtag !== 'function') {
       return;
     }
@@ -89,7 +91,8 @@
       event_category: 'engagement',
       event_label: link.textContent.trim(),
       destination_url: link.href,
-      page_location: window.location.href
+      page_location: window.location.href,
+      ...eventParameters
     });
   };
 
@@ -101,15 +104,23 @@
   bar.setAttribute('aria-live', 'polite');
   bar.setAttribute('role', 'region');
 
-  const message = document.createElement('p');
+  const message = document.createElement('a');
   message.className = 'featured-product-bar__message';
+  message.href = resolveHref(featuredProduct.href, featuredProduct.external);
+  if (featuredProduct.newTab) {
+    message.target = '_blank';
+    message.rel = 'noopener noreferrer';
+  }
   message.textContent = featuredProduct.message;
+  message.addEventListener('click', () => trackEvent('top_featured_product_message_click', message));
 
   const cta = document.createElement('a');
   cta.className = 'featured-product-bar__cta';
-  cta.href = featuredProduct.href;
-  cta.target = '_blank';
-  cta.rel = 'noopener noreferrer';
+  cta.href = resolveHref(featuredProduct.href, featuredProduct.external);
+  if (featuredProduct.newTab) {
+    cta.target = '_blank';
+    cta.rel = 'noopener noreferrer';
+  }
   cta.textContent = featuredProduct.cta;
   cta.addEventListener('click', () => trackEvent('top_featured_product_cta_click', cta));
 
@@ -128,4 +139,10 @@
   if (landingCta) {
     landingCta.addEventListener('click', () => trackEvent('featured_product_cta_click', landingCta));
   }
+
+  document.querySelectorAll('.bt-cta').forEach((playCta) => {
+    playCta.addEventListener('click', () => trackEvent('bastion_tactics_play_cta_click', playCta, {
+      cta_location: playCta.dataset.ctaLocation || 'unknown'
+    }));
+  });
 })();
