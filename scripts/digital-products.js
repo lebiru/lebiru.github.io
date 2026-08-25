@@ -7,6 +7,15 @@
   const fallbackProducts = {
     products: [
       {
+        title: 'Agentic Analytics Codebook',
+        description: 'A practical 180-page field manual for using AI coding agents to plan, implement, review, and verify trustworthy GA4 instrumentation, from business questions and event contracts to evidence-backed funnels.',
+        ctaText: 'Get the Codebook',
+        linkText: 'lebiru.gumroad.com/l/aac',
+        href: 'https://lebiru.gumroad.com/l/aac',
+        dp: 'images/hero/agentic-analytics-codebook-desk.png',
+        themeColors: ['#123247', '#1F6A7A', '#D79B25', '#F3EFE4']
+      },
+      {
         title: 'Kids Coloring: Arabic Letters',
         description: 'Help your child explore the Arabic alphabet through fun tracing and coloring activities designed for ages 3–7. This 28-page printable workbook features beginner-friendly tracing practice, cute illustrations, and clean easy-to-color layouts that make learning feel playful and engaging.',
         ctaText: 'Get the Coloring Book',

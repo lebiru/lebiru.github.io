@@ -291,6 +291,36 @@
     margin-bottom: 35px;
 }
 
+.carousel-item--agentic-analytics .carousel-item__image {
+  background-color: #f3efe4;
+  background-image: url('images/hero/agentic-analytics-codebook-desk.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.carousel-item--agentic-analytics .carousel-item__info {
+  background: linear-gradient(155deg, #fffdf7 0%, #e8f3f1 62%, #f8e7bd 100%);
+}
+
+.carousel-item--agentic-analytics .carousel-item__subtitle {
+  color: #b77816;
+}
+
+.carousel-item--agentic-analytics .carousel-item__title {
+  color: #123247;
+}
+
+.carousel-item--agentic-analytics .carousel-item__btn {
+  display: inline-flex;
+  width: auto;
+  padding: 0.8rem 1rem;
+  border: 1px solid #b77816;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #f6cf6c, #d99b27);
+  color: #123247;
+  box-shadow: 0 8px 20px rgba(183, 120, 22, 0.2);
+}
+
 .carousel-item--kids-arabic .carousel-item__image {
   background-image: url('images/hero/book-cover-hero-arabic.png');
 }
@@ -324,6 +354,192 @@
   background: linear-gradient(135deg, #f6d979, #e99518);
   color: #17243a;
   box-shadow: 0 8px 20px rgba(200, 106, 16, 0.2);
+}
+
+.carousel-item--kids-arabic {
+  --carousel-title: #31563a;
+  --carousel-accent: #758d3d;
+  --carousel-body: #5f6f59;
+  --carousel-panel-start: #fffef9;
+  --carousel-panel-mid: #edf6e8;
+  --carousel-panel-end: #fff0c9;
+  --carousel-button-start: #e9d77e;
+  --carousel-button-end: #91b765;
+  --carousel-button-border: #78984d;
+  --carousel-button-text: #203b28;
+  --carousel-button-shadow: rgba(76, 112, 54, 0.24);
+}
+
+.carousel-item--1 {
+  --carousel-title: #523328;
+  --carousel-accent: #a66b42;
+  --carousel-body: #735c52;
+  --carousel-panel-start: #fffdfa;
+  --carousel-panel-mid: #f8ecdf;
+  --carousel-panel-end: #f1d5b8;
+  --carousel-button-start: #efc586;
+  --carousel-button-end: #c4865d;
+  --carousel-button-border: #a66b42;
+  --carousel-button-text: #392118;
+  --carousel-button-shadow: rgba(138, 82, 48, 0.24);
+}
+
+.carousel-item--2 {
+  --carousel-title: #8f301d;
+  --carousel-accent: #d04b27;
+  --carousel-body: #76554d;
+  --carousel-panel-start: #fffdfa;
+  --carousel-panel-mid: #faeee7;
+  --carousel-panel-end: #f7d3c3;
+  --carousel-button-start: #f2a07f;
+  --carousel-button-end: #dc5b34;
+  --carousel-button-border: #bd4224;
+  --carousel-button-text: #4d1b10;
+  --carousel-button-shadow: rgba(190, 63, 33, 0.22);
+}
+
+.carousel-item--3 {
+  --carousel-title: #582d73;
+  --carousel-accent: #8851b8;
+  --carousel-body: #715e7d;
+  --carousel-panel-start: #fffefe;
+  --carousel-panel-mid: #f2eaff;
+  --carousel-panel-end: #f8dcf4;
+  --carousel-button-start: #d5b4f4;
+  --carousel-button-end: #e48bd6;
+  --carousel-button-border: #9c61bd;
+  --carousel-button-text: #3f1f51;
+  --carousel-button-shadow: rgba(123, 71, 154, 0.22);
+}
+
+.carousel-item--4 {
+  --carousel-title: #075f5a;
+  --carousel-accent: #c76727;
+  --carousel-body: #526d69;
+  --carousel-panel-start: #fffefa;
+  --carousel-panel-mid: #e8f4f1;
+  --carousel-panel-end: #f8e4c1;
+  --carousel-button-start: #82d3c4;
+  --carousel-button-end: #e5a34a;
+  --carousel-button-border: #4b9c90;
+  --carousel-button-text: #103f3c;
+  --carousel-button-shadow: rgba(31, 113, 103, 0.22);
+}
+
+.carousel-item--5 {
+  --carousel-title: #315c9b;
+  --carousel-accent: #7558bb;
+  --carousel-body: #65718a;
+  --carousel-panel-start: #ffffff;
+  --carousel-panel-mid: #eaf2ff;
+  --carousel-panel-end: #eadfff;
+  --carousel-button-start: #bed5ff;
+  --carousel-button-end: #a492e7;
+  --carousel-button-border: #7262bb;
+  --carousel-button-text: #263d6b;
+  --carousel-button-shadow: rgba(76, 81, 157, 0.22);
+}
+
+.carousel-item--6 {
+  --carousel-title: #16675f;
+  --carousel-accent: #0b9b8f;
+  --carousel-body: #52716c;
+  --carousel-panel-start: #ffffff;
+  --carousel-panel-mid: #e5fbf6;
+  --carousel-panel-end: #dcf1c8;
+  --carousel-button-start: #7fded3;
+  --carousel-button-end: #a8d675;
+  --carousel-button-border: #3b9f91;
+  --carousel-button-text: #17483f;
+  --carousel-button-shadow: rgba(33, 126, 112, 0.22);
+}
+
+:is(
+  .carousel-item--kids-arabic,
+  .carousel-item--1,
+  .carousel-item--2,
+  .carousel-item--3,
+  .carousel-item--4,
+  .carousel-item--5,
+  .carousel-item--6
+) .carousel-item__info {
+  background: linear-gradient(
+    155deg,
+    var(--carousel-panel-start) 0%,
+    var(--carousel-panel-mid) 65%,
+    var(--carousel-panel-end) 100%
+  );
+}
+
+:is(
+  .carousel-item--kids-arabic,
+  .carousel-item--1,
+  .carousel-item--2,
+  .carousel-item--3,
+  .carousel-item--4,
+  .carousel-item--5,
+  .carousel-item--6
+) .carousel-item__subtitle {
+  color: var(--carousel-accent);
+}
+
+:is(
+  .carousel-item--kids-arabic,
+  .carousel-item--1,
+  .carousel-item--2,
+  .carousel-item--3,
+  .carousel-item--4,
+  .carousel-item--5,
+  .carousel-item--6
+) .carousel-item__title {
+  color: var(--carousel-title);
+}
+
+:is(
+  .carousel-item--kids-arabic,
+  .carousel-item--1,
+  .carousel-item--2,
+  .carousel-item--3,
+  .carousel-item--4,
+  .carousel-item--5,
+  .carousel-item--6
+) .carousel-item__description {
+  color: var(--carousel-body);
+}
+
+:is(
+  .carousel-item--kids-arabic,
+  .carousel-item--1,
+  .carousel-item--2,
+  .carousel-item--3,
+  .carousel-item--4,
+  .carousel-item--5,
+  .carousel-item--6
+) .carousel-item__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--carousel-button-border);
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--carousel-button-start), var(--carousel-button-end));
+  color: var(--carousel-button-text);
+  box-shadow: 0 8px 20px var(--carousel-button-shadow);
+}
+
+:is(
+  .carousel-item--kids-arabic,
+  .carousel-item--1,
+  .carousel-item--2,
+  .carousel-item--3,
+  .carousel-item--4,
+  .carousel-item--5,
+  .carousel-item--6
+) .carousel-item__image {
+  background-color: var(--carousel-panel-mid);
+  box-shadow: inset 0 0 54px rgba(15, 23, 42, 0.2);
+  filter: saturate(1.04) contrast(1.02);
 }
 
 .carousel-item--1 .carousel-item__image{
