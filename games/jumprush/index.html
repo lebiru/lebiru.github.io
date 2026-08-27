@@ -4,9 +4,85 @@
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="JumpRush — an endless neon one-button running game." />
   <title>JumpRush | Lebiru Games</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #090b18;
+    }
+
+    #game-shell {
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right)
+        env(safe-area-inset-bottom) env(safe-area-inset-left);
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #game {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #game canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-22VNQG7W7C');</script>
   <script src="./assets/jumprush-BLw3V4LG.js"></script>
+  <script>
+    (() => {
+      const installDoubleJump = (scene) => {
+        if (scene.doubleJumpInstalled) return;
+        scene.doubleJumpInstalled = true;
+        const singleJump = scene.jump;
+
+        scene.jump = function () {
+          if (this.dead) return;
+
+          const body = this.player.body;
+          const grounded = body.blocked.down || body.touching.down;
+
+          if (grounded) {
+            this.airJumpsRemaining = 1;
+            singleJump.call(this);
+            return;
+          }
+
+          if ((this.airJumpsRemaining ?? 1) < 1) return;
+          this.airJumpsRemaining -= 1;
+          this.player.setVelocityY(-625);
+          this.airborne = true;
+          this.audio.play('jump');
+          this.effects.bump();
+          this.effects.squash(this.player, .78, 1.24);
+          this.effects.burst(this.player.x, this.player.y + 16, 0x327dff, 4);
+        };
+      };
+
+      const registerInputHandler = Phaser.Input.InputPlugin.prototype.on;
+      Phaser.Input.InputPlugin.prototype.on = function (event, handler, context) {
+        if (this.scene?.sys?.settings?.key === 'GameScene') {
+          installDoubleJump(this.scene);
+        }
+        return registerInputHandler.call(this, event, handler, context);
+      };
+    })();
+  </script>
 </head>
 <body><main id="game-shell"><div id="game" aria-label="JumpRush game"></div></main></body>
 </html>
