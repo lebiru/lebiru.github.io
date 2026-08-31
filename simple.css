@@ -56,14 +56,14 @@ body {
   gap: 1rem;
   padding: 0 1.5rem;
   box-sizing: border-box;
-  background: linear-gradient(110deg, #101b2d 0%, #163f78 38%, #d96b12 72%, #f6b92e 100%);
+  background: linear-gradient(110deg, #123f75 0%, #1f6192 42%, #d84535 76%, #f2a23a 100%);
   color: #fff;
   font-family: 'helvetica', sans-serif;
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.03em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 14px rgba(18, 63, 117, 0.28);
+  border-bottom: 1px solid rgba(249, 227, 192, 0.55);
   z-index: 1000;
 }
 
@@ -86,8 +86,9 @@ body {
   justify-content: center;
   padding: 0.7rem 1.4rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  color: #fff;
+  border: 1px solid #f9e3c0;
+  background: rgba(249, 227, 192, 0.94);
+  color: #123f75;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -96,8 +97,8 @@ body {
 
 .featured-product-bar__cta:hover,
 .featured-product-bar__cta:focus-visible {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: #fff6e7;
+  color: #d84535;
 }
 
 /* Footer styling */

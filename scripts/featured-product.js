@@ -1,10 +1,10 @@
 (() => {
   const featuredProduct = {
-    message: 'Hold the Line. Build the Bastions. Play Bastion Tactics!',
-    cta: 'Discover the Game',
-    href: 'https://www.lebiru.com/games/bastion-tactics.html',
+    message: 'Trace, Color & Learn All 46 Basic Japanese Hiragana!',
+    cta: 'Get the Coloring Book',
+    href: 'https://lebiru.gumroad.com/l/kids-coloring-jhl',
     external: true,
-    newTab: false
+    newTab: true
   };
 
   const currentScript = document.currentScript;

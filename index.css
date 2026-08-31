@@ -293,7 +293,7 @@
 
 .carousel-item--agentic-analytics .carousel-item__image {
   background-color: #f3efe4;
-  background-image: url('images/hero/agentic-analytics-codebook-desk.png');
+  background-image: url('images/hero/agentic-analytics-codebook-desk.webp');
   background-size: cover;
   background-position: center;
 }
@@ -322,12 +322,30 @@
 }
 
 .carousel-item--kids-arabic .carousel-item__image {
-  background-image: url('images/hero/book-cover-hero-arabic.png');
+  background-image: url('images/hero/book-cover-hero-arabic.webp');
+}
+
+.carousel-item--kids-hiragana {
+  --carousel-title: #123f75;
+  --carousel-accent: #d84535;
+  --carousel-body: #65574f;
+  --carousel-panel-start: #fffdf8;
+  --carousel-panel-mid: #fff0df;
+  --carousel-panel-end: #f7d8d5;
+  --carousel-button-start: #f5b348;
+  --carousel-button-end: #df5a36;
+  --carousel-button-border: #c84a31;
+  --carousel-button-text: #3f2018;
+  --carousel-button-shadow: rgba(200, 74, 49, 0.24);
+}
+
+.carousel-item--kids-hiragana .carousel-item__image {
+  background-image: url('images/hero/book-cover-hero-hiragana.webp');
 }
 
 .carousel-item--bastion .carousel-item__image {
   background-color: #101b2d;
-  background-image: url('images/bastion-tactics-logo.png');
+  background-image: url('images/bastion-tactics-logo.webp');
   background-position: center;
   background-size: contain;
   box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.38);
@@ -455,6 +473,7 @@
 }
 
 :is(
+  .carousel-item--kids-hiragana,
   .carousel-item--kids-arabic,
   .carousel-item--1,
   .carousel-item--2,
@@ -472,6 +491,7 @@
 }
 
 :is(
+  .carousel-item--kids-hiragana,
   .carousel-item--kids-arabic,
   .carousel-item--1,
   .carousel-item--2,
@@ -484,6 +504,7 @@
 }
 
 :is(
+  .carousel-item--kids-hiragana,
   .carousel-item--kids-arabic,
   .carousel-item--1,
   .carousel-item--2,
@@ -496,6 +517,7 @@
 }
 
 :is(
+  .carousel-item--kids-hiragana,
   .carousel-item--kids-arabic,
   .carousel-item--1,
   .carousel-item--2,
@@ -508,6 +530,7 @@
 }
 
 :is(
+  .carousel-item--kids-hiragana,
   .carousel-item--kids-arabic,
   .carousel-item--1,
   .carousel-item--2,
@@ -529,6 +552,7 @@
 }
 
 :is(
+  .carousel-item--kids-hiragana,
   .carousel-item--kids-arabic,
   .carousel-item--1,
   .carousel-item--2,
@@ -543,27 +567,27 @@
 }
 
 .carousel-item--1 .carousel-item__image{
-  background-image: url('images/hero/book-cover-hero-cozy.png');
+  background-image: url('images/hero/book-cover-hero-cozy.webp');
 }
 
 .carousel-item--2 .carousel-item__image{
-  background-image: url('images/hero/book-cover-hero-5.png');
+  background-image: url('images/hero/book-cover-hero-5.webp');
 }
 
 .carousel-item--3 .carousel-item__image{
-  background-image: url('images/hero/hero-1.png');
+  background-image: url('images/hero/hero-1.webp');
 }
 
 .carousel-item--4 .carousel-item__image{
-  background-image: url('images/hero/hero-2.png');
+  background-image: url('images/hero/hero-2.webp');
 }
 
 .carousel-item--5 .carousel-item__image{
-  background-image: url('images/hero/hero-3.png');
+  background-image: url('images/hero/hero-3.webp');
 }
 
 .carousel-item--6 .carousel-item__image{
-  background-image: url('images/hero/hero-4.png');
+  background-image: url('images/hero/hero-4.webp');
 } 
 
 .carousel-item__container{

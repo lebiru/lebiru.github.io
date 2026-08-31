@@ -7,6 +7,15 @@
   const fallbackProducts = {
     products: [
       {
+        title: 'Kids Coloring: Japanese Hiragana Letters',
+        description: 'Help your child trace, color, and learn all 46 basic Japanese hiragana through playful, beginner-friendly activities designed for ages 3–7, with a bonus matching game included.',
+        ctaText: 'Get the Coloring Book',
+        linkText: 'lebiru.gumroad.com/l/kids-coloring-jhl',
+        href: 'https://lebiru.gumroad.com/l/kids-coloring-jhl',
+        dp: 'images/hero/book-cover-hero-hiragana.png',
+        themeColors: ['#123F75', '#D84535', '#F2A23A', '#F9E3C0']
+      },
+      {
         title: 'Agentic Analytics Codebook',
         description: 'A practical 180-page field manual for using AI coding agents to plan, implement, review, and verify trustworthy GA4 instrumentation, from business questions and event contracts to evidence-backed funnels.',
         ctaText: 'Get the Codebook',
