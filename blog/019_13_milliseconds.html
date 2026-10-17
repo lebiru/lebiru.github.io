@@ -16,7 +16,7 @@
     <meta name="description" content="A production incident write-up on eliminating unnecessary Couchbase lookups, reducing average API latency by 39%, and diagnosing CPU throttling in a legacy .NET service.">
     <title>Do You Think 13 Milliseconds Is a Long Time?</title>
     <meta name="author" content="Bilal A.">
-    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/hero-image.png" />
+    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/hero-image.webp" />
     <link rel="stylesheet" href="../simple.css" type="text/css">
     <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
@@ -145,7 +145,7 @@
 
         <p>That question reminded me of an old joke my father once told me.</p>
 
-        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/hero-image.png" class="blog-hero-image" alt="Developer investigating a production performance issue alongside an HVAC technician, Dynatrace metrics, and the 13-millisecond improvement timeline." decoding="async" fetchpriority="high">
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/hero-image.webp" class="blog-hero-image" alt="Developer investigating a production performance issue alongside an HVAC technician, Dynatrace metrics, and the 13-millisecond improvement timeline." decoding="async" fetchpriority="high">
         <p class="image-caption">Finding the right fix took ten weeks. Applying it took only a moment.</p>
 
         <hr>
@@ -237,12 +237,12 @@
 
         <p>The selected production observations moved in the right direction. On October 5, average response time was approximately 32 milliseconds, with a median of 31 milliseconds and P90 of 41 milliseconds.</p>
 
-        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/2-baseline-dynatrace.png" class="blog-hero-image" alt="Dynatrace request metrics on October 5, 2026, showing a 32.3-millisecond average response time." loading="lazy" decoding="async">
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/2-baseline-dynatrace.webp" class="blog-hero-image" alt="Dynatrace request metrics on October 5, 2026, showing a 32.3-millisecond average response time." loading="lazy" decoding="async">
         <p class="image-caption">Figure 1 - October 5 baseline: 32.3 ms average response time.</p>
 
         <p>On October 6, after enabling <code>TryGetAsync</code>, average response time was approximately 27 milliseconds, with a median of 26 milliseconds and P90 of 33 milliseconds.</p>
 
-        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/3-trygetasync-dynatrace.png" class="blog-hero-image" alt="Dynatrace request metrics on October 6, 2026, showing a 26.6-millisecond average response time after enabling TryGetAsync." loading="lazy" decoding="async">
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/3-trygetasync-dynatrace.webp" class="blog-hero-image" alt="Dynatrace request metrics on October 6, 2026, showing a 26.6-millisecond average response time after enabling TryGetAsync." loading="lazy" decoding="async">
         <p class="image-caption">Figure 2 - October 6: 26.6 ms average after enabling <code>TryGetAsync</code>.</p>
 
         <p>That was an improvement of roughly six milliseconds, or 18%. Meaningful, but it left an important question unanswered: why was the service requesting missing documents in the first place?</p>
@@ -255,7 +255,7 @@
 
         <p>Across approximately 31,000 stack-trace samples, the profiler reported roughly 61% locking, 36% code execution, and 4% network I/O. These rounded categories were not direct measurements of CPU consumption, but the locking percentage was an important clue.</p>
 
-        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/5-method-hotspot-dynatrace.png" class="blog-hero-image" alt="Dynatrace method hotspots report showing 31,100 stack-trace samples with 61 percent locking, 36 percent code execution, and 3.84 percent network I/O." loading="lazy" decoding="async">
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/5-method-hotspot-dynatrace.webp" class="blog-hero-image" alt="Dynatrace method hotspots report showing 31,100 stack-trace samples with 61 percent locking, 36 percent code execution, and 3.84 percent network I/O." loading="lazy" decoding="async">
         <p class="image-caption">Figure 3 - Dynatrace method hotspots revealed significant locking activity.</p>
 
         <p>Portions of the database-access code still used synchronous operations. When a thread makes a synchronous database call, it waits for Couchbase to respond instead of being available for other work. Under peak traffic, enough blocked threads can create thread-pool pressure, queuing, and increased response times. Interactions with locks or shared resources can worsen the effect.</p>
@@ -321,7 +321,7 @@
 
         <p>On October 8, the selected Dynatrace observation showed an average response time of approximately 20 milliseconds, a median of 20 milliseconds, and P90 of 25 milliseconds. The chart also showed a visible step down in response time around 3:43 PM.</p>
 
-        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/4-document-restoration-dynatrace.png" class="blog-hero-image" alt="Dynatrace request metrics on October 8, 2026, showing a 19.7-millisecond average response time after the document was restored." loading="lazy" decoding="async">
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/4-document-restoration-dynatrace.webp" class="blog-hero-image" alt="Dynatrace request metrics on October 8, 2026, showing a 19.7-millisecond average response time after the document was restored." loading="lazy" decoding="async">
         <p class="image-caption">Figure 4 - October 8: 19.7 ms average after restoring the missing document.</p>
 
         <table>
