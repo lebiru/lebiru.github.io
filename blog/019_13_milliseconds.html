@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22VNQG7W7C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-22VNQG7W7C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A production incident write-up on eliminating unnecessary Couchbase lookups, reducing average API latency by 39%, and diagnosing CPU throttling in a legacy .NET service.">
+    <title>Do You Think 13 Milliseconds Is a Long Time?</title>
+    <meta name="author" content="Bilal A.">
+    <meta property="og:image" content="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/hero-image.webp" />
+    <link rel="stylesheet" href="../simple.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../images/apple/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../images/apple/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../images/apple/apple-touch-icon-76x76.png">
+    <style>
+        pre {
+            background-color: #282828;
+            color: #ebdbb2;
+            border: 1px solid #504945;
+            border-radius: 6px;
+            font-family: "Cascadia Code", Consolas, monospace;
+            line-height: 1.6;
+            padding: 1rem 1.25rem;
+            overflow: auto;
+        }
+
+        pre code {
+            color: inherit;
+        }
+
+        pre .token-comment {
+            color: #928374;
+            font-style: italic;
+        }
+
+        pre .token-keyword {
+            color: #fb4934;
+        }
+
+        pre .token-type,
+        pre .token-struct {
+            color: #fabd2f;
+        }
+
+        pre .token-method {
+            color: #b8bb26;
+        }
+
+        pre .token-variable {
+            color: #83a598;
+        }
+
+        pre .token-property,
+        pre .token-literal {
+            color: #d3869b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .callout {
+            background: #f0f4f8;
+            border-left: 5px solid #10AA94;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+
+        .blog-hero-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    <script src="../scripts/featured-product.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html">About Me</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../digital-products.html">Digital Products</a>
+        <a href="../gpts.html">CustomGPTs</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../apps.html">Apps</a>
+        <a href="../games.html">Games</a>
+    </header>
+    <article>
+        <h1>Do You Think 13 Milliseconds Is a Long Time? The Production Bug That Took 10 Weeks to Solve</h1>
+
+        <div class="author-info">
+            <img src="../images/authors/bilal-pro.png" alt="Author's Profile Picture" class="author-pic">
+            <div class="author-details">
+                <p class="author-name">Bilal A.</p>
+                <p class="post-date">Posted on October 17th, 2026</p>
+            </div>
+        </div>
+
+        <p><em>What a 30-year-old legacy system, a missing Couchbase document, and an HVAC joke my father told me taught me about software engineering.</em></p>
+
+        <p>Do you think 13 milliseconds is a long time?</p>
+
+        <p>A human blink takes a few hundred milliseconds. Thirteen milliseconds is practically imperceptible. It is not something you would notice while clicking a button or browsing a website.</p>
+
+        <p>But saving 13 milliseconds per API request represented a <strong>39% improvement in average response time</strong> for one high-throughput service, and helped us finally get ahead of a production issue we had been fighting for nearly ten weeks.</p>
+
+        <p>Ten weeks of CPU throttling. Ten weeks of investigating logs, analyzing performance metrics, and experimenting with infrastructure configurations. Ten weeks of trying to understand why an application that usually worked perfectly fine would suddenly struggle under load.</p>
+
+        <p>When we finally understood what was happening, the proper code correction was surprisingly small.</p>
+
+        <p>How does a problem take ten weeks to solve when the actual fix is so simple?</p>
+
+        <p>That question reminded me of an old joke my father once told me.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/hero-image.webp" class="blog-hero-image" alt="Developer investigating a production performance issue alongside an HVAC technician, Dynatrace metrics, and the 13-millisecond improvement timeline." decoding="async" fetchpriority="high">
+        <p class="image-caption">Finding the right fix took ten weeks. Applying it took only a moment.</p>
+
+        <hr>
+
+        <h2>The $1,000 HVAC Repair</h2>
+
+        <p>An HVAC technician gets called to a large commercial building after its enormous heating and cooling system stops working. The maintenance staff spend hours inspecting pipes, compressors, motors, ventilation, and electrical equipment, but nothing works.</p>
+
+        <p>Finally, they call an experienced technician. He arrives, studies the equipment for a few minutes, opens his toolbox, makes one small adjustment, and turns the system back on. Everything works.</p>
+
+        <p>Five minutes later, he hands the building manager a bill for $1,000.</p>
+
+        <p>The manager protests: "You were only here for five minutes. All you did was make one little adjustment!"</p>
+
+        <div class="callout">
+            <strong>$50 for making the adjustment.</strong><br>
+            <strong>$950 for knowing exactly where to make it.</strong>
+        </div>
+
+        <p>The repair itself was not particularly difficult. What made the technician valuable was his understanding of the entire system: how the components worked together, which symptoms mattered, and where to look when something went wrong.</p>
+
+        <p>I did not realize how relevant that lesson would become to my own work until this production incident.</p>
+
+        <hr>
+
+        <h2>July 30: The Beginning of a Very Long Summer</h2>
+
+        <p>On July 30, 2026, one of our production microservices began experiencing CPU throttling. At first, it seemed like another routine performance incident. Alerts went off, engineers investigated, and we expected to identify the problem, deploy a fix, and move on.</p>
+
+        <p>Except this time, we did not move on.</p>
+
+        <p>Week after week, usually on Mondays, Tuesdays, and Wednesdays, a subset of our OpenShift pods would suddenly experience CPU throttling. OpenShift runs applications inside containers with limits on their processing power. When a container exhausts its CPU quota, the platform temporarily restricts its execution.</p>
+
+        <p>Sometimes the incidents happened in the morning. Other times, in the afternoon. The service could operate normally for days, handling production traffic without obvious problems. Then, as peak weekly traffic arrived, certain pods would begin struggling. Response times would deteriorate, restarting the affected pods would sometimes provide temporary relief, and the following week we would find ourselves right back where we started.</p>
+
+        <h2>Thirty Years of Business Logic in One Microservice</h2>
+
+        <p>The application calculates domestic time-in-transit estimates. Given an origin and destination within the United States, it determines how long a package is expected to take to travel between those locations.</p>
+
+        <p>The underlying business functionality has evolved over more than 30 years. It has been migrated, modernized, expanded, and adapted to changing requirements. Features have been introduced, modified, disabled, and replaced. Different generations of developers have contributed to the code, while old business rules have been preserved.</p>
+
+        <p>Today, the functionality runs inside a modern .NET microservice deployed on OpenShift, but underneath that architecture sits decades of accumulated business knowledge.</p>
+
+        <p>That complexity matters. In a system like this, you cannot always look at a method and immediately understand why it exists. A database lookup might support a feature introduced years ago. A configuration flag might control functionality no longer enabled in production. Code may have survived several migrations even though the business process around it has changed.</p>
+
+        <p>You need to understand not only what the code does, but why it exists and when it should execute.</p>
+
+        <p>The service was also extremely database-intensive: approximately 120 Couchbase operations per incoming API request on average. At 500 requests per minute, that is 60,000 potential database operations per minute before accounting for multiple service instances. At that scale, even small inefficiencies become significant.</p>
+
+        <hr>
+
+        <h2>Ten Weeks of Turning the Wrong Wrenches</h2>
+
+        <p>As the incidents continued, we explored several reasonable theories. Perhaps the application needed more CPU, so we increased pod resources. No lasting improvement. Perhaps load balancing was distributing requests inefficiently, so we changed from round-robin to least connections. Still no resolution.</p>
+
+        <p>Maybe Couchbase was the bottleneck. Given the volume of database operations, that was a sensible hypothesis. We investigated connection management, throughput, and Couchbase SDK configuration. We made adjustments intended to improve how the application handled database traffic.</p>
+
+        <p>Again, the incidents continued.</p>
+
+        <p>Looking back, we were doing exactly what the maintenance staff in the HVAC joke had done: inspecting different components of a complicated system. We were trying to make the infrastructure better at handling the workload before determining whether the application needed to perform all that work in the first place.</p>
+
+        <hr>
+
+        <h2>The First Breakthrough: Exceptions and Six Milliseconds</h2>
+
+        <p>In early October, more than two months into the incident, we had a Couchbase performance optimization ready to enable. It involved the way the service handled missing documents.</p>
+
+        <p>When an application calls Couchbase <code>GetAsync</code> for a document that does not exist, the SDK throws a <code>DocumentNotFoundException</code>. A simplified implementation looks like this:</p>
+
+        <pre><code><span class="token-keyword">try</span>
+{
+    <span class="token-keyword">using</span> <span class="token-keyword">var</span> <span class="token-variable">result</span> = <span class="token-keyword">await</span> <span class="token-variable">collection</span>.<span class="token-method">GetAsync</span>(<span class="token-variable">documentId</span>);
+    <span class="token-keyword">return</span> <span class="token-variable">result</span>.<span class="token-method">ContentAs</span>&lt;<span class="token-type">MyDocument</span>&gt;();
+}
+<span class="token-keyword">catch</span> (<span class="token-type">DocumentNotFoundException</span>)
+{
+    <span class="token-keyword">return</span> <span class="token-literal">null</span>;
+}</code></pre>
+
+        <p>There is nothing inherently wrong with exceptions, but repeatedly creating and throwing them has a cost. Sometimes a missing document is not an error at all; it is a normal business outcome.</p>
+
+        <p>Couchbase provides <code>TryGetAsync</code>, which allows an application to handle a missing document without using an exception for that expected outcome:</p>
+
+        <pre><code><span class="token-keyword">using</span> <span class="token-keyword">var</span> <span class="token-variable">result</span> = <span class="token-keyword">await</span> <span class="token-variable">collection</span>.<span class="token-method">TryGetAsync</span>(<span class="token-variable">documentId</span>);
+
+    <span class="token-keyword">return</span> <span class="token-variable">result</span>?.<span class="token-method">ContentAs</span>&lt;<span class="token-type">MyDocument</span>&gt;();</code></pre>
+
+        <p>When the document is absent, <code>TryGetAsync</code> returns <code>null</code>, allowing the application to return the expected result without entering an exception path. We had already implemented this optimization behind a feature flag, so we enabled it.</p>
+
+        <p>The selected production observations moved in the right direction. On October 5, average response time was approximately 32 milliseconds, with a median of 31 milliseconds and P90 of 41 milliseconds.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/2-baseline-dynatrace.webp" class="blog-hero-image" alt="Dynatrace request metrics on October 5, 2026, showing a 32.3-millisecond average response time." loading="lazy" decoding="async">
+        <p class="image-caption">Figure 1 - October 5 baseline: 32.3 ms average response time.</p>
+
+        <p>On October 6, after enabling <code>TryGetAsync</code>, average response time was approximately 27 milliseconds, with a median of 26 milliseconds and P90 of 33 milliseconds.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/3-trygetasync-dynatrace.webp" class="blog-hero-image" alt="Dynatrace request metrics on October 6, 2026, showing a 26.6-millisecond average response time after enabling TryGetAsync." loading="lazy" decoding="async">
+        <p class="image-caption">Figure 2 - October 6: 26.6 ms average after enabling <code>TryGetAsync</code>.</p>
+
+        <p>That was an improvement of roughly six milliseconds, or 18%. Meaningful, but it left an important question unanswered: why was the service requesting missing documents in the first place?</p>
+
+        <hr>
+
+        <h2>Following the Threads in Dynatrace</h2>
+
+        <p>Throughout the investigation, we used Dynatrace to monitor the service. Infrastructure metrics told us that something was wrong, but they did not necessarily explain why. So I started examining the method-level profiling data and where application threads were spending their time.</p>
+
+        <p>Across approximately 31,000 stack-trace samples, the profiler reported roughly 61% locking, 36% code execution, and 4% network I/O. These rounded categories were not direct measurements of CPU consumption, but the locking percentage was an important clue.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/5-method-hotspot-dynatrace.webp" class="blog-hero-image" alt="Dynatrace method hotspots report showing 31,100 stack-trace samples with 61 percent locking, 36 percent code execution, and 3.84 percent network I/O." loading="lazy" decoding="async">
+        <p class="image-caption">Figure 3 - Dynatrace method hotspots revealed significant locking activity.</p>
+
+        <p>Portions of the database-access code still used synchronous operations. When a thread makes a synchronous database call, it waits for Couchbase to respond instead of being available for other work. Under peak traffic, enough blocked threads can create thread-pool pressure, queuing, and increased response times. Interactions with locks or shared resources can worsen the effect.</p>
+
+        <p>Network I/O representing only 4% of samples did not mean database calls were insignificant. The downstream delays from blocked threads and contention can be reflected elsewhere in a profiler. The better question was no longer how to make every Couchbase call faster. It was: <strong>which Couchbase calls could we eliminate entirely?</strong></p>
+
+        <hr>
+
+        <h2>The Document That Did Not Belong</h2>
+
+        <p>While tracing the execution paths, I found one particular lookup that seemed suspicious. The service repeatedly requested a specific Couchbase document. It did not exist in Couchbase, which by itself was not necessarily a problem.</p>
+
+        <p>But after following the lookup through the business logic, I found that the production configuration did not even enable the functionality that used the document.</p>
+
+        <p>The feature flag check came after the database retrieval. Conceptually, the code looked like this:</p>
+
+        <pre><code><span class="token-comment">// Retrieve the document first</span>
+<span class="token-keyword">var</span> <span class="token-variable">document</span> = <span class="token-variable">repository</span>.<span class="token-method">Get</span>(<span class="token-variable">documentId</span>);
+
+<span class="token-comment">// Only use it when the feature is enabled</span>
+<span class="token-keyword">if</span> (<span class="token-variable">featureEnabled</span>)
+{
+    <span class="token-method">ProcessDocument</span>(<span class="token-variable">document</span>);
+}</code></pre>
+
+        <p>Even when the feature was disabled, the service made the Couchbase call. Because this execution path was synchronous, the unnecessary lookup could also tie up a thread while waiting for a result the application did not need.</p>
+
+        <p>The intended implementation is simply:</p>
+
+        <pre><code><span class="token-keyword">if</span> (<span class="token-variable">featureEnabled</span>)
+{
+    <span class="token-keyword">var</span> <span class="token-variable">document</span> = <span class="token-variable">repository</span>.<span class="token-method">Get</span>(<span class="token-variable">documentId</span>);
+    <span class="token-method">ProcessDocument</span>(<span class="token-variable">document</span>);
+}</code></pre>
+
+        <p>An <code>if</code> statement. A guard clause. The code change would take minutes. Finding the correct place to make it required understanding a system built on more than 30 years of business logic, migrations, features, configurations, dependencies, and historical decisions.</p>
+
+        <hr>
+
+        <h2>The Cache That Kept Forgetting</h2>
+
+        <p>The service already used caching to reduce database traffic, but it only cached documents that existed. A missing-document result was not cached.</p>
+
+        <p>Every incoming request therefore tried to retrieve the same missing document. Because the document did not exist, the result was not cached. Because the result was not cached, the next request tried again. Before <code>TryGetAsync</code>, those failed lookups could also generate exceptions.</p>
+
+        <p>This is where <strong>negative caching</strong> can help. Rather than caching only documents that exist, an application can temporarily cache the fact that a document was not found. The next request can immediately return the cached missing-document result without making a network call or producing a repeated document-not-found exception.</p>
+
+        <p>Negative caching needs appropriate expiration and, in some cases, invalidation. If a document is created after the absence is cached, the application may temporarily return stale information. For example, an existing document might be cached for 30 minutes while a missing-document result is cached for five, depending on the business requirements.</p>
+
+        <div class="callout">
+            Negative caching protects you from repeated legitimate misses. A guard clause protects you from unnecessary work.
+        </div>
+
+        <p>Both matter, but negative caching would not have corrected the original programming mistake. The service should not have requested this document at all while the feature was disabled.</p>
+
+        <hr>
+
+        <h2>The Fix That Finally Broke the Cycle</h2>
+
+        <p>The proper long-term fix was to introduce the missing guard clause, but implementing, testing, and deploying that change safely would take additional effort. We needed a faster production mitigation.</p>
+
+        <p>So we restored the missing document in Couchbase. That allowed the first retrieval to succeed and be cached. Subsequent requests could retrieve the document from memory rather than repeatedly querying Couchbase, breaking the cycle and removing a source of unnecessary blocking from the synchronous execution path.</p>
+
+        <p>On October 8, the selected Dynatrace observation showed an average response time of approximately 20 milliseconds, a median of 20 milliseconds, and P90 of 25 milliseconds. The chart also showed a visible step down in response time around 3:43 PM.</p>
+
+        <img src="https://lebiru-github-io-assets.pages.dev/019_13_milliseconds/4-document-restoration-dynatrace.webp" class="blog-hero-image" alt="Dynatrace request metrics on October 8, 2026, showing a 19.7-millisecond average response time after the document was restored." loading="lazy" decoding="async">
+        <p class="image-caption">Figure 4 - October 8: 19.7 ms average after restoring the missing document.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Oct. 5 baseline</th>
+                    <th>Oct. 6 <code>TryGetAsync</code></th>
+                    <th>Oct. 8 document restored</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Average</td>
+                    <td>32 ms</td>
+                    <td>27 ms</td>
+                    <td>20 ms</td>
+                </tr>
+                <tr>
+                    <td>P50</td>
+                    <td>31 ms</td>
+                    <td>26 ms</td>
+                    <td>20 ms</td>
+                </tr>
+                <tr>
+                    <td>P90</td>
+                    <td>41 ms</td>
+                    <td>33 ms</td>
+                    <td>25 ms</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Compared with the October 5 baseline, average response time had improved by approximately 13 milliseconds: a 39% reduction. P90 fell from approximately 41 milliseconds to 25 milliseconds, a reduction of about 16 milliseconds, or 40%.</p>
+
+        <p>These are rounded production observations rather than controlled experiments proving that each individual change caused exactly that amount of improvement. Even so, the progression was clear. The recurring CPU-throttling incidents stopped appearing during the following week, including during a data-center failover.</p>
+
+        <hr>
+
+        <h2>Thirteen Milliseconds and a Thousand-Dollar Lesson</h2>
+
+        <p>The biggest lesson from this incident was to question the workload before questioning the infrastructure. CPU resources, load balancing, and database configuration were all reasonable places to look, but the largest improvement came from understanding what the application was doing and why.</p>
+
+        <p>The cost of a database call is not always limited to the time spent retrieving data. In a synchronous application, waiting for a database response can tie up a thread that could otherwise be doing useful work. Under heavier traffic, that can contribute to contention, queuing, and degraded response times.</p>
+
+        <p>The most useful performance optimization is not always making an operation faster. Sometimes it is eliminating the operation entirely.</p>
+
+        <p>After nearly ten weeks of recurring incidents, we had a concrete explanation for the repeated database traffic, a successful production mitigation, and a clear path to a permanent code fix. The guard clause still needed to be deployed, monitoring still needed to continue, and there were more opportunities to improve caching and reduce synchronous database access elsewhere in the service.</p>
+
+        <p>But we finally understood what we had been chasing.</p>
+
+        <p>Writing the code is often the easy part. Understanding where to write it, why it belongs there, and what effect it will have on the rest of the system: that is where the real engineering happens.</p>
+
+        <div class="callout">
+            The value is not always in the complexity of the fix. Sometimes it is in the depth of understanding required to find it.
+        </div>
+
+        <p><em>Author's note: This article is based on a real production troubleshooting experience. Code examples are simplified to illustrate the underlying concepts, and internal implementation details have been generalized. Performance measurements are rounded to whole milliseconds for readability and are based on highlighted Dynatrace observations.</em></p>
+
+        <p><strong>Topics:</strong> .NET, C#, Couchbase, CPU Throttling, OpenShift, Dynatrace, Performance Engineering, Negative Caching, Thread Contention, Legacy Systems</p>
+    </article>
+
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "https://lebiru.github.io/blog/019_13_milliseconds.html";
+            this.page.identifier = "019_13_milliseconds";
+        };
+        (function () {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://lebiru.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a target="_blank" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    <footer>
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../index.html">About Me</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../digital-products.html">Digital Products</a></li>
+                <li><a href="../gpts.html">CustomGPTs</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../apps.html">Apps</a></li>
+                <li><a href="../games.html">Games</a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/bilalakabi/">LinkedIn</a></li>
+                <li><a target="_blank" href="https://github.com/lebiru">GitHub</a></li>
+                <li><a target="_blank" href="https://lebiru.gumroad.com/subscribe">Subscribe</a></li>
+            </ul>
+        </div>
+        <p>&copy; <span id="copyright-year"></span> Lebiru.com - All rights reserved.</p>
+        <script>
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        </script>
+    </footer>
+</body>
+
+</html>
